@@ -6,13 +6,24 @@ import {
   faBookmark,
 } from '@fortawesome/pro-regular-svg-icons';
 
+import logo from '../public/logo.png';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
+import { getPopularMovies } from '@/movieService';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const test = async () => {
+    const res = await getPopularMovies();
+    console.log(res);
+  };
+
+  test();
   return (
     <>
       <Head>
@@ -22,26 +33,30 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div className='min-h-screen flex flex-col grow bg-gradient-to-t from-blue-900 to-slate-900 '>
-        <Navbar />
         <main
-          className={'flex flex-col grow'}
+          className={'flex flex-col grow '}
           style={{
             backgroundImage: `linear-gradient( to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), url('/background.webp')`,
           }}
         >
+          <div className='container mx-auto p-4'>
+            <Image src={logo} alt='' className='w-32' />
+          </div>
           <div className='text-center mx-auto px-20 my-28 flex-grow '>
             <div className='mb-24'>
               <h1 className='mb-10 h-100 mx-auto text-6xl md:text-8xl font-extrabold text-white  '>
-                <div className=''>Browse less.</div>
-                <div className=''>Watch more.</div>
+                <div>Browse less.</div>
+                <div>Watch more.</div>
               </h1>
               <p className='text-lg md:text-2xl text-slate-300 mb-10 block w-96 md:w-2/3 mx-auto'>
                 Watchflix is a tool designed to simplify your movie search, so
                 you can spend less time endlessly scrolling on movie night.
               </p>
-              <button className='bg-blue-600 px-5 py-3 rounded-md font-semibold text-lg'>
-                Get started
-              </button>
+              <Link href='/movies'>
+                <button className='bg-blue-600 px-5 py-3 rounded-md font-semibold text-lg'>
+                  Get started
+                </button>
+              </Link>
             </div>
 
             <div className='flex flex-col md:flex-row  justify-around'>
@@ -73,7 +88,7 @@ export default function Home() {
                 <div className='ml-5'>
                   <p className=' text-xl font-medium leading-6'>Track Movies</p>
                   <p className='mt-2 text-base text-gray-400'>
-                    Keep track and rate all the movies you've seen
+                    Keep track and rate all the movies you see
                   </p>
                 </div>
               </div>

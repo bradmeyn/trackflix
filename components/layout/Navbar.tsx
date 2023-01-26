@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const Navbar = () => {
   return (
-    <nav className='p-3 bg-slate-800 '>
+    <nav className='p-3 bg-slate-900  '>
       <div className='flex md:justify-between container w-full mx-auto justify-between'>
         <a className='text-white align-middle flex items-center'>
           <div className=''>
