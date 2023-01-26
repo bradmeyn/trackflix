@@ -1,5 +1,6 @@
 import Card from './Card';
 import useFetch from '../hooks/useFetch';
+import Movies from '@/pages/movies';
 const posterPath = 'https://image.tmdb.org/t/p/w200';
 
 const Carousel = ({ title, url }: { title: string; url: string }) => {
@@ -27,6 +28,10 @@ const Carousel = ({ title, url }: { title: string; url: string }) => {
       </h2>
       <div className='flex-1 carousel carousel-end rounded-box'>
         <div className='carousel w-full'>
+          {data.map(movie) =>(
+            <img src='https://placeimg.com/800/200/arch' className='w-full' />
+          </div>
+          )}
           <div id='item1' className='carousel-item w-full'>
             <img src='https://placeimg.com/800/200/arch' className='w-full' />
           </div>
@@ -35,7 +40,7 @@ const Carousel = ({ title, url }: { title: string; url: string }) => {
             1
           </a>
         </div>
-        {data.map((movie) => (
+        {/* {data.map((movie) => (
           <div className='carousel-item'>
             <Card
               key={movie.id}
@@ -44,7 +49,7 @@ const Carousel = ({ title, url }: { title: string; url: string }) => {
               poster={`${posterPath}${movie.poster_path} `}
             />
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );

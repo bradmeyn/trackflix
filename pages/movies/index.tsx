@@ -33,7 +33,7 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
         <Navbar />
         <main className={'flex flex-col grow '}>
           <div
-            className='text-left h-[50rem] p-6 bg-opacity-90 bg-cover bg-no-repeat bg-top mb-10 flex flex-col justify-end'
+            className='text-left h-[45rem] p-6  bg-opacity-90 bg-cover bg-no-repeat bg-top flex flex-col '
             style={{
               backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .9)), url(https://image.tmdb.org/t/p/original${movies[0].backdrop_path})`,
             }}
@@ -43,27 +43,26 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
                 src={`https://image.tmdb.org/t/p/w400${movies[0].backdrop_path}`}
                 alt='movie poster'
               /> */}
-            <div className=' container mx-auto'>
-              <div className='mb-5'>
-                {' '}
-                <h1 className='text-5xl font-bold mb-5'>{movies[0].title}</h1>
-                <p className='text-md font-light mb-10'>{movies[0].overview}</p>
-              </div>
-              <h2 className='pl-2 pb-2 font-bold text-white text-xl md:text-2x'>
-                Popular Now
-              </h2>
-              <div className='flex overflow-scroll-y w-full container mx-auto'>
-                {movies
-                  ? movies.map((movie) => (
-                      <Card
-                        key={movie.id}
-                        id={movie.id}
-                        title={movie.title}
-                        poster={movie.poster_path}
-                      />
-                    ))
-                  : ''}
-              </div>
+
+            <h1 className='text-5xl font-bold mb-5'>{movies[0].title}</h1>
+            <p className='text-xl font-light mb-10 w-[50rem]'>
+              {movies[0].overview}
+            </p>
+
+            <h2 className='mb-2 font-bold text-white text-xl md:text-2x'>
+              Popular Now
+            </h2>
+            <div className='grid gap-5 grid-flow-col overflow-x-scroll '>
+              {movies
+                ? movies.map((movie) => (
+                    <Card
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title}
+                      poster={movie.poster_path}
+                    />
+                  ))
+                : ''}
             </div>
           </div>
         </main>
