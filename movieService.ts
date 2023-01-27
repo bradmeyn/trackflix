@@ -12,11 +12,40 @@ const movieService = axios.create({
 });
 
 export const getPopularMovies = async () => {
-  console.log('calling');
   const response = await movieService.get(`trending/movie/week?${params}`);
-
   return response;
 };
+
+export const getTopRatedMovies = async () => {
+  const response = await movieService.get(`movie/top_rated?${params}`);
+  return response;
+};
+
+export const getMovie = async (movieId: string | number) => {
+  const response = await movieService.get(
+    `movie/${movieId}?${params}&append_to_response=credits`
+  );
+  return response;
+};
+
+//  const year = Math.floor(Math.random() * 51) + 1970;
+//    {
+//      title: `Biggest Movies of ${year - 1}`,
+//      url: `https://api.themoviedb.org/3/discover/movie?${params}&primary_release_year=${
+//        year - 1
+//      }&sort_by=revenue.desc`,
+//    },
+//    {
+//      title: `Biggest Movies of ${year}`,
+//      url: `https://api.themoviedb.org/3/discover/movie?${params}&primary_release_year=${year}&sort_by=revenue.desc`,
+//    },
+//    {
+//      title: `Biggest Movies of ${year + 1}`,
+//      url: `https://api.themoviedb.org/3/discover/movie?${params}&primary_release_year=${
+//        year + 1
+//      }&sort_by=revenue.desc`,
+//    },
+//  ];
 
 // const collections = [
 //   {

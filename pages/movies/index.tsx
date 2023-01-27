@@ -5,22 +5,20 @@ import {
   faCheck,
   faBookmark,
 } from '@fortawesome/pro-regular-svg-icons';
-
+import { useState } from 'react';
 import { IMovie } from '@/types/types';
-
-import logo from '../public/logo.png';
-import Image from 'next/image';
-
 import Card from '@/components/Card';
-
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getPopularMovies } from '@/movieService';
+import { getPopularMovies, getTopRatedMovies } from '@/movieService';
+import Carousel from '@/components/Carousel';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Movies({ movies }: { movies: IMovie[] }) {
+  const [featuredMovie, setFeaturedMovie] = useState(movies[1]);
+
   return (
     <>
       <Head>
@@ -35,36 +33,47 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
           <div
             className='text-left h-[45rem] p-6  bg-opacity-90 bg-cover bg-no-repeat bg-top flex flex-col '
             style={{
-              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .9)), url(https://image.tmdb.org/t/p/original${movies[0].backdrop_path})`,
+              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .9)), url(https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path})`,
             }}
           >
-            {/* <img
-                className='rounded-lg shadow-2xl md:mr-4 w-48 md:w-60 lg:w-80 mb-2'
-                src={`https://image.tmdb.org/t/p/w400${movies[0].backdrop_path}`}
-                alt='movie poster'
-              /> */}
-
-            <h1 className='text-5xl font-bold mb-5'>{movies[0].title}</h1>
-            <p className='text-xl font-light mb-10 w-[50rem]'>
-              {movies[0].overview}
-            </p>
-
-            <h2 className='mb-2 font-bold text-white text-xl md:text-2x'>
-              Popular Now
-            </h2>
-            <div className='grid gap-5 grid-flow-col overflow-x-scroll '>
-              {movies
-                ? movies.map((movie) => (
-                    <Card
-                      key={movie.id}
-                      id={movie.id}
-                      title={movie.title}
-                      poster={movie.poster_path}
-                    />
-                  ))
-                : ''}
+            <div className='container mx-auto'>
+              <h1 className='text-5xl font-bold mb-5'>{featuredMovie.title}</h1>
+              <p className='text-xl font-light mb-5 w-[50rem]'>
+                {featuredMovie.overview}
+              </p>
+              <h2 className='mb-2 font-bold text-white text-xl md:text-2x'>
+                Popular Now
+              </h2>
+              <div className='grid gap-3 grid-flow-col '>
+                {movies
+                  ? movies.map((movie) => (
+                      <Card
+                        key={movie.id}
+                        id={movie.id}
+                        title={movie.title}
+                        poster={movie.poster_path}
+                      />
+                    ))
+                  : ''}
+              </div>
             </div>
           </div>
+          <Carousel
+            title={'Highest Rated Movies of All Time'}
+            movies={movies}
+          />
+          <Carousel
+            title={'Highest Rated Movies of All Time'}
+            movies={movies}
+          />
+          <Carousel
+            title={'Highest Rated Movies of All Time'}
+            movies={movies}
+          />
+          <Carousel
+            title={'Highest Rated Movies of All Time'}
+            movies={movies}
+          />
         </main>
         <Footer />
       </div>
@@ -74,7 +83,6 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
 
 export async function getStaticProps() {
   const response = await getPopularMovies();
-  console.log(response);
   const movies: IMovie[] = response.data.results;
 
   return {
