@@ -13,12 +13,11 @@ import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
 import { getPopularMovies, getTopRatedMovies } from '@/movieService';
 import Carousel from '@/components/Carousel';
-
+import Image from 'next/image';
+import LargeCarousel from '@/components/LargeCarousel';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Movies({ movies }: { movies: IMovie[] }) {
-  const [featuredMovie, setFeaturedMovie] = useState(movies[1]);
-
   return (
     <>
       <Head>
@@ -27,37 +26,26 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='min-h-screen flex flex-col grow bg-gradient-to-t from-slate-800 to-slate-900 '>
+      <div className='flex min-h-screen grow flex-col bg-gradient-to-t from-slate-800 to-slate-900 '>
         <Navbar />
-        <main className={'flex flex-col grow '}>
-          <div
-            className='text-left h-[45rem] p-6  bg-opacity-90 bg-cover bg-no-repeat bg-top flex flex-col '
-            style={{
-              backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, .9)), url(https://image.tmdb.org/t/p/original${featuredMovie.backdrop_path})`,
-            }}
-          >
-            <div className='container mx-auto'>
-              <h1 className='text-5xl font-bold mb-5'>{featuredMovie.title}</h1>
-              <p className='text-xl font-light mb-5 w-[50rem]'>
-                {featuredMovie.overview}
-              </p>
-              <h2 className='mb-2 font-bold text-white text-xl md:text-2x'>
-                Popular Now
-              </h2>
-              <div className='grid gap-3 grid-flow-col '>
-                {movies
-                  ? movies.map((movie) => (
-                      <Card
-                        key={movie.id}
-                        id={movie.id}
-                        title={movie.title}
-                        poster={movie.poster_path}
-                      />
-                    ))
-                  : ''}
-              </div>
-            </div>
+        <main className={'flex grow flex-col '}>
+          <LargeCarousel movies={movies} />
+          <h2 className='md:text-2x mb-2 text-xl font-bold text-white'>
+            Popular Now
+          </h2>
+          <div className='grid grid-flow-col gap-3 '>
+            {movies
+              ? movies.map((movie) => (
+                  <Card
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title}
+                    poster={movie.poster_path}
+                  />
+                ))
+              : ''}
           </div>
+
           <Carousel
             title={'Highest Rated Movies of All Time'}
             movies={movies}

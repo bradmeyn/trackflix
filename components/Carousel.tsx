@@ -2,9 +2,9 @@ import Card from './Card';
 
 export default function Carousel({ title, movies }) {
   return (
-    <div className='py-5'>
-      <h2 className='mb-2 font-bold text-white text-xl md:text-2x'>{title}</h2>
-      <div className='grid gap-5 grid-flow-col overflow-x-scroll  '>
+    <div className='m-5'>
+      <h2 className='md:text-2x mb-2 text-xl font-bold text-white'>{title}</h2>
+      <div className='grid grid-flow-col gap-5 overflow-x-scroll  '>
         {movies
           ? movies.map((movie) => (
               <Card

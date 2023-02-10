@@ -19,7 +19,7 @@ const Card = ({
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className=' w-[200px] drop-shadow-lg hover:drop-shadow-2xl border-2 border-transparent rounded-xl hover:border-slate-400 hover:cursor-pointer '>
+        <div className=' w-[100px] rounded-xl  border-transparent hover:cursor-pointer hover:border-slate-400 hover:outline-slate-400 hover:outline md:w-[150px] lg:w-[200px] '>
           {/* <button className='flex justify-center right-0 top-1 px-2 text-slate-500 absolute hover:text-blue-500 text-3xl md:text-4xl'>
           <FontAwesomeIcon icon={faBookmark} />
           <FontAwesomeIcon
