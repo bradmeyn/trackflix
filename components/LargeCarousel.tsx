@@ -25,8 +25,8 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
 
   return (
     <>
-      <div className='custom-shadow container mx-auto flex h-[200px] w-full overflow-hidden rounded hover:outline-slate-400  hover:outline md:mx-auto md:h-[300px] lg:h-[350px]'>
-        {movies.map((movie) => (
+      <div className='custom-shadow container mx-auto flex h-[200px] w-full overflow-hidden rounded hover:outline-slate-400  hover:outline md:mx-auto md:h-[300px] lg:h-[370px]'>
+        {movies.map((movie, i) => (
           <Link
             key={movie.id}
             href={`/movies/${movie.id}`}
@@ -56,7 +56,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                 </div>
               )}
 
-              <div className='flex w-full items-center justify-start md:flex-row'>
+              <div className='flex w-full items-start justify-start px-10 md:flex-row'>
                 <Image
                   className='w-[100px] rounded md:w-[150px] lg:w-[200px]'
                   loader={() =>
@@ -67,8 +67,14 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                   height={100}
                   alt={movie.title ?? ''}
                 />
-                <div className='pl-10'>
-                  <h1 className='text-3xl font-bold md:text-5xl lg:text-6xl '>
+                <div className='mt-10 pl-5'>
+                  <h1
+                    className={` text-3xl font-bold  transition-[opacity,transform] duration-1000 ease-in-out  md:text-5xl lg:text-7xl ${
+                      featuredIndex === i
+                        ? 'translate-x-8 opacity-100'
+                        : 'opacity-0'
+                    }`}
+                  >
                     {movie.title}
                   </h1>
                   {/* <p className='truncate-300 md:text-md xl:2xl w-[600px] font-light'>
