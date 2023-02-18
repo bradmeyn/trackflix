@@ -1,58 +1,89 @@
 import { useEffect, useRef, useState } from 'react';
-// import './Search.css';
-// import { Link } from 'react-router-dom';
-// import useOutsideClick from '../../hooks/useOutsideClick';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faStar } from '@fortawesome/pro-solid-svg-icons';
+import Link from 'next/link';
+import Image from 'next/image';
+import useOutsideClick from '../../hooks/useOutsideClick';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/pro-solid-svg-icons';
+import { IMovie } from '@/types/types';
 
-// const SearchDropdown = ({ movies, query, closeSearch }) => {
-//   const [dropdownActive, setDropDownActive] = useState(false);
-//   const dropdown = useRef(null);
+export default function SearchDropdown({
+  movies,
+  closeSearch,
+}: {
+  movies: IMovie[];
+  closeSearch: VoidFunction;
+}) {
+  const [dropdownActive, setDropDownActive] = useState(false);
+  const dropdown = useRef(null);
 
-//   useEffect(() => {
-//     setDropDownActive(true);
-//   }, [movies]);
+  useEffect(() => {
+    setDropDownActive(true);
+  }, [movies]);
 
-//   useOutsideClick(dropdown, () => {
-//     setDropDownActive(false);
-//   });
+  useOutsideClick(dropdown, () => {
+    setDropDownActive(false);
+  });
 
-//   const handleClick = () => {
-//     closeSearch();
-//     setDropDownActive(false);
-//   };
+  const handleClick = () => {
+    closeSearch();
+    setDropDownActive(false);
+  };
 
-//   return (
-//     <ul ref={dropdown} className={dropdownActive ? ' block w-full ' : 'hidden'}>
-//       {movies.map((movie) => (
-//         <Link id={movie.id} onClick={handleClick} to={`movies/${movie.id}`}>
-//           <li className=' flex bg-slate-700 hover:bg-slate-600 border-t-2 border-slate-600'>
-//             <img
-//               src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-//               alt='Movie Poster'
-//               className='w-20'
-//             />
-//             <div className='p-4'>
-//               <h4 className='text-white text-lg md:text-xl pb-1'>
-//                 {movie.original_title}
-//               </h4>
+  return (
+    <div
+      className={`${
+        dropdownActive
+          ? 'max-h-[300px] overflow-y-scroll md:max-h-[600px]'
+          : 'hidden'
+      }`}
+    >
+      <ul ref={dropdown} className={'block w-full'}>
+        {movies.map((movie) => (
+          <li
+            key={movie.id}
+            className=' border-t-2 border-slate-600 bg-slate-700 hover:bg-slate-600'
+          >
+            <Link
+              className='flex'
+              onClick={handleClick}
+              href={`/movies/${movie.id}`}
+            >
+              <div className='w-28 p-1'>
+                <Image
+                  loader={() =>
+                    `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+                  }
+                  placeholder='blur'
+                  blurDataURL={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  height='0'
+                  width='0'
+                  sizes='100vw'
+                  className='h-auto w-full rounded-xl'
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  alt={movie.original_title}
+                />
+              </div>
 
-//               <div className='text-sm md:text-md pb-2'>
-//                 {new Date(movie.release_date).getFullYear()}
-//               </div>
-//               <span className='flex items-center'>
-//                 <FontAwesomeIcon
-//                   icon={faStar}
-//                   className='mr-2 text-yellow-400'
-//                 />
-//                 <span>{Math.round(movie.vote_average * 10) / 10}</span>
-//               </span>
-//             </div>
-//           </li>
-//         </Link>
-//       ))}
-//     </ul>
-//   );
-// };
+              <div className='p-4'>
+                <h4 className='pb-1 text-lg text-white md:text-xl'>
+                  {movie.original_title}
+                </h4>
 
-// export default SearchDropdown;
+                <div className='md:text-md pb-2 text-sm'>
+                  {new Date(movie.release_date).getFullYear()}
+                </div>
+                <span className='flex items-center'>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className='mr-2 text-yellow-400'
+                  />
+                  <span>{Math.round(movie.vote_average * 10) / 10}</span>
+                </span>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

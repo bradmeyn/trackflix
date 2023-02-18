@@ -1,23 +1,32 @@
 import Head from 'next/head';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMagnifyingGlass,
-  faCheck,
-  faBookmark,
-} from '@fortawesome/pro-regular-svg-icons';
-import { useState } from 'react';
+
 import { IMovie } from '@/types/types';
-import Card from '@/components/Card';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getPopularMovies, getTopRatedMovies } from '@/movieService';
+import {
+  getPopularMovies,
+  getTopRatedMovies,
+  getMoviesByYear,
+} from '@/movieService';
 import Carousel from '@/components/Carousel';
-import Image from 'next/image';
 import LargeCarousel from '@/components/LargeCarousel';
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Movies({ movies }: { movies: IMovie[] }) {
+interface MoviesByYear {
+  title: string;
+  movies: IMovie[];
+}
+
+export default function Movies({
+  topRatedMovies,
+  popularMovies,
+  moviesByYear,
+}: {
+  topRatedMovies: IMovie[];
+  popularMovies: IMovie[];
+  moviesByYear: MoviesByYear[];
+}) {
   return (
     <>
       <Head>
@@ -29,39 +38,21 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
       <div className='flex min-h-screen grow flex-col bg-gradient-to-t from-slate-800 to-slate-900 '>
         <Navbar />
         <main className={'flex grow flex-col '}>
-          <LargeCarousel movies={movies} />
-          <h2 className='md:text-2x mb-2 text-xl font-bold text-white'>
-            Popular Now
-          </h2>
-          <div className='grid grid-flow-col gap-3 '>
-            {movies
-              ? movies.map((movie) => (
-                  <Card
-                    key={movie.id}
-                    id={movie.id}
-                    title={movie.title}
-                    poster={movie.poster_path}
-                  />
-                ))
-              : ''}
-          </div>
+          <LargeCarousel movies={popularMovies} />
 
+          <Carousel title={'Popular Now'} movies={popularMovies} />
           <Carousel
             title={'Highest Rated Movies of All Time'}
-            movies={movies}
+            movies={topRatedMovies}
           />
-          <Carousel
-            title={'Highest Rated Movies of All Time'}
-            movies={movies}
-          />
-          <Carousel
-            title={'Highest Rated Movies of All Time'}
-            movies={movies}
-          />
-          <Carousel
-            title={'Highest Rated Movies of All Time'}
-            movies={movies}
-          />
+
+          {moviesByYear.map((year) => (
+            <Carousel
+              key={year.title}
+              title={year.title}
+              movies={year.movies}
+            />
+          ))}
         </main>
         <Footer />
       </div>
@@ -70,12 +61,34 @@ export default function Movies({ movies }: { movies: IMovie[] }) {
 }
 
 export async function getStaticProps() {
-  const response = await getPopularMovies();
-  const movies: IMovie[] = response.data.results;
+  const popularMovies = await getPopularMovies();
+  const topRatedMovies = await getTopRatedMovies();
+  const randomYear = Math.floor(Math.random() * 52) + 1970;
+
+  const moviesByYearOne = await getMoviesByYear(randomYear.toString());
+  const moviesByYearTwo = await getMoviesByYear((randomYear + 1).toString());
+  const moviesByYearThree = await getMoviesByYear((randomYear + 2).toString());
+
+  const moviesByYear = [
+    {
+      title: `Best of ${randomYear}`,
+      movies: moviesByYearOne,
+    },
+    {
+      title: `Best of ${randomYear - 5}`,
+      movies: moviesByYearTwo,
+    },
+    {
+      title: `Best of ${randomYear + 5}`,
+      movies: moviesByYearThree,
+    },
+  ];
 
   return {
     props: {
-      movies,
+      popularMovies,
+      topRatedMovies,
+      moviesByYear,
     },
   };
 }

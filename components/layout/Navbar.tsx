@@ -1,21 +1,23 @@
 import logo from '../.././public/logo.png';
 import Image from 'next/image';
+import Search from '../Search/SearchModal';
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faCircleUser } from '@fortawesome/pro-light-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleUser } from '@fortawesome/pro-light-svg-icons';
+import SearchModal from '../Search/SearchModal';
 
 const Navbar = () => {
   return (
-    <nav className='p-3 bg-slate-900  '>
-      <div className='flex md:justify-between container w-full mx-auto justify-between'>
-        <a className='text-white align-middle flex items-center'>
+    <nav className='bg-slate-900 p-3  '>
+      <div className='container mx-auto flex w-full items-center justify-between md:justify-between'>
+        <a className='flex items-center  text-white'>
           <div className=''>
             <Image src={logo} alt='' className='w-32' />
           </div>
         </a>
-        {/* <Search /> */}
-        <a className='hover:text-white align-middle flex items-center'>
-          {/* <FontAwesomeIcon icon={faCircleUser} className='text-3xl  mr-2' /> */}
+        <SearchModal />
+        <a className='flex items-center align-middle hover:text-white'>
+          <FontAwesomeIcon icon={faCircleUser} className='mr-2  text-3xl' />
         </a>
       </div>
     </nav>

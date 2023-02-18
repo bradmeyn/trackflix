@@ -14,25 +14,21 @@ const Card = ({
   title: string;
   poster: string;
 }) => {
-  const src = `https://image.tmdb.org/t/p/w400${poster}`;
+  const src = `https://image.tmdb.org/t/p/w200${poster}`;
 
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className=' w-[100px] rounded-xl  border-transparent hover:cursor-pointer hover:border-slate-400 hover:outline-slate-400 hover:outline md:w-[150px] lg:w-[200px] '>
-          {/* <button className='flex justify-center right-0 top-1 px-2 text-slate-500 absolute hover:text-blue-500 text-3xl md:text-4xl'>
-          <FontAwesomeIcon icon={faBookmark} />
-          <FontAwesomeIcon
-            icon={faPlus}
-            className='text-white absolute text-base top-1.5'
-          />
-        </button> */}
+        <div className='relative w-[200px] rounded-xl border-4 border-transparent transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:border-slate-400 '>
           <Image
-            className='rounded-xl'
             loader={() => src}
+            placeholder='blur'
+            blurDataURL={src}
+            height='0'
+            width='0'
+            sizes='100vw'
+            className='h-auto w-full rounded-xl'
             src={src}
-            width={200}
-            height={400}
             alt={title}
           />
         </div>

@@ -1,7 +1,7 @@
 import { IMovie } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,12 +13,12 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   let featuredMovie = movies[featuredIndex];
 
-  const moveLeft = (e: MouseEvent) => {
+  const moveLeft = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setFeaturedIndex((prev) => prev + -1);
   };
 
-  const moveRight = (e: MouseEvent) => {
+  const moveRight = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setFeaturedIndex((prev) => prev + 1);
   };
@@ -67,9 +67,9 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                   height={100}
                   alt={movie.title ?? ''}
                 />
-                <div className='mt-10 pl-5'>
+                <div className='pl-2 pt-2 md:pl-5'>
                   <h1
-                    className={` text-3xl font-bold  transition-[opacity,transform] duration-1000 ease-in-out  md:text-5xl lg:text-7xl ${
+                    className={`text-3xl font-bold transition-[opacity,transform] duration-1000 ease-in-out md:text-5xl lg:max-w-[700px] lg:text-7xl ${
                       featuredIndex === i
                         ? 'translate-x-8 opacity-100'
                         : 'opacity-0'
@@ -77,9 +77,6 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                   >
                     {movie.title}
                   </h1>
-                  {/* <p className='truncate-300 md:text-md xl:2xl w-[600px] font-light'>
-                    {movie.overview}
-                  </p> */}
                 </div>
               </div>
               <ul className='absolute bottom-3  left-1/2 hidden -translate-x-1/2 transform md:flex'>
