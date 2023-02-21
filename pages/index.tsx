@@ -9,8 +9,12 @@ import {
 import logo from '../public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import avengersPoster from '../public/landing_posters/avengers_poster.jpg';
+import djangoPoster from '../public/landing_posters/django_poster.jpg';
+import goodfellasPoster from '../public/landing_posters/goodfellas_poster.jpg';
+import lotrPoster from '../public/landing_posters/lotr_poster.jpg';
+import theDarkKnightPoster from '../public/landing_posters/the_dark_knight_poster.jpg';
 
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
 import { getPopularMovies } from '@/movieService';
@@ -32,9 +36,9 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='min-h-screen flex flex-col grow bg-gradient-to-t from-blue-900 to-slate-900 '>
+      <div className='flex min-h-screen grow flex-col bg-gradient-to-t from-blue-900 to-slate-900 '>
         <main
-          className={'flex flex-col grow '}
+          className={'flex grow flex-col '}
           style={{
             backgroundImage: `linear-gradient( to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.7)), url('/background.webp')`,
           }}
@@ -42,26 +46,54 @@ export default function Home() {
           <div className='container mx-auto p-4'>
             <Image src={logo} alt='' className='w-32' />
           </div>
-          <div className='text-center mx-auto px-20 my-28 flex-grow '>
+          <div className='my-8 flex-grow text-center md:my-12'>
             <div className='mb-24'>
-              <h1 className='mb-10 h-100 mx-auto text-6xl md:text-8xl font-extrabold text-white  '>
+              <h1 className='h-100 mx-auto mb-5 text-6xl font-extrabold text-white md:mb-8 md:text-7xl lg:text-8xl  '>
                 <div>Browse less.</div>
                 <div>Watch more.</div>
               </h1>
-              <p className='text-lg md:text-2xl text-slate-300 mb-10 block w-96 md:w-2/3 mx-auto'>
+
+              <div
+                className={
+                  'mb-10 flex w-full justify-center gap-2 md:mb-12 md:gap-3 lg:gap-4'
+                }
+              >
+                <Image
+                  className={'w-20 rounded md:w-28 lg:w-36'}
+                  src={avengersPoster}
+                />
+                <Image
+                  className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
+                  src={djangoPoster}
+                />
+                <Image
+                  className={'w-20 translate-y-6 rounded md:w-28 lg:w-36'}
+                  src={goodfellasPoster}
+                />
+                <Image
+                  className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
+                  src={lotrPoster}
+                />
+                <Image
+                  className={'w-20 rounded md:w-28 lg:w-36'}
+                  src={theDarkKnightPoster}
+                />
+              </div>
+
+              <p className='mx-auto mb-10 block w-96 text-lg text-slate-300 md:w-2/3 md:text-2xl'>
                 Watchflix is a tool designed to simplify your movie search, so
                 you can spend less time endlessly scrolling on movie night.
               </p>
               <Link href='/movies'>
-                <button className='bg-blue-600 px-5 py-3 rounded-md font-semibold text-lg'>
+                <button className='rounded-md bg-blue-600 px-5 py-3 text-lg font-semibold'>
                   Get started
                 </button>
               </Link>
             </div>
 
-            <div className='flex flex-col md:flex-row  justify-around'>
-              <div className='flex text-left p-3 w-full md:w-1/3'>
-                <div className='p-7 w-5 h-5 bg-blue-500 rounded-md flex justify-center items-center'>
+            <div className='flex flex-col justify-around  md:flex-row'>
+              <div className='flex w-full p-3 text-left md:w-1/3'>
+                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
                   <FontAwesomeIcon
                     icon={faMagnifyingGlass}
                     className='text-lg md:text-xl'
@@ -78,8 +110,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className='flex text-left p-3 w-full md:w-1/3'>
-                <div className='p-7 w-5 h-5 bg-blue-500 rounded-md flex justify-center items-center'>
+              <div className='flex w-full p-3 text-left md:w-1/3'>
+                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
                   <FontAwesomeIcon
                     icon={faCheck}
                     className='text-lg md:text-xl'
@@ -93,8 +125,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className='flex text-left p-3 w-full md:w-1/3'>
-                <div className='p-7 w-5 h-5 bg-blue-500 rounded-md flex justify-center items-center'>
+              <div className='flex w-full p-3 text-left md:w-1/3'>
+                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
                   <FontAwesomeIcon
                     icon={faBookmark}
                     className='text-lg md:text-xl'

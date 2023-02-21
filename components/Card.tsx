@@ -19,7 +19,7 @@ const Card = ({
   return (
     <>
       <Link href={`/movies/${id}`}>
-        <div className='relative w-[200px] rounded-xl border-4 border-transparent transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:border-slate-400 '>
+        <div className='relative w-[100px] rounded border-4 border-transparent transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:border-slate-400 md:w-[200px] '>
           <Image
             loader={() => src}
             placeholder='blur'
@@ -27,7 +27,7 @@ const Card = ({
             height='0'
             width='0'
             sizes='100vw'
-            className='h-auto w-full rounded-xl'
+            className='h-auto w-full rounded'
             src={src}
             alt={title}
           />

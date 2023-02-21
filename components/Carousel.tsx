@@ -1,6 +1,12 @@
 import { IMovie } from '@/types/types';
 import Card from './Card';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/pro-regular-svg-icons';
+
 export default function Carousel({
   title,
   movies,
@@ -9,9 +15,11 @@ export default function Carousel({
   movies: IMovie[];
 }) {
   return (
-    <div className='container mx-auto py-3'>
-      <h2 className='md:text-2x mb-2 text-xl font-bold text-white'>{title}</h2>
-      <div className='grid grid-flow-col gap-5 overflow-x-scroll  py-2'>
+    <div className='p-3 '>
+      <h2 className='text-md container mx-auto   font-bold text-white md:text-2xl'>
+        {title}
+      </h2>
+      <div className='no-scroll-bar container mx-auto grid w-screen grid-flow-col gap-2 overflow-visible overflow-x-scroll py-2  md:gap-5'>
         {movies
           ? movies.map((movie: IMovie) => (
               <Card
