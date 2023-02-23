@@ -1,7 +1,5 @@
 import logo from '../.././public/logo.png';
 import Image from 'next/image';
-import Search from '../Search/SearchModal';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/pro-light-svg-icons';
 import SearchModal from '../Search/SearchModal';

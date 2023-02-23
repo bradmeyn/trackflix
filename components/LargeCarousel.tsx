@@ -11,7 +11,6 @@ import {
 
 export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  let featuredMovie = movies[featuredIndex];
 
   const moveLeft = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
