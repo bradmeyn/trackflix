@@ -1,12 +1,6 @@
 import { IMovie } from '@/types/types';
 import Card from './Card';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/pro-regular-svg-icons';
-
 export default function Carousel({
   title,
   movies,
