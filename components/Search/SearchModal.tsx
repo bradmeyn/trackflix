@@ -53,9 +53,9 @@ export default function SearchModal() {
     setModalActive(false);
   };
 
-  const handleFocus = () => {
-    // searchMovies(query);
-  };
+  // const handleFocus = () => {
+  //   // searchMovies(query);
+  // };
 
   const activateSearch = (e: MouseEvent) => {
     e.stopPropagation();
@@ -94,7 +94,6 @@ export default function SearchModal() {
                 placeholder='Search movies'
                 className='w-full rounded-t-lg bg-slate-700 py-3 pl-12 text-lg text-white outline-0 md:text-xl'
                 onChange={handleChange}
-                onFocus={handleFocus}
               />
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
