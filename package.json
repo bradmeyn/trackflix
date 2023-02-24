@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-common-types": "^6.3.0",
     "@fortawesome/fontawesome-pro": "^6.2.1",
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/pro-duotone-svg-icons": "^6.2.1",
     "@fortawesome/pro-light-svg-icons": "^6.2.1",

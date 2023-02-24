@@ -61,22 +61,27 @@ export default function Home() {
                 <Image
                   className={'w-20 rounded md:w-28 lg:w-36'}
                   src={avengersPoster}
+                  alt='Movie poster for Avengers'
                 />
                 <Image
                   className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
                   src={djangoPoster}
+                  alt='Movie poster for Django Unchained'
                 />
                 <Image
                   className={'w-20 translate-y-6 rounded md:w-28 lg:w-36'}
                   src={goodfellasPoster}
+                  alt='Movie poster for Goodfellas'
                 />
                 <Image
                   className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
                   src={lotrPoster}
+                  alt='Movie poster for Lord of the Rings: Return of the King'
                 />
                 <Image
                   className={'w-20 rounded md:w-28 lg:w-36'}
                   src={theDarkKnightPoster}
+                  alt='Movie poster for '
                 />
               </div>
 

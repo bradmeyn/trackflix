@@ -1,8 +1,9 @@
-import { MouseEvent, useEffect } from 'react';
+import { MouseEvent, MouseEventHandler, RefObject, useEffect } from 'react';
 
-const useOutsideClick = (ref: any, callback: any) => {
-  const handleClick = (e: MouseEvent) => {
-    if (ref.current && !ref.current.contains(e.target)) {
+const useOutsideClick = (ref: RefObject<HTMLElement>, callback: any) => {
+  const handleClick = (e: Event) => {
+    // Specify the type of the MouseEvent object
+    if (ref.current && !ref.current.contains(e.target as Node)) {
       callback();
     }
   };

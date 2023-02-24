@@ -11,14 +11,13 @@ export default function SearchModal() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isDesktop, setDesktop] = useState(true);
-  const search = useRef(null);
+  const searchContainer = useRef(null);
   const searchInput = useRef<HTMLInputElement>(null);
 
   const updateScreen = () => setDesktop(window.innerWidth > 650);
 
   const getMovies = async () => {
     const data = await searchMovies(searchQuery);
-    console.log(data);
     setMovies(data);
   };
 
@@ -35,7 +34,7 @@ export default function SearchModal() {
     return () => window.removeEventListener('resize', updateScreen);
   });
 
-  useOutsideClick(search, () => {
+  useOutsideClick(searchContainer, () => {
     if (modalActive) {
       closeSearch();
     }
@@ -84,7 +83,7 @@ export default function SearchModal() {
     <>
       {modalActive ? (
         <div className='fixed top-0 left-0 z-50 h-full w-full bg-slate-900/30 p-0  backdrop-blur-md  '>
-          <div ref={search} className='m-10 md:mx-auto md:max-w-3xl '>
+          <div ref={searchContainer} className='m-10 md:mx-auto md:max-w-3xl '>
             <div
               className='relative flex flex-1 items-center rounded '
               onClick={focusInput}

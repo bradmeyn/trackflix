@@ -1,7 +1,7 @@
 import logo from '../.././public/logo.png';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub, faGithubSquare } from '@fortawesome/free-brands-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {
   return (
     <footer className='items-center bg-slate-800 p-5 text-slate-400 '>
