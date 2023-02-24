@@ -53,10 +53,6 @@ export default function SearchModal() {
     setModalActive(false);
   };
 
-  // const handleFocus = () => {
-  //   // searchMovies(query);
-  // };
-
   const activateSearch = (e: MouseEvent) => {
     e.stopPropagation();
     setModalActive(true);
