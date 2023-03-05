@@ -56,9 +56,9 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                   </div>
                 )}
 
-                <div className='flex w-full items-start justify-start md:flex-row'>
+                <div className='flex w-full '>
                   <Image
-                    className='ml-8 w-[100px] rounded md:ml-12 md:w-[150px] lg:ml-14 lg:w-[200px]'
+                    className=' w-[100px] rounded  md:w-[150px]  lg:w-[200px] xl:ml-6'
                     loader={() =>
                       `https://image.tmdb.org/t/p/w400${movie.poster_path}`
                     }
@@ -69,7 +69,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                   />
 
                   <h1
-                    className={`p-2 text-3xl font-bold transition-[opacity,transform] duration-1000 ease-in-out md:p-4 md:text-5xl lg:max-w-[700px] lg:text-7xl ${
+                    className={`max-w-sm pt-3 text-2xl font-bold transition-[opacity,transform] duration-1000 ease-in-out sm:text-3xl md:pt-4 md:text-4xl  lg:max-w-xl lg:text-6xl  xl:max-w-2xl xl:text-7xl ${
                       featuredIndex === i
                         ? 'translate-x-8 opacity-100'
                         : 'opacity-0'
@@ -87,7 +87,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                           e.preventDefault();
                           setFeaturedIndex(i);
                         }}
-                        className={`mx-2 rounded-full border border-slate-200 p-[3px] hover:bg-slate-100 ${
+                        className={`mx-2 rounded-full border border-slate-200 p-[5px] hover:bg-slate-100 ${
                           featuredIndex === i ? 'bg-slate-100' : ''
                         }`}
                       ></button>

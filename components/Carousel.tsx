@@ -1,4 +1,10 @@
 import { IMovie } from '@/types/types';
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
 import Card from './Card';
 
 export default function Carousel({
@@ -8,22 +14,62 @@ export default function Carousel({
   title: string;
   movies: IMovie[];
 }) {
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleScrollLeft = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -carouselRef.current.clientWidth * 1,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  const handleScrollRight = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: carouselRef.current.clientWidth * 1,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
-    <div className='p-3 '>
-      <h2 className='text-md container mx-auto   font-bold text-white md:text-2xl'>
+    <div className='p-3'>
+      <h2 className='text-md container mx-auto font-bold text-white md:text-2xl'>
         {title}
       </h2>
-      <div className='no-scroll-bar container mx-auto grid w-screen grid-flow-col gap-2 overflow-visible overflow-x-scroll py-2  md:gap-5'>
-        {movies
-          ? movies.map((movie: IMovie) => (
-              <Card
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                poster={movie.poster_path}
-              />
-            ))
-          : ''}
+      <div className='relative'>
+        <button
+          className={`absolute left-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white`}
+          onClick={handleScrollLeft}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+        <div
+          className='no-scroll-bar container relative mx-auto grid grid-flow-col gap-2 overflow-hidden p-2 transition-transform duration-500 ease-in-out'
+          ref={carouselRef}
+          style={{
+            scrollSnapType: 'x mandatory',
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {movies.map((movie) => (
+            <Card
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              poster={movie.poster_path}
+            />
+          ))}
+        </div>
+        <button
+          className={`absolute right-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white`}
+          onClick={handleScrollRight}
+        >
+          <FontAwesomeIcon icon={faChevronRight} />
+        </button>
       </div>
     </div>
   );
