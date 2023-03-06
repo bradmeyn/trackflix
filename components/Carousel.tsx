@@ -41,13 +41,13 @@ export default function Carousel({
       </h2>
       <div className='relative'>
         <button
-          className={`absolute left-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white`}
+          className={`absolute left-0 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
           onClick={handleScrollLeft}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <div
-          className='no-scroll-bar container relative mx-auto grid grid-flow-col gap-2 overflow-hidden p-2 transition-transform duration-500 ease-in-out'
+          className='no-scroll-bar container relative mx-auto grid touch-pan-x grid-flow-col gap-2 overflow-hidden overflow-x-scroll p-2 transition-transform duration-500 ease-in-out'
           ref={carouselRef}
           style={{
             scrollSnapType: 'x mandatory',
@@ -65,7 +65,7 @@ export default function Carousel({
           ))}
         </div>
         <button
-          className={`absolute right-0 top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white`}
+          className={`absolute right-0 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
           onClick={handleScrollRight}
         >
           <FontAwesomeIcon icon={faChevronRight} />
