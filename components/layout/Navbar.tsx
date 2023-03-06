@@ -10,12 +10,12 @@ const Navbar = () => {
       <div className='container mx-auto flex w-full items-center justify-between md:justify-between'>
         <a className='flex items-center  text-white'>
           <div className=''>
-            <Image src={logo} alt='' className='w-32' />
+            <Image src={logo} alt='' className='w-24 md:w-32' />
           </div>
         </a>
         <SearchModal />
         <a className='flex items-center align-middle hover:text-white'>
-          <FontAwesomeIcon icon={faCircleUser} className='mr-2  text-3xl' />
+          <FontAwesomeIcon icon={faCircleUser} className='mr-2  text-lg' />
         </a>
       </div>
     </nav>

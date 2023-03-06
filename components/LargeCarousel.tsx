@@ -39,7 +39,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
               <div className='flex h-full items-center justify-between'>
                 {featuredIndex !== 0 ? (
                   <button
-                    className='p-5 text-slate-400 hover:text-white'
+                    className='z-10 h-full  p-3 text-slate-400 hover:text-white md:p-5'
                     onClick={moveLeft}
                   >
                     <FontAwesomeIcon
@@ -48,10 +48,10 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                     />
                   </button>
                 ) : (
-                  <div className='p-5'>
+                  <div className='p-3 md:p-5'>
                     <FontAwesomeIcon
                       icon={faChevronLeft}
-                      className='text-lg text-transparent md:text-4xl'
+                      className='h-full text-lg text-transparent md:text-4xl'
                     />
                   </div>
                 )}
@@ -96,7 +96,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                 </ul>
                 <button
                   onClick={moveRight}
-                  className='p-5 text-slate-400 hover:text-white'
+                  className='z-10 h-full p-3 text-slate-400 hover:text-white md:p-5'
                 >
                   <FontAwesomeIcon
                     icon={faChevronRight}

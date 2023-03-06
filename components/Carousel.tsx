@@ -39,9 +39,9 @@ export default function Carousel({
       <h2 className='text-md container mx-auto font-bold text-white md:text-2xl'>
         {title}
       </h2>
-      <div className='relative'>
+      <div className='container relative mx-auto'>
         <button
-          className={`absolute left-0 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
+          className={`absolute -left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
           onClick={handleScrollLeft}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -65,7 +65,7 @@ export default function Carousel({
           ))}
         </div>
         <button
-          className={`absolute right-0 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
+          className={`absolute -right-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
           onClick={handleScrollRight}
         >
           <FontAwesomeIcon icon={faChevronRight} />

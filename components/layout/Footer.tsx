@@ -6,9 +6,9 @@ const Footer = () => {
   return (
     <footer className='items-center bg-slate-800 p-5 text-slate-400 '>
       <div className='text-center'>
-        <Image src={logo} alt='Watchflix logo' className='mx-auto mb-2 w-28' />
+        <Image src={logo} alt='Watchflix logo' className='mx-auto mb-2 w-20' />
 
-        <p className=' mb-2 flex items-center justify-center'>
+        <p className=' mb-2 flex items-center justify-center text-sm'>
           <span className='mr-2'>Developed by</span>
           <a
             href={'https://www.bradmeyn.com'}
@@ -23,9 +23,9 @@ const Footer = () => {
           href={'https://www.github.com/bradmeyn/watchflix'}
           target='_blank'
           rel='noreferrer'
-          className='underline-offset-2text-white mb-2 flex items-center justify-center text-white hover:underline'
+          className='mb-2 flex items-center justify-center text-sm text-lg text-white underline-offset-2 hover:underline'
         >
-          <FontAwesomeIcon icon={faGithub} className='mr-2 text-lg' />{' '}
+          <FontAwesomeIcon icon={faGithub} className='mr-2 ' />{' '}
           <span>GitHub</span>
         </a>
 

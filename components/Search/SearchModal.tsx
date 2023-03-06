@@ -10,11 +10,15 @@ export default function SearchModal() {
   const [modalActive, setModalActive] = useState(false);
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isDesktop, setDesktop] = useState(true);
+  const [isDesktop, setDesktop] = useState<Boolean>(false);
   const searchContainer = useRef(null);
   const searchInput = useRef<HTMLInputElement>(null);
 
   const updateScreen = () => setDesktop(window.innerWidth > 650);
+
+  useEffect(() => {
+    updateScreen();
+  }, []);
 
   const getMovies = async () => {
     const data = await searchMovies(searchQuery);
@@ -70,7 +74,7 @@ export default function SearchModal() {
   ) : (
     <FontAwesomeIcon
       icon={faMagnifyingGlass}
-      className='focus:white ml-auto mr-5 cursor-pointer text-lg hover:text-white md:text-2xl '
+      className='focus:white text-md ml-auto mr-5 cursor-pointer hover:text-white md:text-2xl '
       onClick={activateSearch}
     />
   );
