@@ -18,16 +18,17 @@ const Footer = () => {
           >
             Brad Meyn
           </a>
+          <span className='px-2'>&#8226;</span>
+          <a
+            href={'https://www.github.com/bradmeyn/watchflix'}
+            target='_blank'
+            rel='noreferrer'
+            className='flex items-center justify-center text-sm text-lg text-white underline-offset-2 hover:underline'
+          >
+            <FontAwesomeIcon icon={faGithub} className='mr-2 ' />{' '}
+            <span>GitHub</span>
+          </a>
         </p>
-        <a
-          href={'https://www.github.com/bradmeyn/watchflix'}
-          target='_blank'
-          rel='noreferrer'
-          className='mb-2 flex items-center justify-center text-sm text-lg text-white underline-offset-2 hover:underline'
-        >
-          <FontAwesomeIcon icon={faGithub} className='mr-2 ' />{' '}
-          <span>GitHub</span>
-        </a>
 
         <p className='text-xs'>
           Copyright © {new Date().getFullYear()} - All right reserved

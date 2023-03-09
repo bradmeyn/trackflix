@@ -3,19 +3,34 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser } from '@fortawesome/pro-light-svg-icons';
 import SearchModal from '../Search/SearchModal';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
+  const router = useRouter();
+
   return (
     <nav className='bg-slate-900 p-3  '>
       <div className='container mx-auto flex w-full items-center justify-between md:justify-between'>
-        <a className='flex items-center  text-white'>
-          <div className=''>
+        <div className='flex items-center'>
+          <Link href={'/movies'}>
             <Image src={logo} alt='' className='w-24 md:w-32' />
-          </div>
-        </a>
+          </Link>
+          <Link
+            href={'/discover'}
+            className={`text-md ml-7 font-semibold  hover:text-white ${
+              router.pathname === '/discover'
+                ? ' text-white '
+                : ' text-slate-400 '
+            }`}
+          >
+            Discover
+          </Link>
+        </div>
+
         <SearchModal />
         <a className='flex items-center align-middle hover:text-white'>
-          <FontAwesomeIcon icon={faCircleUser} className='mr-2  text-lg' />
+          <FontAwesomeIcon icon={faCircleUser} className='mr-2  text-xl' />
         </a>
       </div>
     </nav>

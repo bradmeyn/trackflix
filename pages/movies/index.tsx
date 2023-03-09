@@ -4,11 +4,7 @@ import { IMovie } from '@/types/types';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import {
-  getPopularMovies,
-  getTopRatedMovies,
-  getMoviesByYear,
-} from '@/movieService';
+import { getMovies, MovieSearchData, discoverMovies } from '@/movieService';
 import Carousel from '@/components/Carousel';
 import LargeCarousel from '@/components/LargeCarousel';
 const inter = Inter({ subsets: ['latin'] });
@@ -19,13 +15,9 @@ interface MoviesByYear {
 }
 
 export default function Movies({
-  topRatedMovies,
-  popularMovies,
-  moviesByYear,
+  carouselData,
 }: {
-  topRatedMovies: IMovie[];
-  popularMovies: IMovie[];
-  moviesByYear: MoviesByYear[];
+  carouselData: CarouselData[];
 }) {
   return (
     <>
@@ -38,20 +30,9 @@ export default function Movies({
       <div className='flex min-h-screen grow flex-col bg-gradient-to-t from-slate-800 to-slate-900 '>
         <Navbar />
         <main className={'flex grow flex-col '}>
-          <LargeCarousel movies={popularMovies} />
-
-          <Carousel title={'Popular Now'} movies={popularMovies} />
-          <Carousel
-            title={'Highest Rated Movies of All Time'}
-            movies={topRatedMovies}
-          />
-
-          {moviesByYear.map((year) => (
-            <Carousel
-              key={year.title}
-              title={year.title}
-              movies={year.movies}
-            />
+          <LargeCarousel movies={carouselData[0].data.results} />
+          {carouselData.map((collection) => (
+            <Carousel key={collection.title} carouselData={collection} />
           ))}
         </main>
         <Footer />
@@ -60,35 +41,78 @@ export default function Movies({
   );
 }
 
-export async function getStaticProps() {
-  const popularMovies = await getPopularMovies();
-  const topRatedMovies = await getTopRatedMovies();
-  const randomYear = Math.floor(Math.random() * 52) + 1970;
+export interface CarouselData {
+  title: string;
+  url: string;
+  data: MovieSearchData;
+}
 
-  const moviesByYearOne = await getMoviesByYear(randomYear.toString());
-  const moviesByYearTwo = await getMoviesByYear((randomYear + 1).toString());
-  const moviesByYearThree = await getMoviesByYear((randomYear + 2).toString());
+export async function getServerSideProps() {
+  const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
+  const params = new URLSearchParams({
+    api_key: API_KEY!,
+    language: 'en-AU',
+  });
 
-  const moviesByYear = [
+  const popularMoviesData = await getMovies('trending/movie/week?', 1);
+  const topRatedMoviesData = await getMovies('movie/top_rated?', 1);
+
+  const randomYear = Math.floor(Math.random() * 40) + 1970;
+  const randomYearData1 = await discoverMovies(randomYear - 10, 1);
+  const randomYearData2 = await discoverMovies(randomYear - 5, 1);
+  const randomYearData3 = await discoverMovies(randomYear, 1);
+  const randomYearData4 = await discoverMovies(randomYear + 5, 1);
+  const randomYearData5 = await discoverMovies(randomYear + 10, 1);
+
+  const carouselData: CarouselData[] = [
     {
-      title: `Best of ${randomYear}`,
-      movies: moviesByYearOne,
+      title: 'Popular Now',
+      url: 'trending/movie/week?',
+      data: popularMoviesData,
+    },
+    {
+      title: 'All Time Classics',
+      url: 'movie/top_rated?',
+      data: topRatedMoviesData,
+    },
+    {
+      title: `Best of ${randomYear - 10}`,
+      url: `discover/movie?${params}&primary_release_year=${
+        randomYear - 10
+      }&sort_by=revenue.desc`,
+      data: randomYearData1,
     },
     {
       title: `Best of ${randomYear - 5}`,
-      movies: moviesByYearTwo,
+      url: `discover/movie?${params}&primary_release_year=${
+        randomYear - 5
+      }&sort_by=revenue.desc`,
+      data: randomYearData2,
+    },
+    {
+      title: `Best of ${randomYear}`,
+      url: `discover/movie?${params}&primary_release_year=${randomYear}&sort_by=revenue.desc`,
+      data: randomYearData3,
     },
     {
       title: `Best of ${randomYear + 5}`,
-      movies: moviesByYearThree,
+      url: `discover/movie?${params}&primary_release_year=${
+        randomYear + 5
+      }&sort_by=revenue.desc`,
+      data: randomYearData4,
+    },
+    {
+      title: `Best of ${randomYear + 10}`,
+      url: `discover/movie?${params}&primary_release_year=${
+        randomYear + 10
+      }&sort_by=revenue.desc`,
+      data: randomYearData5,
     },
   ];
 
   return {
     props: {
-      popularMovies,
-      topRatedMovies,
-      moviesByYear,
+      carouselData,
     },
   };
 }

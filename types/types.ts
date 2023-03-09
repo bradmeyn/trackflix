@@ -1,6 +1,6 @@
 export interface APIResponse {
   page: number;
-  results?: IMovie[];
+  results: IMovie[];
   total_pages: number;
   total_results: number;
 }
@@ -29,11 +29,11 @@ export interface IMovie {
   release_date: string;
   revenue: number;
   runtime: number;
-  spoken_languages?: Language[];
+  spoken_languages: Language[];
   status: string;
   tagline: string;
   title: string;
-  video?: boolean;
+  video: boolean;
   vote_average: number;
   vote_count: number;
   media_type: string;

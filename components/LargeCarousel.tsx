@@ -1,7 +1,7 @@
 import { IMovie } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,23 +9,41 @@ import {
   faChevronRight,
 } from '@fortawesome/pro-regular-svg-icons';
 
+import { faStar } from '@fortawesome/pro-solid-svg-icons';
+
 export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
 
-  const moveLeft = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const moveLeft = (e?: MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
     setFeaturedIndex((prev) => prev + -1);
   };
 
-  const moveRight = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setFeaturedIndex((prev) => prev + 1);
+  const moveRight = (e?: MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault();
+    setFeaturedIndex((prev) => {
+      if (prev === movies.length - 1) {
+        return 0;
+      }
+      return prev + 1;
+    });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (featuredIndex !== movies.length - 1) {
+        moveRight();
+      } else {
+        setFeaturedIndex(0);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [featuredIndex, movies.length]);
 
   return (
     <>
-      <div className='p-3'>
-        <div className='custom-shadow container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline-slate-400  hover:outline md:mx-auto md:h-[300px] lg:h-[370px]'>
+      <div className='px-3'>
+        <div className='custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]'>
           {movies.map((movie, i) => (
             <Link
               key={movie.id}
@@ -59,24 +77,37 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                 <div className='flex w-full '>
                   <Image
                     className=' w-[100px] rounded  md:w-[150px]  lg:w-[200px] xl:ml-6'
-                    loader={() =>
-                      `https://image.tmdb.org/t/p/w400${movie.poster_path}`
-                    }
-                    src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                    priority
                     width={200}
                     height={100}
+                    unoptimized
                     alt={movie.title ?? ''}
                   />
 
-                  <h1
-                    className={`max-w-sm pt-3 text-2xl font-bold transition-[opacity,transform] duration-1000 ease-in-out sm:text-3xl md:pt-4 md:text-4xl  lg:max-w-xl lg:text-6xl  xl:max-w-2xl xl:text-7xl ${
+                  <div
+                    className={`transition-[opacity,transform] duration-1000 ease-in-out xl:ml-5 ${
                       featuredIndex === i
                         ? 'translate-x-8 opacity-100'
                         : 'opacity-0'
                     }`}
                   >
-                    {movie.title}
-                  </h1>
+                    <h1
+                      className={`mb-2 max-w-sm pt-1 text-3xl font-bold sm:text-3xl md:pt-4 md:text-4xl  lg:max-w-xl lg:text-6xl  xl:max-w-2xl`}
+                    >
+                      {movie.title}
+                    </h1>
+
+                    <div className='text-md flex items-center md:text-2xl '>
+                      <FontAwesomeIcon
+                        icon={faStar}
+                        className='mr-2 text-yellow-400'
+                      />
+                      <span className='text-white'>
+                        {movie.vote_average.toFixed(1)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <ul className='absolute bottom-3 left-1/2 hidden -translate-x-1/2 transform md:flex'>
                   {movies.map((movie, i) => (
@@ -94,15 +125,24 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={moveRight}
-                  className='z-10 h-full p-3 text-slate-400 hover:text-white md:p-5'
-                >
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='text-lg md:text-4xl'
-                  />
-                </button>
+                {featuredIndex !== movies.length - 1 ? (
+                  <button
+                    onClick={moveRight}
+                    className='z-10 h-full p-3 text-slate-400 hover:text-white md:p-5'
+                  >
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className='text-lg md:text-4xl'
+                    />
+                  </button>
+                ) : (
+                  <div className='p-3 md:p-5'>
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className='h-full text-lg text-transparent md:text-4xl'
+                    />
+                  </div>
+                )}
               </div>
             </Link>
           ))}

@@ -4,16 +4,20 @@ import {
   faChevronRight,
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Card from './Card';
+import { CarouselData } from '@/pages/movies';
+import { getMovies } from '@/movieService';
 
 export default function Carousel({
-  title,
-  movies,
+  carouselData,
 }: {
-  title: string;
-  movies: IMovie[];
+  carouselData: CarouselData;
 }) {
+  const { title, url, data } = carouselData;
+
+  const [movies, setMovies] = useState(data.results);
+  const [currentPage, setCurrentPage] = useState(1);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleScrollLeft = () => {
@@ -34,9 +38,30 @@ export default function Carousel({
     }
   };
 
+  const getMoreMovies = async () => {
+    try {
+      const data = await getMovies(url, currentPage + 1);
+
+      setMovies([...movies, ...data.results]);
+      setCurrentPage((prev) => prev + 1);
+    } catch (e) {}
+  };
+
+  const handleCarouselEnd = () => {
+    const carousel = carouselRef.current;
+    if (carousel) {
+      const scrollRight =
+        carousel.scrollWidth - carousel.clientWidth - carousel.scrollLeft;
+      if (scrollRight === 0) {
+        getMoreMovies();
+        // Here you can add any code that should be executed when the carousel hits the end
+      }
+    }
+  };
+
   return (
     <div className='p-3'>
-      <h2 className='text-md container mx-auto font-bold text-white md:text-2xl'>
+      <h2 className='container mx-auto text-lg font-bold text-white md:text-2xl'>
         {title}
       </h2>
       <div className='container relative mx-auto'>
@@ -47,8 +72,9 @@ export default function Carousel({
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <div
-          className='no-scroll-bar container relative mx-auto grid touch-pan-x grid-flow-col gap-2 overflow-hidden overflow-x-scroll p-2 transition-transform duration-500 ease-in-out'
+          className='no-scroll-bar container relative mx-auto grid touch-pan-x grid-flow-col gap-4 overflow-hidden overflow-y-auto overflow-x-scroll p-2 py-4 transition-transform duration-500 ease-in-out md:gap-6'
           ref={carouselRef}
+          onScroll={handleCarouselEnd}
           style={{
             scrollSnapType: 'x mandatory',
             scrollBehavior: 'smooth',

@@ -17,17 +17,10 @@ import theDarkKnightPoster from '../public/landing_posters/the_dark_knight_poste
 
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getPopularMovies } from '@/movieService';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-  const test = async () => {
-    const res = await getPopularMovies();
-    console.log(res);
-  };
-
-  test();
   return (
     <>
       <Head>
@@ -59,26 +52,31 @@ export default function Home() {
                 }
               >
                 <Image
+                  priority
                   className={'w-20 rounded md:w-28 lg:w-36'}
                   src={avengersPoster}
                   alt='Movie poster for Avengers'
                 />
                 <Image
+                  priority
                   className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
                   src={djangoPoster}
                   alt='Movie poster for Django Unchained'
                 />
                 <Image
+                  priority
                   className={'w-20 translate-y-6 rounded md:w-28 lg:w-36'}
                   src={goodfellasPoster}
                   alt='Movie poster for Goodfellas'
                 />
                 <Image
+                  priority
                   className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
                   src={lotrPoster}
                   alt='Movie poster for Lord of the Rings: Return of the King'
                 />
                 <Image
+                  priority
                   className={'w-20 rounded md:w-28 lg:w-36'}
                   src={theDarkKnightPoster}
                   alt='Movie poster for '

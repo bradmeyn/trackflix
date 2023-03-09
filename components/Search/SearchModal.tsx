@@ -62,23 +62,6 @@ export default function SearchModal() {
     setModalActive(true);
   };
 
-  const searchBtn = isDesktop ? (
-    <button
-      className='relative mx-8 flex flex-1 items-center rounded-lg bg-slate-700 py-3 px-4 hover:bg-slate-600 md:max-w-md lg:max-w-xl '
-      onClick={activateSearch}
-    >
-      <FontAwesomeIcon icon={faMagnifyingGlass} className='mr-2  text-lg' />
-      <span className='mr-2 text-lg md:text-2xl  '></span>
-      <span className='text-md md:text-md'>Search Movies</span>
-    </button>
-  ) : (
-    <FontAwesomeIcon
-      icon={faMagnifyingGlass}
-      className='focus:white text-md ml-auto mr-5 cursor-pointer hover:text-white md:text-2xl '
-      onClick={activateSearch}
-    />
-  );
-
   return (
     <>
       {modalActive ? (
@@ -100,7 +83,7 @@ export default function SearchModal() {
                 className='absolute ml-4 text-lg md:text-xl'
               />
               <span
-                className='absolute right-4 z-50 cursor-pointer text-xl text-white md:text-2xl '
+                className='absolute right-4 z-50 cursor-pointer text-xl text-white'
                 onClick={closeSearch}
               ></span>
             </div>
@@ -112,7 +95,23 @@ export default function SearchModal() {
           </div>
         </div>
       ) : (
-        <>{searchBtn}</>
+        <>
+          {isDesktop ? (
+            <button
+              className='text-md relative mx-8 flex flex-1 items-center rounded-md bg-slate-700 py-2 px-4 text-slate-300 hover:bg-slate-600 hover:text-white md:max-w-md lg:max-w-xl'
+              onClick={activateSearch}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} className='mr-3' />
+              <span>Search movies</span>
+            </button>
+          ) : (
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className='focus:white ml-auto mr-5 cursor-pointer text-xl hover:text-white '
+              onClick={activateSearch}
+            />
+          )}
+        </>
       )}
     </>
   );

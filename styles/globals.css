@@ -115,6 +115,11 @@ a {
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
 }
 
+.card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.2) 0px 8px 6px -2px;
+}
+
 .no-scroll-bar::-webkit-scrollbar {
   display: none;
 }

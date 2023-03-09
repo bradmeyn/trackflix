@@ -5,7 +5,7 @@ import { faBookmark as falStar } from '@fortawesome/pro-regular-svg-icons';
 import Image, { ImageLoader } from 'next/image';
 import Link from 'next/link';
 
-const Card = ({
+export default function DiscoverCard({
   id,
   title,
   poster,
@@ -13,7 +13,7 @@ const Card = ({
   id: number;
   title: string;
   poster: string;
-}) => {
+}) {
   const src = `https://image.tmdb.org/t/p/w200${poster}`;
 
   return (
@@ -21,7 +21,7 @@ const Card = ({
       <Link
         href={`/movies/${id}`}
         className={
-          'card-shadow relative w-28 rounded-md transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:outline hover:outline-4 md:w-36 lg:w-48  xl:w-60'
+          'card-shadow  relative rounded-md transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:outline  hover:outline-4'
         }
       >
         <Image
@@ -38,6 +38,4 @@ const Card = ({
       </Link>
     </>
   );
-};
-
-export default Card;
+}
