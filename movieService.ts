@@ -95,6 +95,7 @@ interface movieParams {
     max: number;
   };
   genres: number[];
+  userRating: number;
   page: string | number;
 }
 
@@ -102,12 +103,13 @@ export const getFilteredMovies = async ({
   releaseYears: { min, max },
   genres,
   page,
+  userRating,
 }: movieParams) => {
   try {
     const response: AxiosResponse<MovieSearchData> = await movieService.get(
       `discover/movie?${params}&primary_release_date.gte=${min}-01-01&primary_release_date.lte=${max}-12-31&with_genres=${genres.join(
         ','
-      )}&page=${page}&sort_by=revenue.desc`
+      )}&vote_average.gte=${userRating}&page=${page}&sort_by=revenue.desc`
     );
 
     return response.data;

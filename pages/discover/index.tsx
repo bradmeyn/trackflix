@@ -4,10 +4,11 @@ import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
 import { getMovies, MovieSearchData, getFilteredMovies } from '@/movieService';
 import DiscoverCard from '@/components/discover/DiscoverCard';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import YearsFilter from '@/components/discover/YearsFilter';
 import GenresFilter from '@/components/discover/GenresFilter';
 import movieGenres from '@/utils/movieGenres';
+import UserRatingFilter from '@/components/discover/UserRatingFilter';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,9 +19,14 @@ export default function Discover({
 }) {
   const [movies, setMovies] = useState(popularMoviesData?.results);
   const [genres, setGenres] = useState(movieGenres);
+  const [userRating, setUserRating] = useState(0);
   const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
   const [currentPage, setCurrentPage] = useState(1);
   const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    updateMovies();
+  }, [genres, userRating, releaseYears]);
 
   // const getMoreMovies = async () => {
   //   try {
@@ -52,6 +58,7 @@ export default function Discover({
       releaseYears,
       genres: selectedGenres,
       page: currentPage,
+      userRating,
     });
 
     setCurrentPage(data.page);
@@ -69,10 +76,19 @@ export default function Discover({
           <div className='container mx-auto mt-10 px-5'>
             <h1 className='mb-3 text-3xl font-bold text-white'>Discover</h1>
             <div className='mb-3 flex gap-2'>
-              <YearsFilter />
+              <YearsFilter
+                releaseYears={releaseYears}
+                setReleaseYears={setReleaseYears}
+                updateMovies={updateMovies}
+              />
               <GenresFilter
                 genres={genres}
                 setGenres={setGenres}
+                updateMovies={updateMovies}
+              />
+              <UserRatingFilter
+                userRating={userRating}
+                setUserRating={setUserRating}
                 updateMovies={updateMovies}
               />
             </div>

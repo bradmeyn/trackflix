@@ -16,15 +16,12 @@ interface MovieGenreFilter {
   selected: boolean;
 }
 
-export default function GenresFilter({
-  genres,
-  setGenres,
-  updateMovies,
-}: {
+interface Props {
   genres: MovieGenreFilter[];
   setGenres: (newGenres: MovieGenreFilter[]) => void;
-  updateMovies: () => void;
-}) {
+}
+
+export default function GenresFilter({ genres, setGenres }: Props) {
   const [isActive, setIsActive] = useState(false);
   const filterContainer = useRef<HTMLDivElement>(null);
 
@@ -46,8 +43,6 @@ export default function GenresFilter({
     });
 
     setGenres(updatedGenres);
-
-    updateMovies();
   };
   const handleReset = () => {
     const resetGenres: MovieGenreFilter[] = genres.map((genre) => {
