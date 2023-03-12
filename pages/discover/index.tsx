@@ -1,12 +1,13 @@
 import Head from 'next/head';
-
-import { IMovie } from '@/types/types';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getMovies, MovieSearchData, discoverMovies } from '@/movieService';
-import DiscoverCard from '@/components/DiscoverCard';
-import { useState } from 'react';
+import { getMovies, MovieSearchData, getFilteredMovies } from '@/movieService';
+import DiscoverCard from '@/components/discover/DiscoverCard';
+import { useRef, useState } from 'react';
+import YearsFilter from '@/components/discover/YearsFilter';
+import GenresFilter from '@/components/discover/GenresFilter';
+import movieGenres from '@/utils/movieGenres';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,6 +17,47 @@ export default function Discover({
   popularMoviesData: MovieSearchData;
 }) {
   const [movies, setMovies] = useState(popularMoviesData?.results);
+  const [genres, setGenres] = useState(movieGenres);
+  const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
+  const [currentPage, setCurrentPage] = useState(1);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  // const getMoreMovies = async () => {
+  //   try {
+  //     setMovies([...movies, ...data.results]);
+  //     setCurrentPage((prev) => prev + 1);
+  //   } catch (e) {}
+  // };
+
+  const handleGridEnd = () => {
+    const grid = gridRef.current;
+    if (grid) {
+      const scrollTop = grid.scrollTop;
+      const scrollHeight = grid.scrollHeight;
+      const clientHeight = grid.clientHeight;
+
+      if (scrollHeight - scrollTop === clientHeight) {
+        // User has reached the bottom of the grid
+        // getMoreMovies();
+        // Here you can add any code that should be executed when the grid hits the end
+      }
+    }
+  };
+
+  const updateMovies = async () => {
+    const selectedGenres = genres
+      .filter((genre) => genre.selected)
+      .map((genre) => genre.id);
+    const data = await getFilteredMovies({
+      releaseYears,
+      genres: selectedGenres,
+      page: currentPage,
+    });
+
+    setCurrentPage(data.page);
+    setMovies([...data.results]);
+  };
+
   return (
     <>
       <Head>
@@ -26,8 +68,18 @@ export default function Discover({
         <main className={'flex grow flex-col '}>
           <div className='container mx-auto mt-10 px-5'>
             <h1 className='mb-3 text-3xl font-bold text-white'>Discover</h1>
-            <div></div>
-            <div className='grid grid-cols-2 gap-4  md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+            <div className='mb-3 flex gap-2'>
+              <YearsFilter />
+              <GenresFilter
+                genres={genres}
+                setGenres={setGenres}
+                updateMovies={updateMovies}
+              />
+            </div>
+            <div
+              className='relative mb-10 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'
+              ref={gridRef}
+            >
               {movies.map((movie) => (
                 <DiscoverCard
                   key={movie.id}

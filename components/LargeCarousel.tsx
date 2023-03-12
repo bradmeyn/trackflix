@@ -118,8 +118,8 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                           e.preventDefault();
                           setFeaturedIndex(i);
                         }}
-                        className={`mx-2 rounded-full border border-slate-200 p-[5px] hover:bg-slate-100 ${
-                          featuredIndex === i ? 'bg-slate-100' : ''
+                        className={`mx-2 rounded-full  p-[5px] hover:bg-slate-100 ${
+                          featuredIndex === i ? 'bg-slate-100' : 'bg-slate-500'
                         }`}
                       ></button>
                     </li>

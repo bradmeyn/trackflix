@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 const Footer = () => {
   return (
-    <footer className='items-center bg-slate-800 p-5 text-slate-400 '>
+    <footer className='items-center bg-slate-900 p-5 text-slate-400 '>
       <div className='text-center'>
         <Image src={logo} alt='Watchflix logo' className='mx-auto mb-2 w-20' />
 
@@ -23,7 +23,7 @@ const Footer = () => {
             href={'https://www.github.com/bradmeyn/watchflix'}
             target='_blank'
             rel='noreferrer'
-            className='flex items-center justify-center text-sm text-lg text-white underline-offset-2 hover:underline'
+            className='flex items-center justify-center text-sm text-white underline-offset-2 hover:underline'
           >
             <FontAwesomeIcon icon={faGithub} className='mr-2 ' />{' '}
             <span>GitHub</span>

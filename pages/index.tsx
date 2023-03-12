@@ -14,9 +14,8 @@ import djangoPoster from '../public/landing_posters/django_poster.jpg';
 import goodfellasPoster from '../public/landing_posters/goodfellas_poster.jpg';
 import lotrPoster from '../public/landing_posters/lotr_poster.jpg';
 import theDarkKnightPoster from '../public/landing_posters/the_dark_knight_poster.jpg';
-
-import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,112 +40,96 @@ export default function Home() {
           </div>
           <div className='my-8 flex-grow text-center md:my-12'>
             <div className='mb-24'>
-              <h1 className='h-100 mx-auto mb-5 text-6xl font-extrabold text-white md:mb-8 md:text-7xl lg:text-8xl  '>
+              <h1 className='h-100 mx-auto mb-10 text-6xl font-extrabold text-white md:mb-8 md:text-7xl lg:text-8xl   '>
                 <div>Browse less.</div>
                 <div>Watch more.</div>
               </h1>
 
               <div
                 className={
-                  'mb-10 flex w-full justify-center gap-2 md:mb-12 md:gap-3 lg:gap-4'
+                  'container mx-auto mb-10 grid max-w-[1200px] grid-cols-5 gap-4 px-5 md:gap-6'
                 }
               >
                 <Image
                   priority
-                  className={'w-20 rounded md:w-28 lg:w-36'}
+                  className={'rounded-md'}
                   src={avengersPoster}
                   alt='Movie poster for Avengers'
                 />
                 <Image
                   priority
-                  className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
+                  className={'rounded-md'}
                   src={djangoPoster}
                   alt='Movie poster for Django Unchained'
                 />
                 <Image
                   priority
-                  className={'w-20 translate-y-6 rounded md:w-28 lg:w-36'}
+                  className={'rounded-md'}
                   src={goodfellasPoster}
                   alt='Movie poster for Goodfellas'
                 />
                 <Image
                   priority
-                  className={'w-20 translate-y-3 rounded md:w-28 lg:w-36'}
+                  className={''}
                   src={lotrPoster}
                   alt='Movie poster for Lord of the Rings: Return of the King'
                 />
                 <Image
                   priority
-                  className={'w-20 rounded md:w-28 lg:w-36'}
+                  className={'rounded-md'}
                   src={theDarkKnightPoster}
                   alt='Movie poster for '
                 />
               </div>
 
-              <p className='mx-auto mb-10 block w-96 text-lg text-slate-300 md:w-2/3 md:text-2xl'>
+              <p className='container mx-auto mb-10 block max-w-[800px] px-5  text-lg text-slate-200 md:text-2xl'>
                 Watchflix is a tool designed to simplify your movie search, so
                 you can spend less time endlessly scrolling on movie night.
               </p>
               <Link href='/movies'>
-                <button className='rounded-md bg-blue-600 px-5 py-3 text-lg font-semibold'>
-                  Get started
+                <button className='rounded-md bg-blue-600 px-5 py-3 text-lg font-semibold hover:bg-blue-500'>
+                  Get Started
                 </button>
               </Link>
             </div>
-
-            <div className='flex flex-col justify-around  md:flex-row'>
-              <div className='flex w-full p-3 text-left md:w-1/3'>
-                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className='text-lg md:text-xl'
-                  />
-                </div>
-                <div className='ml-5'>
-                  <p className=' text-xl font-medium leading-6'>
-                    Search Movies
-                  </p>
-                  <p className='mt-2 text-base text-gray-400'>
-                    Search through thousands of movies powered by The Movie
-                    Database API
-                  </p>
-                </div>
-              </div>
-
-              <div className='flex w-full p-3 text-left md:w-1/3'>
-                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className='text-lg md:text-xl'
-                  />
-                </div>
-                <div className='ml-5'>
-                  <p className=' text-xl font-medium leading-6'>Track Movies</p>
-                  <p className='mt-2 text-base text-gray-400'>
-                    Keep track and rate all the movies you see
-                  </p>
-                </div>
-              </div>
-
-              <div className='flex w-full p-3 text-left md:w-1/3'>
-                <div className='flex h-5 w-5 items-center justify-center rounded-md bg-blue-500 p-7'>
-                  <FontAwesomeIcon
-                    icon={faBookmark}
-                    className='text-lg md:text-xl'
-                  />
-                </div>
-                <div className='ml-5'>
-                  <p className=' text-xl font-medium leading-6'>Save Movies</p>
-                  <p className='mt-2 text-base text-gray-400'>
-                    Create a personal watchlist so your know what to watch up
-                    next
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
+
+          <footer className='items-center p-5 text-slate-400 '>
+            <div className='text-center'>
+              <Image
+                src={logo}
+                alt='Watchflix logo'
+                className='mx-auto mb-2 w-20'
+              />
+
+              <p className=' mb-2 flex items-center justify-center text-sm'>
+                <span className='mr-2'>Developed by</span>
+                <a
+                  href={'https://www.bradmeyn.com'}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='text-white underline-offset-2 hover:underline'
+                >
+                  Brad Meyn
+                </a>
+                <span className='px-2'>&#8226;</span>
+                <a
+                  href={'https://www.github.com/bradmeyn/watchflix'}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='flex items-center justify-center text-sm text-white underline-offset-2 hover:underline'
+                >
+                  <FontAwesomeIcon icon={faGithub} className='mr-2 ' />{' '}
+                  <span>GitHub</span>
+                </a>
+              </p>
+
+              <p className='text-xs'>
+                Copyright © {new Date().getFullYear()} - All right reserved
+              </p>
+            </div>
+          </footer>
         </main>
-        <Footer />
       </div>
     </>
   );

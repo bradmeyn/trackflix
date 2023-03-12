@@ -5,6 +5,7 @@ import { faCircleUser } from '@fortawesome/pro-light-svg-icons';
 import SearchModal from '../Search/SearchModal';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { faCameraMovie } from '@fortawesome/pro-regular-svg-icons';
 
 const Navbar = () => {
   const router = useRouter();
@@ -18,12 +19,13 @@ const Navbar = () => {
           </Link>
           <Link
             href={'/discover'}
-            className={`text-md ml-7 font-semibold  hover:text-white ${
+            className={`text-md ml-7 font-semibold  uppercase hover:text-white ${
               router.pathname === '/discover'
                 ? ' text-white '
                 : ' text-slate-400 '
             }`}
           >
+            <FontAwesomeIcon icon={faCameraMovie} className={'mr-2'} />
             Discover
           </Link>
         </div>

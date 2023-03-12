@@ -47,21 +47,6 @@ export const searchMovies = async (query: string): Promise<IMovie[]> => {
   }
 };
 
-export const getMoviesByYear = async (year: string) => {
-  try {
-    const response: AxiosResponse<MovieSearchData> = await movieService.get(
-      `discover/movie?${params}&primary_release_year=${year}&sort_by=revenue.desc`
-    );
-
-    const movies = response.data.results;
-    return movies;
-  } catch (error) {
-    console.log(error);
-
-    return [];
-  }
-};
-
 export const getMovies = async (url: string, page: string | number = 1) => {
   try {
     const response: AxiosResponse<MovieSearchData> = await movieService.get(
@@ -81,13 +66,48 @@ export const getMovies = async (url: string, page: string | number = 1) => {
   }
 };
 
-export const discoverMovies = async (
+export const getMoviesByYear = async (
   year: number,
   page: string | number = 1
 ) => {
   try {
     const response: AxiosResponse<MovieSearchData> = await movieService.get(
       `discover/movie?${params}&primary_release_year=${year}&page=${page}&sort_by=revenue.desc`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+
+    throw new Error(`Failed to movie`);
+    return {
+      page: 0,
+      total_pages: 0,
+      total_results: 0,
+      results: [],
+    };
+  }
+};
+
+interface movieParams {
+  releaseYears: {
+    min: number;
+    max: number;
+  };
+  genres: number[];
+  page: string | number;
+}
+
+export const getFilteredMovies = async ({
+  releaseYears: { min, max },
+  genres,
+  page,
+}: movieParams) => {
+  try {
+    const response: AxiosResponse<MovieSearchData> = await movieService.get(
+      `discover/movie?${params}&primary_release_date.gte=${min}-01-01&primary_release_date.lte=${max}-12-31&with_genres=${genres.join(
+        ','
+      )}&page=${page}&sort_by=revenue.desc`
     );
 
     return response.data;

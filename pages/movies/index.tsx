@@ -4,7 +4,7 @@ import { IMovie } from '@/types/types';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getMovies, MovieSearchData, discoverMovies } from '@/movieService';
+import { getMovies, MovieSearchData, getMoviesByYear } from '@/movieService';
 import Carousel from '@/components/Carousel';
 import LargeCarousel from '@/components/LargeCarousel';
 const inter = Inter({ subsets: ['latin'] });
@@ -58,11 +58,11 @@ export async function getServerSideProps() {
   const topRatedMoviesData = await getMovies('movie/top_rated?', 1);
 
   const randomYear = Math.floor(Math.random() * 40) + 1970;
-  const randomYearData1 = await discoverMovies(randomYear - 10, 1);
-  const randomYearData2 = await discoverMovies(randomYear - 5, 1);
-  const randomYearData3 = await discoverMovies(randomYear, 1);
-  const randomYearData4 = await discoverMovies(randomYear + 5, 1);
-  const randomYearData5 = await discoverMovies(randomYear + 10, 1);
+  const randomYearData1 = await getMoviesByYear(randomYear - 10, 1);
+  const randomYearData2 = await getMoviesByYear(randomYear - 5, 1);
+  const randomYearData3 = await getMoviesByYear(randomYear, 1);
+  const randomYearData4 = await getMoviesByYear(randomYear + 5, 1);
+  const randomYearData5 = await getMoviesByYear(randomYear + 10, 1);
 
   const carouselData: CarouselData[] = [
     {
