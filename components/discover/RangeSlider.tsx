@@ -1,6 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 
-const RangeSlider = ({ step, min, max }) => {
+interface Props {
+  step: number;
+  min: number;
+  max: number;
+}
+
+const RangeSlider = ({ step, min, max }: Props) => {
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
   const minPos = ((minValue - min) / (max - min)) * 100;
