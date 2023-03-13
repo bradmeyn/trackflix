@@ -79,17 +79,11 @@ export default function Discover({
               <YearsFilter
                 releaseYears={releaseYears}
                 setReleaseYears={setReleaseYears}
-                updateMovies={updateMovies}
               />
-              <GenresFilter
-                genres={genres}
-                setGenres={setGenres}
-                updateMovies={updateMovies}
-              />
+              <GenresFilter genres={genres} setGenres={setGenres} />
               <UserRatingFilter
                 userRating={userRating}
                 setUserRating={setUserRating}
-                updateMovies={updateMovies}
               />
             </div>
             <div
