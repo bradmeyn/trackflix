@@ -89,7 +89,7 @@ export const getMoviesByYear = async (
   }
 };
 
-interface movieParams {
+export interface MovieParams {
   releaseYears: {
     min: number;
     max: number;
@@ -104,7 +104,7 @@ export const getFilteredMovies = async ({
   genres,
   page,
   userRating,
-}: movieParams) => {
+}: MovieParams) => {
   try {
     const response: AxiosResponse<MovieSearchData> = await movieService.get(
       `discover/movie?${params}&primary_release_date.gte=${min}-01-01&primary_release_date.lte=${max}-12-31&with_genres=${genres.join(

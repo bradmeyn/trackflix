@@ -19,13 +19,12 @@ const Navbar = () => {
           </Link>
           <Link
             href={'/discover'}
-            className={`text-md ml-7 font-semibold  uppercase hover:text-white ${
+            className={`text-md ml-7 font-semibold hover:text-white ${
               router.pathname === '/discover'
                 ? ' text-white '
                 : ' text-slate-400 '
             }`}
           >
-            <FontAwesomeIcon icon={faCameraMovie} className={'mr-2'} />
             Discover
           </Link>
         </div>

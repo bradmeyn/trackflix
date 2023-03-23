@@ -40,14 +40,14 @@ export default function Home() {
           </div>
           <div className='my-8 flex-grow text-center md:my-12'>
             <div className='mb-24'>
-              <h1 className='h-100 mx-auto mb-10 text-6xl font-extrabold text-white md:mb-8 md:text-7xl lg:text-8xl   '>
+              <h1 className='h-100 mx-auto mb-10 text-6xl font-extrabold text-white md:mb-12  md:text-7xl lg:text-8xl   '>
                 <div>Browse less.</div>
                 <div>Watch more.</div>
               </h1>
 
               <div
                 className={
-                  'container mx-auto mb-10 grid max-w-[1200px] grid-cols-5 gap-4 px-5 md:gap-6'
+                  'container mx-auto mb-10 grid max-w-[1000px] grid-cols-5 gap-4 px-5 md:gap-6'
                 }
               >
                 <Image
