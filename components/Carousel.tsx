@@ -14,7 +14,7 @@ export default function Carousel({
 }: {
   carouselData: CarouselData;
 }) {
-  const { title, url, data } = carouselData;
+  const { title, url, data, year } = carouselData;
 
   const [movies, setMovies] = useState(data.results);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +40,7 @@ export default function Carousel({
 
   const getMoreMovies = async () => {
     try {
-      const data = await getMovies(url, currentPage + 1);
+      const data = await getMovies(url, { page: currentPage + 1, year });
 
       setMovies([...movies, ...data.results]);
       setCurrentPage((prev) => prev + 1);
@@ -54,7 +54,6 @@ export default function Carousel({
         carousel.scrollWidth - carousel.clientWidth - carousel.scrollLeft;
       if (scrollRight === 0) {
         getMoreMovies();
-        // Here you can add any code that should be executed when the carousel hits the end
       }
     }
   };
@@ -67,8 +66,7 @@ export default function Carousel({
       <div className='container relative mx-auto'>
         <button
           className={`absolute -left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
-          onClick={handleScrollLeft}
-        >
+          onClick={handleScrollLeft}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <div
@@ -79,8 +77,7 @@ export default function Carousel({
             scrollSnapType: 'x mandatory',
             scrollBehavior: 'smooth',
             WebkitOverflowScrolling: 'touch',
-          }}
-        >
+          }}>
           {movies.map((movie) => (
             <Card
               key={movie.id}
@@ -92,8 +89,7 @@ export default function Carousel({
         </div>
         <button
           className={`absolute -right-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
-          onClick={handleScrollRight}
-        >
+          onClick={handleScrollRight}>
           <FontAwesomeIcon icon={faChevronRight} />
         </button>
       </div>

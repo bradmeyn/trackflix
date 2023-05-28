@@ -1,4 +1,11 @@
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
 import { IMovie } from '@/types/types';
 import { searchMovies } from '@/movieService';
 import useOutsideClick from '../../hooks/useOutsideClick';
@@ -20,9 +27,18 @@ export default function SearchModal() {
     updateScreen();
   }, []);
 
-  const getMovies = async () => {
-    const data = await searchMovies(searchQuery);
-    setMovies(data);
+  const getMovies = useCallback(async () => {
+    if (searchQuery.trim().length > 0) {
+      const data = await searchMovies(searchQuery);
+      setMovies(data);
+    } else {
+      setMovies([]);
+    }
+  }, [searchQuery]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearchQuery(value.trim());
   };
 
   useEffect(() => {
@@ -31,7 +47,7 @@ export default function SearchModal() {
     } else {
       setMovies([]);
     }
-  }, [searchQuery]);
+  }, [searchQuery, getMovies]);
 
   useEffect(() => {
     window.addEventListener('resize', updateScreen);
@@ -46,11 +62,6 @@ export default function SearchModal() {
 
   const focusInput = () => {
     searchInput.current?.focus();
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setSearchQuery(value);
   };
 
   const closeSearch = () => {
@@ -69,13 +80,14 @@ export default function SearchModal() {
           <div ref={searchContainer} className='m-10 md:mx-auto md:max-w-3xl '>
             <div
               className='relative flex flex-1 items-center rounded '
-              onClick={focusInput}
-            >
+              onClick={focusInput}>
               <input
                 autoFocus
                 ref={searchInput}
                 placeholder='Search movies'
-                className='w-full rounded-t-lg bg-slate-700 py-3 pl-12 text-lg text-white outline-0 md:text-xl'
+                className={`w-full bg-slate-700 py-3 pl-12 text-lg text-white outline-0 md:text-xl ${
+                  movies.length > 0 ? 'rounded-t' : 'rounded'
+                }`}
                 onChange={handleChange}
               />
               <FontAwesomeIcon
@@ -84,14 +96,15 @@ export default function SearchModal() {
               />
               <span
                 className='absolute right-4 z-50 cursor-pointer text-xl text-white'
-                onClick={closeSearch}
-              ></span>
+                onClick={closeSearch}></span>
             </div>
-            {movies.length > 0 ? (
+            {movies?.length > 0 ? (
               <SearchDropdown movies={movies} closeSearch={closeSearch} />
-            ) : (
-              ''
-            )}
+            ) : movies.length === 0 && searchQuery.trim() !== '' ? (
+              <div className='rounded-b bg-slate-800 p-3'>
+                <p className=' text-slate-300'>No results found</p>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : (
@@ -99,8 +112,7 @@ export default function SearchModal() {
           {isDesktop ? (
             <button
               className='text-md relative mx-8 flex flex-1 items-center rounded-md bg-slate-700 py-2 px-4 text-slate-300 hover:bg-slate-600 hover:text-white md:max-w-md lg:max-w-xl'
-              onClick={activateSearch}
-            >
+              onClick={activateSearch}>
               <FontAwesomeIcon icon={faMagnifyingGlass} className='mr-3' />
               <span>Search movies</span>
             </button>

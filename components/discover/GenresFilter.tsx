@@ -44,6 +44,7 @@ export default function GenresFilter({ genres, setGenres }: Props) {
 
     setGenres(updatedGenres);
   };
+
   const handleReset = () => {
     const resetGenres: MovieGenreFilter[] = genres.map((genre) => {
       return { ...genre, selected: false };
@@ -59,8 +60,7 @@ export default function GenresFilter({ genres, setGenres }: Props) {
           isActive
             ? 'bg-slate-600 text-white'
             : 'text-slate-300 hover:bg-slate-600 hover:text-white'
-        }`}
-      >
+        }`}>
         <span className='mr-2'>Genres</span>
         <FontAwesomeIcon icon={faChevronDown} />
       </button>
@@ -68,8 +68,7 @@ export default function GenresFilter({ genres, setGenres }: Props) {
         <div
           className={
             'absolute z-10 mt-1 w-96 rounded bg-slate-700 p-5 shadow-lg'
-          }
-        >
+          }>
           <div className='mb-3 flex justify-between'>
             <h4 className='text-xl text-white'>Genres</h4>
             <button onClick={handleReset}>Reset</button>

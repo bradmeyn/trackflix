@@ -1,18 +1,11 @@
 import Head from 'next/head';
-
-import { IMovie } from '@/types/types';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import { getMovies, MovieSearchData, getMoviesByYear } from '@/movieService';
+import { getMovies, MovieData } from '@/movieService';
 import Carousel from '@/components/Carousel';
 import LargeCarousel from '@/components/LargeCarousel';
 const inter = Inter({ subsets: ['latin'] });
-
-interface MoviesByYear {
-  title: string;
-  movies: IMovie[];
-}
 
 export default function Movies({
   carouselData,
@@ -44,70 +37,46 @@ export default function Movies({
 export interface CarouselData {
   title: string;
   url: string;
-  data: MovieSearchData;
+  data: MovieData;
+  year?: number;
 }
 
 export async function getServerSideProps() {
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
-  const params = new URLSearchParams({
-    api_key: API_KEY!,
-    language: 'en-AU',
-  });
-
-  const popularMoviesData = await getMovies('trending/movie/week?', 1);
-  const topRatedMoviesData = await getMovies('movie/top_rated?', 1);
+  const popularMoviesData = await getMovies('trending/movie/week', { page: 1 });
+  const topRatedMoviesData = await getMovies('movie/top_rated', { page: 1 });
 
   const randomYear = Math.floor(Math.random() * 40) + 1970;
-  const randomYearData1 = await getMoviesByYear(randomYear - 10, 1);
-  const randomYearData2 = await getMoviesByYear(randomYear - 5, 1);
-  const randomYearData3 = await getMoviesByYear(randomYear, 1);
-  const randomYearData4 = await getMoviesByYear(randomYear + 5, 1);
-  const randomYearData5 = await getMoviesByYear(randomYear + 10, 1);
+  const years = [
+    randomYear - 10,
+    randomYear - 5,
+    randomYear,
+    randomYear + 5,
+    randomYear + 10,
+  ];
+
+  const randomYearMovies = await Promise.all(
+    years.map((year) =>
+      getMovies('discover/movie', { primary_release_year: year })
+    )
+  );
 
   const carouselData: CarouselData[] = [
     {
       title: 'Popular Now',
-      url: 'trending/movie/week?',
+      url: 'trending/movie/week',
       data: popularMoviesData,
     },
     {
       title: 'All Time Classics',
-      url: 'movie/top_rated?',
+      url: 'movie/top_rated',
       data: topRatedMoviesData,
     },
-    {
-      title: `Best of ${randomYear - 10}`,
-      url: `discover/movie?${params}&primary_release_year=${
-        randomYear - 10
-      }&sort_by=revenue.desc`,
-      data: randomYearData1,
-    },
-    {
-      title: `Best of ${randomYear - 5}`,
-      url: `discover/movie?${params}&primary_release_year=${
-        randomYear - 5
-      }&sort_by=revenue.desc`,
-      data: randomYearData2,
-    },
-    {
-      title: `Best of ${randomYear}`,
-      url: `discover/movie?${params}&primary_release_year=${randomYear}&sort_by=revenue.desc`,
-      data: randomYearData3,
-    },
-    {
-      title: `Best of ${randomYear + 5}`,
-      url: `discover/movie?${params}&primary_release_year=${
-        randomYear + 5
-      }&sort_by=revenue.desc`,
-      data: randomYearData4,
-    },
-    {
-      title: `Best of ${randomYear + 10}`,
-      url: `discover/movie?${params}&primary_release_year=${
-        randomYear + 10
-      }&sort_by=revenue.desc`,
-      data: randomYearData5,
-    },
+    ...randomYearMovies.map((data, i) => ({
+      title: `Best of ${years[i]}`,
+      url: `discover/movie&primary_release_year=${years[i]}`,
+      data,
+      year: years[i],
+    })),
   ];
 
   return {

@@ -47,8 +47,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
           isActive
             ? 'bg-slate-600 text-white'
             : 'text-slate-300 hover:bg-slate-600 hover:text-white'
-        }`}
-      >
+        }`}>
         <span className='mr-2'>Release Year</span>
         <FontAwesomeIcon icon={faChevronDown} />
       </button>
@@ -56,8 +55,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
         <div
           className={
             'absolute z-10 mt-1 w-96 rounded bg-slate-700 p-5 shadow-lg'
-          }
-        >
+          }>
           <div className='mb-3 flex justify-between'>
             <h4 className='text-xl text-white'>Release Year</h4>
             <button onClick={handleReset}>Reset</button>
@@ -71,8 +69,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
                 max='2023'
                 step='1'
                 value={yearRange[0]}
-                onChange={handleYearChange}
-              ></input>
+                onChange={handleYearChange}></input>
               <span>{yearRange[0]}</span>
             </div>
             <div className='flex justify-between'>
@@ -83,8 +80,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
                 max='2023'
                 step='1'
                 value={yearRange[1]}
-                onChange={handleEndYearChange}
-              ></input>
+                onChange={handleEndYearChange}></input>
               <span>{yearRange[1]}</span>
             </div>
           </div>

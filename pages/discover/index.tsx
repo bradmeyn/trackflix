@@ -2,94 +2,120 @@ import Head from 'next/head';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
-import {
-  getMovies,
-  MovieSearchData,
-  getFilteredMovies,
-  MovieParams,
-} from '@/movieService';
+import { getMovies, MovieData } from '@/movieService';
 import DiscoverCard from '@/components/discover/DiscoverCard';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import YearsFilter from '@/components/discover/YearsFilter';
 import GenresFilter from '@/components/discover/GenresFilter';
 import movieGenres from '@/utils/movieGenres';
 import UserRatingFilter from '@/components/discover/UserRatingFilter';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { IMovie } from '@/types/types';
 
 const inter = Inter({ subsets: ['latin'] });
+
+interface MovieParams {
+  releaseYears: {
+    min: number;
+    max: number;
+  };
+  genres: number[];
+  userRating: number;
+  page: string | number;
+}
 
 export default function Discover({
   popularMoviesData,
 }: {
-  popularMoviesData: MovieSearchData;
+  popularMoviesData: MovieData;
 }) {
-  const [movies, setMovies] = useState(popularMoviesData?.results);
+  const [movies, setMovies] = useState<IMovie[]>(popularMoviesData.results);
   const [genres, setGenres] = useState(movieGenres);
   const [userRating, setUserRating] = useState(0);
   const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [isFetching, setIsFetching] = useState(false);
+
   const gridRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     updateMovies();
   }, [genres, userRating, releaseYears]);
-  const [isFetching, setIsFetching] = useState(false);
 
-  const getMoreMovies = async () => {
-    try {
-      const selectedGenres = genres
-        .filter((genre) => genre.selected)
-        .map((genre) => genre.id);
-      const params: MovieParams = {
-        releaseYears,
-        genres: selectedGenres,
-        page: currentPage + 1,
-        userRating,
-      };
-
-      const movieData = await getFilteredMovies(params);
-      setMovies([...movies, ...movieData.results]);
-      setCurrentPage((prev) => prev + 1);
-    } catch (e) {}
-  };
-
+  // Update movies when user changes filters
   const updateMovies = async () => {
+    console.log('updating movies...');
     const selectedGenres = genres
       .filter((genre) => genre.selected)
       .map((genre) => genre.id);
-    const data = await getFilteredMovies({
+
+    const params: MovieParams = {
       releaseYears,
       genres: selectedGenres,
-      page: currentPage,
+      page: currentPage + 1,
       userRating,
-    });
+    };
+
+    const data = await getMovies('discover/movie', params);
 
     setCurrentPage(data.page);
     setMovies([...data.results]);
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const firstEntry = entries[0];
-        if (firstEntry.isIntersecting) {
-          getMoreMovies();
-        }
-      },
-      { threshold: 1.0 }
-    );
+  // Load more movies when user scrolls to bottom of page
+  const getMoreMovies = useCallback(async () => {
+    if (!isFetching) {
+      try {
+        setIsFetching(true);
+        console.log('getting more movies...');
 
-    if (loadMoreRef.current) {
-      observer.observe(loadMoreRef.current);
-    }
+        const selectedGenres = genres
+          .filter((genre) => genre.selected)
+          .map((genre) => genre.id);
 
-    return () => {
-      if (loadMoreRef.current) {
-        observer.unobserve(loadMoreRef.current);
+        const params: MovieParams = {
+          releaseYears,
+          genres: selectedGenres,
+          page: currentPage + 1,
+          userRating,
+        };
+
+        const movieData = await getMovies('discover/movie', params);
+
+        setMovies((prevMovies) => [...prevMovies, ...movieData.results]);
+        setCurrentPage((prev) => prev + 1);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setIsFetching(false);
       }
-    };
-  }, [loadMoreRef, getMoreMovies]);
+    }
+  }, [genres, userRating, releaseYears, currentPage]);
+
+  // // Infinite scroll
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       const firstEntry = entries[0];
+  //       if (firstEntry.isIntersecting) {
+  //         getMoreMovies();
+  //       }
+  //     },
+  //     { threshold: 1.0 }
+  //   );
+
+  //   if (loadMoreRef.current) {
+  //     observer.observe(loadMoreRef.current);
+  //   }
+
+  //   const currentGridRef = gridRef.current;
+  //   return () => {
+  //     if (currentGridRef) {
+  //       observer.unobserve(currentGridRef);
+  //     }
+  //   };
+  // }, [loadMoreRef, getMoreMovies]);
 
   return (
     <>
@@ -113,25 +139,28 @@ export default function Discover({
             </div>
             <div
               className='relative mb-10 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7'
-              ref={gridRef}
-            >
-              {movies.map((movie) => (
+              ref={gridRef}>
+              {movies?.map((movie, i) => (
                 <DiscoverCard
-                  key={movie.id}
+                  key={i}
                   id={movie.id}
                   title={movie.title}
                   poster={movie.poster_path}
                 />
               ))}
             </div>
-            <button
-              ref={loadMoreRef}
-              className='load-more-btn mx-auto block rounded-md bg-slate-600 p-2 text-white'
-              onClick={getMoreMovies}
-            >
-              <span className='mr-2'>Load more</span>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
+            {isFetching ? (
+              <div>Loading...</div>
+            ) : (
+              movies?.length > 0 && (
+                <button
+                  ref={loadMoreRef}
+                  className='load-more-btn mx-auto block rounded-md bg-slate-600 p-2 px-5 text-white'
+                  onClick={getMoreMovies}>
+                  Load More
+                </button>
+              )
+            )}
           </div>
         </main>
         <Footer />
@@ -141,7 +170,7 @@ export default function Discover({
 }
 
 export async function getServerSideProps() {
-  const popularMoviesData = await getMovies('trending/movie/week?', 1);
+  const popularMoviesData = await getMovies('movie/popular', { page: 1 });
   return {
     props: { popularMoviesData },
   };

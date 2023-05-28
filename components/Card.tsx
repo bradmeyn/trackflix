@@ -22,14 +22,13 @@ const Card = ({
         href={`/movies/${id}`}
         className={
           'card-shadow relative w-28 rounded-md transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:outline hover:outline-4 md:w-36 lg:w-48  xl:w-52'
-        }
-      >
+        }>
         <Image
           loader={() => src}
           placeholder='blur'
           blurDataURL={src}
           height='0'
-          width='0'
+          width={200}
           sizes='100vw'
           className='h-auto w-full rounded'
           src={src}

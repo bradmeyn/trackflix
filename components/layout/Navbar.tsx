@@ -18,13 +18,21 @@ const Navbar = () => {
             <Image src={logo} alt='' className='w-24 md:w-32' />
           </Link>
           <Link
+            href={'/movies'}
+            className={`text-md ml-7 font-semibold hover:text-white ${
+              router.pathname === '/movies'
+                ? ' text-white '
+                : ' text-slate-400 '
+            }`}>
+            Movies
+          </Link>
+          <Link
             href={'/discover'}
             className={`text-md ml-7 font-semibold hover:text-white ${
               router.pathname === '/discover'
                 ? ' text-white '
                 : ' text-slate-400 '
-            }`}
-          >
+            }`}>
             Discover
           </Link>
         </div>

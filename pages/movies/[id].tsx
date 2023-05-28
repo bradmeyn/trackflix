@@ -29,8 +29,7 @@ export default function MovieDetail({ movie }: { movie: IMovie }) {
               className='bg-cover bg-top bg-no-repeat py-10 px-6 text-left md:py-20'
               style={{
                 backgroundImage: `linear-gradient(rgba(16, 23, 42, 0.8), rgba(16, 23, 42, 0.8)), url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
-              }}
-            >
+              }}>
               <div className='container mx-auto flex flex-col justify-start gap-4 md:gap-8 lg:flex-row lg:items-start'>
                 <div className='mx-auto'>
                   <Image
