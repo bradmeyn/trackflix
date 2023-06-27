@@ -4,12 +4,13 @@ import Footer from '@/components/layout/Footer';
 import { Inter } from '@next/font/google';
 import { getMovies, MovieData } from '@/movieService';
 import DiscoverCard from '@/components/discover/DiscoverCard';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import YearsFilter from '@/components/discover/YearsFilter';
 import GenresFilter from '@/components/discover/GenresFilter';
 import movieGenres from '@/utils/movieGenres';
 import UserRatingFilter from '@/components/discover/UserRatingFilter';
 import { IMovie } from '@/types/types';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,89 +34,54 @@ export default function Discover({
   const [userRating, setUserRating] = useState(0);
   const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
   const [currentPage, setCurrentPage] = useState(1);
-
   const [isFetching, setIsFetching] = useState(false);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    updateMovies();
-  }, [genres, userRating, releaseYears]);
+  const selectedGenres = useMemo(
+    () => genres.filter((genre) => genre.selected).map((genre) => genre.id),
+    [genres]
+  );
 
-  // Update movies when user changes filters
-  const updateMovies = async () => {
-    console.log('updating movies...');
-    const selectedGenres = genres
-      .filter((genre) => genre.selected)
-      .map((genre) => genre.id);
+  const updateMovies = useCallback(
+    async (appendMovies = false) => {
+      console.log('updating movies...');
+      const selectedGenres = genres
+        .filter((genre) => genre.selected)
+        .map((genre) => genre.id);
 
-    const params: MovieParams = {
-      releaseYears,
-      genres: selectedGenres,
-      page: currentPage + 1,
-      userRating,
-    };
-
-    const data = await getMovies('discover/movie', params);
-
-    setCurrentPage(data.page);
-    setMovies([...data.results]);
-  };
-
-  // Load more movies when user scrolls to bottom of page
-  const getMoreMovies = useCallback(async () => {
-    if (!isFetching) {
+      const params: MovieParams = {
+        releaseYears,
+        genres: selectedGenres,
+        page: currentPage + 1,
+        userRating,
+      };
       try {
-        setIsFetching(true);
-        console.log('getting more movies...');
+        const data = await getMovies('discover/movie', params);
 
-        const selectedGenres = genres
-          .filter((genre) => genre.selected)
-          .map((genre) => genre.id);
-
-        const params: MovieParams = {
-          releaseYears,
-          genres: selectedGenres,
-          page: currentPage + 1,
-          userRating,
-        };
-
-        const movieData = await getMovies('discover/movie', params);
-
-        setMovies((prevMovies) => [...prevMovies, ...movieData.results]);
-        setCurrentPage((prev) => prev + 1);
+        if (appendMovies) {
+          setMovies((prevMovies) => [...prevMovies, ...data.results]);
+          setCurrentPage((prev) => prev + 1);
+        } else {
+          setCurrentPage(data.page);
+          setMovies([...data.results]);
+        }
       } catch (e) {
         console.error(e);
       } finally {
         setIsFetching(false);
       }
-    }
-  }, [genres, userRating, releaseYears, currentPage]);
+    },
+    [userRating, releaseYears, currentPage, genres]
+  );
 
-  // // Infinite scroll
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       const firstEntry = entries[0];
-  //       if (firstEntry.isIntersecting) {
-  //         getMoreMovies();
-  //       }
-  //     },
-  //     { threshold: 1.0 }
-  //   );
+  useInfiniteScroll(gridRef, () => updateMovies(true));
 
-  //   if (loadMoreRef.current) {
-  //     observer.observe(loadMoreRef.current);
-  //   }
-
-  //   const currentGridRef = gridRef.current;
-  //   return () => {
-  //     if (currentGridRef) {
-  //       observer.unobserve(currentGridRef);
-  //     }
-  //   };
-  // }, [loadMoreRef, getMoreMovies]);
+  useEffect(() => {
+    updateMovies();
+    console.log('useEffect');
+  }, [selectedGenres, userRating, releaseYears]);
 
   return (
     <>
@@ -156,7 +122,7 @@ export default function Discover({
                 <button
                   ref={loadMoreRef}
                   className='load-more-btn mx-auto block rounded-md bg-slate-600 p-2 px-5 text-white'
-                  onClick={getMoreMovies}>
+                  onClick={() => updateMovies(true)}>
                   Load More
                 </button>
               )
