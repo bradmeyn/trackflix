@@ -76,7 +76,7 @@ export default function Discover({
     [userRating, releaseYears, currentPage, genres]
   );
 
-  useInfiniteScroll(gridRef, () => updateMovies(true));
+  // useInfiniteScroll(gridRef, () => updateMovies(true));
 
   useEffect(() => {
     updateMovies();
