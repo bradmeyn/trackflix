@@ -144,13 +144,10 @@ type MovieStaticProps = {
   movie: IMovie;
 };
 
-type MovieId = { id: string };
-
-export const getServerSideProps: GetServerSideProps<
-  MovieStaticProps,
-  MovieId
-> = async (context) => {
-  const id = context.params!.id;
+export const getServerSideProps: GetServerSideProps<MovieStaticProps> = async (
+  context
+) => {
+  const id = context.params!.id as string;
   const response = await getMovie(id);
   const movie = response.data;
 
