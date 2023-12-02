@@ -30,7 +30,7 @@ export const getMovies = async (
     return response.data;
   } catch (error) {
     console.log(error);
-    throw new Error('Failed to fetch movies.');
+    
   }
 };
 
@@ -42,7 +42,7 @@ export const getMovie = async (movieId: string | number) => {
     return response;
   } catch (error) {
     console.log(error);
-    throw new Error('Failed to fetch movie.');
+    
   }
 };
 
