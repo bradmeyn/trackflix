@@ -1,17 +1,21 @@
-import { IMovie } from '@/types/types';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MouseEvent, useEffect, useState } from 'react';
+import { MovieResult } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
+import { MouseEvent, useEffect, useState } from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
-} from '@fortawesome/pro-regular-svg-icons';
+} from "@fortawesome/pro-regular-svg-icons";
 
-import { faStar } from '@fortawesome/pro-solid-svg-icons';
+import { faStar } from "@fortawesome/pro-solid-svg-icons";
 
-export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
+type Props = {
+  movies: MovieResult[];
+};
+
+export default function Banner({ movies }: Props) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
 
   const moveLeft = (e?: MouseEvent<HTMLButtonElement>) => {
@@ -42,8 +46,8 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
 
   return (
     <>
-      <div className='px-3'>
-        <div className='custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]'>
+      <div className="px-3">
+        <div className="custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]">
           {movies.map((movie, i) => (
             <Link
               key={movie.id}
@@ -54,42 +58,42 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                 transform: `translateX(-${featuredIndex * 100}%)`,
               }}
             >
-              <div className='flex h-full items-center justify-between'>
+              <div className="flex h-full items-center justify-between">
                 {featuredIndex !== 0 ? (
                   <button
-                    className='z-10 h-full  p-3 text-slate-400 hover:text-white md:p-5'
+                    className="z-10 h-full  p-3 text-slate-400 hover:text-white md:p-5"
                     onClick={moveLeft}
                   >
                     <FontAwesomeIcon
                       icon={faChevronLeft}
-                      className='text-lg md:text-4xl'
+                      className="text-lg md:text-4xl"
                     />
                   </button>
                 ) : (
-                  <div className='p-3 md:p-5'>
+                  <div className="p-3 md:p-5">
                     <FontAwesomeIcon
                       icon={faChevronLeft}
-                      className='h-full text-lg text-transparent md:text-4xl'
+                      className="h-full text-lg text-transparent md:text-4xl"
                     />
                   </div>
                 )}
 
-                <div className='flex w-full '>
+                <div className="flex w-full ">
                   <Image
-                    className=' w-[100px] rounded  md:w-[150px]  lg:w-[200px] xl:ml-6'
+                    className=" w-[100px] rounded  md:w-[150px]  lg:w-[200px] xl:ml-6"
                     src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                     priority
                     width={200}
                     height={100}
                     unoptimized
-                    alt={movie.title ?? ''}
+                    alt={movie.title ?? ""}
                   />
 
                   <div
                     className={`transition-[opacity,transform] duration-1000 ease-in-out xl:ml-5 ${
                       featuredIndex === i
-                        ? 'translate-x-8 opacity-100'
-                        : 'opacity-0'
+                        ? "translate-x-8 opacity-100"
+                        : "opacity-0"
                     }`}
                   >
                     <h1
@@ -98,18 +102,18 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                       {movie.title}
                     </h1>
 
-                    <div className='text-md flex items-center md:text-2xl '>
+                    <div className="text-md flex items-center md:text-2xl ">
                       <FontAwesomeIcon
                         icon={faStar}
-                        className='mr-2 text-yellow-400'
+                        className="mr-2 text-yellow-400"
                       />
-                      <span className='text-white'>
+                      <span className="text-white">
                         {movie.vote_average.toFixed(1)}
                       </span>
                     </div>
                   </div>
                 </div>
-                <ul className='absolute bottom-3 left-1/2 hidden -translate-x-1/2 transform md:flex'>
+                <ul className="absolute bottom-3 left-1/2 hidden -translate-x-1/2 transform md:flex">
                   {movies.map((movie, i) => (
                     <li key={movie.id}>
                       <button
@@ -119,7 +123,7 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                           setFeaturedIndex(i);
                         }}
                         className={`mx-2 rounded-full  p-[5px] hover:bg-slate-100 ${
-                          featuredIndex === i ? 'bg-slate-100' : 'bg-slate-500'
+                          featuredIndex === i ? "bg-slate-100" : "bg-slate-500"
                         }`}
                       ></button>
                     </li>
@@ -128,18 +132,18 @@ export default function LargeCarousel({ movies }: { movies: IMovie[] }) {
                 {featuredIndex !== movies.length - 1 ? (
                   <button
                     onClick={moveRight}
-                    className='z-10 h-full p-3 text-slate-400 hover:text-white md:p-5'
+                    className="z-10 h-full p-3 text-slate-400 hover:text-white md:p-5"
                   >
                     <FontAwesomeIcon
                       icon={faChevronRight}
-                      className='text-lg md:text-4xl'
+                      className="text-lg md:text-4xl"
                     />
                   </button>
                 ) : (
-                  <div className='p-3 md:p-5'>
+                  <div className="p-3 md:p-5">
                     <FontAwesomeIcon
                       icon={faChevronRight}
-                      className='h-full text-lg text-transparent md:text-4xl'
+                      className="h-full text-lg text-transparent md:text-4xl"
                     />
                   </div>
                 )}

@@ -6,7 +6,7 @@ import SearchModal from "../Search/SearchModal";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Navbar = () => {
+export default function Header() {
   const router = useRouter();
 
   return (
@@ -43,6 +43,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

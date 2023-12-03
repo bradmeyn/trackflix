@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/layout/Header.";
 import Footer from "@/components/layout/Footer";
-import { Inter } from "@next/font/google";
+
 import { getMovies, MovieData } from "@/movieService";
 import DiscoverCard from "@/components/discover/DiscoverCard";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -9,12 +9,9 @@ import YearsFilter from "@/components/discover/YearsFilter";
 import GenresFilter from "@/components/discover/GenresFilter";
 import movieGenres from "@/utils/movieGenres";
 import UserRatingFilter from "@/components/discover/UserRatingFilter";
-import { IMovie } from "@/types/types";
-import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { MovieResult } from "@/types/types";
 
-const inter = Inter({ subsets: ["latin"] });
-
-interface MovieParams {
+type MovieParams = {
   releaseYears: {
     min: number;
     max: number;
@@ -22,14 +19,16 @@ interface MovieParams {
   genres: number[];
   userRating: number;
   page: string | number;
-}
+};
 
 export default function Discover({
   popularMoviesData,
 }: {
   popularMoviesData: MovieData;
 }) {
-  const [movies, setMovies] = useState<IMovie[]>(popularMoviesData.results);
+  const [movies, setMovies] = useState<MovieResult[]>(
+    popularMoviesData.results
+  );
   const [genres, setGenres] = useState(movieGenres);
   const [userRating, setUserRating] = useState(0);
   const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
@@ -60,12 +59,14 @@ export default function Discover({
       try {
         const data = await getMovies("discover/movie", params);
 
-        if (appendMovies) {
-          setMovies((prevMovies) => [...prevMovies, ...data.results]);
-          setCurrentPage((prev) => prev + 1);
-        } else {
-          setCurrentPage(data.page);
-          setMovies([...data.results]);
+        if (data) {
+          if (appendMovies) {
+            setMovies((prevMovies) => [...prevMovies, ...data.results]);
+            setCurrentPage((prev) => prev + 1);
+          } else {
+            setCurrentPage(data.page);
+            setMovies([...data.results]);
+          }
         }
       } catch (e) {
         console.error(e);

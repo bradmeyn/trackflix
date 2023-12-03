@@ -1,11 +1,11 @@
 export interface APIResponse {
   page: number;
-  results: IMovie[];
+  results: MovieResult[];
   total_pages: number;
   total_results: number;
 }
 
-export interface IMovie {
+export interface MovieResult {
   adult: boolean;
   backdrop_path?: string;
   belongs_to_collection: ICollection;

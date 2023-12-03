@@ -5,17 +5,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import Card from "./Card";
-import { CarouselData } from "@/pages/movies";
 import { getMovies } from "@/movieService";
+import { CarouselData } from "@/pages/index";
 
-export default function Carousel({
-  carouselData,
-}: {
+type Props = {
   carouselData: CarouselData;
-}) {
+};
+
+export default function Carousel({ carouselData }: Props) {
   const { title, url, data, year } = carouselData;
 
-  const [movies, setMovies] = useState(data.results);
+  const [movies, setMovies] = useState(data?.results ?? []);
   const [currentPage, setCurrentPage] = useState(1);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -40,8 +40,7 @@ export default function Carousel({
   const getMoreMovies = async () => {
     try {
       const data = await getMovies(url, { page: currentPage + 1, year });
-
-      setMovies([...movies, ...data.results]);
+      setMovies([...movies, ...(data?.results ?? [])]);
       setCurrentPage((prev) => prev + 1);
     } catch (e) {}
   };
@@ -58,11 +57,9 @@ export default function Carousel({
   };
 
   return (
-    <div className="p-3">
-      <h2 className="container mx-auto text-lg font-bold text-white md:text-2xl">
-        {title}
-      </h2>
-      <div className="container relative mx-auto">
+    <div className="container mx-auto">
+      <h2 className="text-lg font-bold text-white md:text-xl">{title}</h2>
+      <div className="relative">
         <button
           className={`absolute -left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
           onClick={handleScrollLeft}
