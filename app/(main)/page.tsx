@@ -1,6 +1,6 @@
 import { getMovies, MovieData } from "@/movieService";
-import Carousel from "@/app/components/Carousel";
-import Banner from "@/app/components/Banner";
+import Carousel from "@/app/(main)/Carousel";
+import Banner from "@/app/(main)/Banner";
 
 export type CarouselData = {
   title: string;

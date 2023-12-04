@@ -1,12 +1,12 @@
 "use client";
 
 import { getMovies, MovieData } from "@/movieService";
-import DiscoverCard from "@/app/movies/DiscoverCard";
+import DiscoverCard from "@/app/(main)/movies/DiscoverCard";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import YearsFilter from "@/app/movies/YearsFilter";
-import GenresFilter from "@/app/movies/GenresFilter";
+import YearsFilter from "@/app/(main)/movies/YearsFilter";
+import GenresFilter from "@/app/(main)/movies/GenresFilter";
 import movieGenres from "@/utils/movieGenres";
-import UserRatingFilter from "@/app/movies/UserRatingFilter";
+import UserRatingFilter from "@/app/(main)/movies/UserRatingFilter";
 import { MovieResult } from "@/types/types";
 
 type Props = {
