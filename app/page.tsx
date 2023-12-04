@@ -1,6 +1,13 @@
 import { getMovies, MovieData } from "@/movieService";
-import Carousel from "@/components/Carousel";
-import Banner from "@/components/Banner";
+import Carousel from "@/app/components/Carousel";
+import Banner from "@/app/components/Banner";
+
+export type CarouselData = {
+  title: string;
+  url: string;
+  data?: MovieData;
+  year?: number;
+};
 
 export async function getData() {
   const popularMoviesData = await getMovies("trending/movie/week", { page: 1 });
@@ -40,18 +47,11 @@ export async function getData() {
   return carouselData;
 }
 
-export type CarouselData = {
-  title: string;
-  url: string;
-  data?: MovieData;
-  year?: number;
-};
-
 export default async function HomePage() {
   const carouselData = await getData();
 
   return (
-    <main className={"flex grow flex-col "}>
+    <main className="grow">
       <Banner movies={carouselData[0]?.data?.results ?? []} />
       {carouselData.map((collection) => (
         <Carousel key={collection.title} carouselData={collection} />

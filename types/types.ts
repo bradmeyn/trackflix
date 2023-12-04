@@ -1,20 +1,20 @@
-export interface APIResponse {
+export type APIResponse = {
   page: number;
   results: MovieResult[];
   total_pages: number;
   total_results: number;
-}
+};
 
-export interface MovieResult {
+export type MovieResult = {
   adult: boolean;
   backdrop_path?: string;
-  belongs_to_collection: ICollection;
+  belongs_to_collection: Collection;
   budget: number;
   credits: {
-    cast: ICast[];
-    crew: ICrew[];
+    cast: Cast[];
+    crew: Crew[];
   };
-  genres: IGenre[];
+  genres: Genre[];
   genre_ids: number[];
   homepage: string;
   id: number;
@@ -37,16 +37,16 @@ export interface MovieResult {
   vote_average: number;
   vote_count: number;
   media_type: string;
-}
+};
 
-interface ICollection {
+type Collection = {
   id: number;
   name: string;
   poster_path: string;
   backdrop_path: string;
-}
+};
 
-interface ICast {
+type Cast = {
   adult: boolean;
   gender: number;
   id: number;
@@ -59,9 +59,9 @@ interface ICast {
   character: string;
   credit_id: string;
   order: number;
-}
+};
 
-interface ICrew {
+type Crew = {
   adult: boolean;
   gender: number;
   id: number;
@@ -73,9 +73,9 @@ interface ICrew {
   credit_id: string;
   department: string;
   job: string;
-}
+};
 
-interface IGenre {
+interface Genre {
   id: number;
   name: string;
 }
@@ -85,14 +85,14 @@ interface Language {
   iso_639_1: string;
   name: string;
 }
-interface ProductionCompany {
+type ProductionCompany = {
   id: number;
   logo_path: string;
   name: string;
   origin_country: string;
-}
+};
 
-interface ProductionCountry {
+type ProductionCountry = {
   iso_3166_1: string;
   name: string;
-}
+};

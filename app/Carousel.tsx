@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import Card from "./Card";
 import { getMovies } from "@/movieService";
-import { CarouselData } from "@/types/types";
+import type { CarouselData } from "@/app/page";
 
 type Props = {
   carouselData: CarouselData;

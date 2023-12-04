@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="bg-slate-900 p-3  ">
       <div className="container mx-auto flex w-full items-center justify-between md:justify-between">
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-2 md:gap-6">
           <Link href={"/"}>
             <Image
               src={logo}
