@@ -1,7 +1,3 @@
-import Head from "next/head";
-import Navbar from "@/components/layout/Header.";
-import Footer from "@/components/layout/Footer";
-
 import { getMovies, MovieData } from "@/movieService";
 import DiscoverCard from "@/components/discover/DiscoverCard";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -21,11 +17,13 @@ type MovieParams = {
   page: string | number;
 };
 
-export default function Discover({
+export default function Page({
   popularMoviesData,
 }: {
   popularMoviesData: MovieData;
 }) {
+  const popularMoviesData = await getMovies("movie/popular", { page: 1 });
+
   const [movies, setMovies] = useState<MovieResult[]>(
     popularMoviesData.results
   );
@@ -86,11 +84,6 @@ export default function Discover({
 
   return (
     <>
-      <Head>
-        <title>Watchflix | Discover</title>
-      </Head>
-
-      <Navbar />
       <main className={"flex grow flex-col "}>
         <div className="container mx-auto my-10 px-5">
           <div className="mb-3 flex gap-2">
@@ -132,14 +125,6 @@ export default function Discover({
           )}
         </div>
       </main>
-      <Footer />
     </>
   );
-}
-
-export async function getServerSideProps() {
-  const popularMoviesData = await getMovies("movie/popular", { page: 1 });
-  return {
-    props: { popularMoviesData },
-  };
 }

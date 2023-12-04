@@ -1,15 +1,15 @@
+"use client";
 import { MovieResult } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/pro-solid-svg-icons";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/pro-regular-svg-icons";
-
-import { faStar } from "@fortawesome/pro-solid-svg-icons";
 
 type Props = {
   movies: MovieResult[];

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   faChevronLeft,
   faChevronRight,
@@ -6,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
 import Card from "./Card";
 import { getMovies } from "@/movieService";
-import { CarouselData } from "@/pages/index";
+import { CarouselData } from "@/types/types";
 
 type Props = {
   carouselData: CarouselData;
@@ -57,8 +59,8 @@ export default function Carousel({ carouselData }: Props) {
   };
 
   return (
-    <div className="container mx-auto">
-      <h2 className="text-lg font-bold text-white md:text-xl">{title}</h2>
+    <div className="container mx-auto mb-2">
+      <h2 className="px-2 text-lg font-bold text-white md:text-xl">{title}</h2>
       <div className="relative">
         <button
           className={`absolute -left-3 top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 rounded-full bg-slate-800 text-slate-400 hover:text-white md:block`}
@@ -67,7 +69,7 @@ export default function Carousel({ carouselData }: Props) {
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <div
-          className="no-scroll-bar container relative mx-auto grid touch-pan-x grid-flow-col gap-4 overflow-hidden overflow-y-auto overflow-x-scroll p-2 py-4 transition-transform duration-500 ease-in-out md:gap-6"
+          className="no-scroll-bar container relative mx-auto grid touch-pan-x grid-flow-col gap-4 overflow-hidden overflow-y-auto overflow-x-scroll p-2 transition-transform duration-500 ease-in-out md:gap-6"
           ref={carouselRef}
           onScroll={handleCarouselEnd}
           style={{

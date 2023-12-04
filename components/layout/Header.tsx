@@ -4,43 +4,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/pro-light-svg-icons";
 import SearchModal from "../Search/SearchModal";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function Header() {
-  const router = useRouter();
-
   return (
-    <nav className="bg-slate-900 p-3  ">
+    <header className="bg-slate-900 p-3  ">
       <div className="container mx-auto flex w-full items-center justify-between md:justify-between">
-        <div className="flex items-center">
+        <nav className="flex items-center gap-4">
           <Link href={"/"}>
-            <Image src={logo} alt="" className="w-24 md:w-32" />
+            <Image
+              src={logo}
+              alt="Watchedflix logo"
+              width={100}
+              height={50}
+              priority
+            />
           </Link>
           <Link
             href={"/"}
-            className={`text-md ml-7 font-semibold hover:text-white ${
-              router.pathname === "/" ? " text-white " : " text-slate-400 "
-            }`}
+            className={`text-md font-semibold text-slate-400 hover:text-white `}
           >
             Home
           </Link>
           <Link
             href={"/movies"}
-            className={`text-md ml-7 font-semibold hover:text-white ${
-              router.pathname === "/movies"
-                ? " text-white "
-                : " text-slate-400 "
-            }`}
+            className={`text-md font-semibold text-slate-400 hover:text-white `}
           >
             Discover
           </Link>
-        </div>
-
+        </nav>
         <SearchModal />
         <a className="flex items-center align-middle hover:text-white">
-          <FontAwesomeIcon icon={faCircleUser} className="mr-2  text-xl" />
+          <FontAwesomeIcon icon={faCircleUser} className="text-xl" />
         </a>
       </div>
-    </nav>
+    </header>
   );
 }
