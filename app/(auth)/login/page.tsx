@@ -1,29 +1,55 @@
+import { faCircleExclamation } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from "@/public/logo.png";
-import Image from "next/image";
-import Link from "next/link";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import Footer from "@/components/layout/Footer";
 
 export default function LoginPage() {
   return (
-    <div className="my-8 flex-grow text-center md:my-12">
-      <div className="mb-24">
-        <h1 className="h-100 mx-auto mb-10 text-6xl font-extrabold text-white md:mb-12  md:text-7xl lg:text-8xl   ">
-          <div>Browse less.</div>
-          <div>Watch more.</div>
-        </h1>
+    <div className="mx-auto my-20 h-auto w-full max-w-[30rem] rounded bg-slate-800 p-6 py-12 shadow-2xl">
+      <h1 className="mb-8 text-4xl font-extrabold text-white">Sign Up</h1>
+      <form>
+        <div className="mb-5">
+          <label
+            className="mb-1 block text-sm font-semibold text-slate-200"
+            // htmlFor={id}
+          >
+            Email
+          </label>
+          <input
+            // id={id}
+            // type={type}
+            // placeholder={placeholder}
+            className="flex w-full items-center justify-between rounded border-2 border-slate-600 bg-slate-800 p-3 text-start text-slate-50 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            // {...register}
+          />
+          <small className="mt-1 flex items-center gap-1 text-sm text-red-300">
+            <FontAwesomeIcon icon={faCircleExclamation} />
+            {/* <span>{error}</span> */}
+          </small>
+        </div>
 
-        <p className="container mx-auto mb-10 block max-w-[800px] px-5  text-lg text-slate-200 md:text-2xl">
-          Watchflix is a tool designed to simplify your movie search, so you can
-          spend less time endlessly scrolling on movie night.
-        </p>
-        <Link href="/movies">
-          <button className="rounded-md bg-blue-600 px-5 py-3 text-lg font-semibold hover:bg-blue-500">
-            Get Started
-          </button>
-        </Link>
-      </div>
+        <div className="mb-5">
+          <label
+            className="mb-1 block text-sm font-semibold text-slate-200"
+            // htmlFor={id}
+          >
+            Email
+          </label>
+          <input
+            // id={id}
+            // type={type}
+            // placeholder={placeholder}
+            className="flex w-full items-center justify-between rounded border-2 border-slate-600 bg-slate-800 p-3 text-start text-slate-50 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+            // {...register}
+          />
+          <small className="mt-1 flex items-center gap-1 text-sm text-red-300">
+            <FontAwesomeIcon icon={faCircleExclamation} />
+            {/* <span>{error}</span> */}
+          </small>
+        </div>
+
+        <button className="w-full rounded bg-slate-500 p-4 hover:bg-slate-600">
+          Login
+        </button>
+      </form>
     </div>
   );
 }

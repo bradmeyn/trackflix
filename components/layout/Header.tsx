@@ -5,7 +5,7 @@ import { faCircleUser } from "@fortawesome/pro-light-svg-icons";
 import SearchModal from "../Search/SearchModal";
 import Link from "next/link";
 
-export default function Header() {
+export default function Header({ isAuthenticated = false }) {
   return (
     <header className="bg-slate-900 p-3  ">
       <div className="container mx-auto flex w-full items-center justify-between md:justify-between">
@@ -33,9 +33,19 @@ export default function Header() {
           </Link>
         </nav>
         <SearchModal />
-        <a className="flex items-center align-middle hover:text-white">
-          <FontAwesomeIcon icon={faCircleUser} className="text-xl" />
-        </a>
+
+        {isAuthenticated ? (
+          <a className="flex items-center align-middle hover:text-white">
+            <FontAwesomeIcon icon={faCircleUser} className="text-xl" />
+          </a>
+        ) : (
+          <div className="flex items-center gap-4">
+            <button className="rounded py-2 px-4 text-white">Login</button>
+            <button className="rounded bg-slate-600 py-2 px-4 text-white">
+              Sign Up
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
