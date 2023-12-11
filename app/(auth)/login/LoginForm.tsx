@@ -45,11 +45,23 @@ export default function LoginForm() {
           <FontAwesomeIcon icon={faCircleExclamation} />
           {/* <span>{error}</span> */}
         </small>
-      </div>
 
-      <button className="w-full rounded bg-slate-500 p-4 hover:bg-slate-600">
-        Login
-      </button>
+        <LoginButton />
+      </div>
     </form>
+  );
+}
+
+function LoginButton() {
+  const { pending, data, method, action } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      className="w-full rounded bg-sky-500 py-3 px-4 font-semibold text-white hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500"
+      disabled={pending}
+    >
+      {pending ? "Loading..." : "Sign Up"}
+    </button>
   );
 }
