@@ -6,9 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate:mysql",
+    "db:migrate": "drizzle-kit migrate:mysql",
+    "db:rollback": "drizzle-kit rollback:mysql",
+    "db:introspect": "drizzle-kit introspect:mysql",
+    "db:push": "drizzle-kit push:mysql"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^0.3.11",
     "@fortawesome/fontawesome-common-types": "^6.3.0",
     "@fortawesome/fontawesome-pro": "^6.2.1",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -20,13 +26,17 @@
     "@fortawesome/pro-thin-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@fortawesome/sharp-solid-svg-icons": "^6.2.1",
+    "@neondatabase/serverless": "^0.6.0",
+    "@planetscale/database": "^1.13.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
     "@types/react-slick": "^0.23.10",
     "axios": "^1.2.3",
     "bcrypt": "^5.1.1",
-    "dotenv": "^16.0.3",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.1",
     "eslint": "8.32.0",
     "next": "^14.0.3",
@@ -39,6 +49,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "autoprefixer": "^10.4.13",
     "drizzle-kit": "^0.20.6",
     "eslint-config-next": "^14.0.3",
