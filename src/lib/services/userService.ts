@@ -1,5 +1,5 @@
 import { db } from "@db/index";
-import { users, type User } from "@db/schema";
+import { users, type User, NewUser } from "@db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getUser(email: string): Promise<User | undefined> {
@@ -15,7 +15,7 @@ export async function getUser(email: string): Promise<User | undefined> {
   }
 }
 
-export async function createUser(user: User): Promise<User> {
+export async function createUser(user: NewUser): Promise<User> {
   try {
     const success = await db.insert(users).values(user);
     if (!success) throw new Error("Failed to create user.");

@@ -21,7 +21,7 @@ export default function AuthLayout({
         <header className="container mx-auto p-4">
           <Image src={logo} alt="" className="w-32" />
         </header>
-        <main className={"flex grow flex-col "}>{children}</main>
+        <main className={"flex grow flex-col"}>{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,62 +1,87 @@
 "use client";
 
-import { register } from "@lib/actions";
+import { registerUser } from "@lib/actions";
 // @ts-expect-error
 import { useFormState, useFormStatus } from "react-dom";
+
 import FormField from "../FormField";
 import { SubmitButton } from "../SubmitButton";
-import { FormErrorMessage } from "../FormErrorMessage";
 
-const formFields = [
-  {
-    label: "First name",
-    name: "firstName",
-    type: "text",
-    placeholder: "Brad",
-  },
-  {
-    label: "Last name",
-    name: "lastName",
-    type: "text",
-    placeholder: "Meyn",
-  },
-  {
-    label: "Email",
-    name: "email",
-    type: "email",
-    placeholder: "Enter your email",
-  },
-  {
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "Enter your password",
-  },
-];
+import { FormErrorMessage } from "../FormErrorMessage";
+import { useState } from "react";
+import { signUpSchema } from "@lib/schemas";
 
 export default function SignUpForm() {
+  const [formFields, setFormFields] = useState([
+    {
+      label: "First name",
+      name: "firstName",
+      type: "text",
+      placeholder: "Brad",
+      error: "",
+    },
+    {
+      label: "Last name",
+      name: "lastName",
+      type: "text",
+      placeholder: "Meyn",
+      error: "",
+    },
+    {
+      label: "Email",
+      name: "email",
+      type: "email",
+      placeholder: "Enter your email",
+      error: "",
+    },
+    {
+      label: "Password",
+      name: "password",
+      type: "password",
+      placeholder: "Enter your password",
+      error: "",
+    },
+  ]);
 
-console.log(process.env.DB_URI);
+  // client action for validating form data & submitting to server
+  const submitAction = async (formData: FormData) => {
+    const newUser = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
-  const [errorMessage, dispatch] = useFormState(register, undefined);
+    const validationResult = signUpSchema.safeParse(newUser);
+
+    if (validationResult.success === false) {
+      const errors = validationResult.error.flatten().fieldErrors;
+      // Update formFields with error messages
+      const updatedFormFields = formFields.map((field) => ({
+        ...field,
+        error: errors[field.name] ? errors[field.name].join(", ") : "",
+      }));
+      setFormFields(updatedFormFields);
+      return;
+    }
+
+    await registerUser(newUser);
+  };
+
+  const [errorMessage, dispatch] = useFormState(registerUser, undefined);
   const { pending } = useFormStatus();
   return (
-    <form action={dispatch}>
+    // @ts-expect-error
+    <form action={submitAction}>
       <div className="mb-10 grid grid-cols-2 gap-3">
         {formFields.map((field) => {
           if (field.name === "firstName" || field.name === "lastName") {
-            return (
-              <>
-                <div className="col-span-2 md:col-span-1">
-                  <FormField key={field.name} {...field} />
-                </div>
-              </>
-            );
+            return <></>;
           } else {
             return (
               <>
                 <div className="col-span-2">
-                  <FormField key={field.name} {...field} />
+                  <FormField key={"register-" + field.name} {...field} />
                 </div>
               </>
             );

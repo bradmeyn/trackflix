@@ -1,20 +1,15 @@
 "use client";
 
-import { authenticate } from "@lib/actions";
+import { authenticateUser } from "@lib/actions";
 // @ts-expect-error
 import { useFormState, useFormStatus } from "react-dom";
-import { z } from "zod";
+
 import FormField from "../FormField";
 import { FormErrorMessage } from "../FormErrorMessage";
 import { SubmitButton } from "../SubmitButton";
 
-const loginFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const [errorMessage, dispatch] = useFormState(authenticateUser, undefined);
   const { pending } = useFormStatus();
 
   const formFields = [
@@ -34,16 +29,24 @@ export default function LoginForm() {
 
   return (
     <form action={dispatch}>
-      <div className="mb-10 grid  gap-5">
-        {formFields.map((field) => (
-          <>
-            <FormField key={field.name} {...field} />
-          </>
-        ))}
-      </div>
-      {errorMessage && (
+      <FormField
+        key="email"
+        label="Email"
+        type="email"
+        name="email"
+        placeholder="name@mail.com"
+      />
+      <FormField
+        key="password"
+        label="Password"
+        type="password"
+        name="password"
+        placeholder="********"
+      />
+
+      {errorMessage ? (
         <FormErrorMessage errorMessage={errorMessage as string} />
-      )}
+      ) : null}
       <SubmitButton pending={pending} label={"Login"} />
     </form>
   );

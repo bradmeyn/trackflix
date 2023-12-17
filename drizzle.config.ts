@@ -1,15 +1,15 @@
+import { cwd } from "node:process";
 import type { Config } from "drizzle-kit";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { loadEnvConfig } from "@next/env";
+
+loadEnvConfig(cwd());
 
 export default {
   schema: "./src/db/schema.ts",
-  out: "./drizzle",
+  out: "./src/db/migrations",
   driver: "mysql2",
   dbCredentials: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: "flix",
+    uri: process.env.DATABASE_URL,
   },
+  verbose: true,
 } satisfies Config;

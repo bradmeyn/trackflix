@@ -20,12 +20,12 @@ export const { auth, signIn, signOut } = NextAuth({
       },
 
       async authorize(credentials, req) {
-        const parsedCredentials = z
+        const validationResult = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
+        if (validationResult.success) {
+          const { email, password } = validationResult.data;
           const user = await getUser(email);
           if (!user) return null;
 
@@ -33,7 +33,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
           if (passwordsMatch) return user as any;
         }
-
+        console.log("Failed to authorize user");
         return null;
       },
     }),
