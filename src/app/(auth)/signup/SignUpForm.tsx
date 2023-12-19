@@ -3,6 +3,7 @@
 import { registerUser } from "@lib/actions";
 // @ts-expect-error
 import { useFormState, useFormStatus } from "react-dom";
+import { useEffect } from "react";
 
 import FormField from "../FormField";
 import { SubmitButton } from "../SubmitButton";
@@ -43,6 +44,12 @@ export default function SignUpForm() {
     },
   ]);
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // client action for validating form data & submitting to server
   const submitAction = async (formData: FormData) => {
     const newUser = {
@@ -73,24 +80,24 @@ export default function SignUpForm() {
   return (
     // @ts-expect-error
     <form action={submitAction}>
-      <div className="mb-10 grid grid-cols-2 gap-3">
+      <div className="mb-8 grid gap-4">
         {formFields.map((field) => {
-          if (field.name === "firstName" || field.name === "lastName") {
-            return <></>;
-          } else {
-            return (
-              <>
-                <div className="col-span-2">
-                  <FormField key={"register-" + field.name} {...field} />
-                </div>
-              </>
-            );
-          }
+          const isNameField =
+            field.name === "firstName" || field.name === "lastName";
+          return (
+            <div
+              key={"register-" + field.name}
+              className={`col-span-2 ${isNameField ? "md:col-span-1" : ""}`}
+            >
+              <FormField {...field} />
+            </div>
+          );
         })}
       </div>
-      {errorMessage && (
+
+      {errorMessage ? (
         <FormErrorMessage errorMessage={errorMessage as string} />
-      )}
+      ) : null}
       <SubmitButton pending={pending} label={"Sign Up"} />
     </form>
   );

@@ -1,11 +1,11 @@
-interface Props {
+type Props = {
   label: string;
   name: string;
   type: string;
   placeholder: string;
   register?: any;
   error?: string | null;
-}
+};
 
 export default function FormField({
   label,
@@ -15,7 +15,7 @@ export default function FormField({
   error,
 }: Props) {
   return (
-    <div>
+    <>
       <label
         className="mb-1 block text-sm font-semibold text-slate-200"
         htmlFor={name}
@@ -34,6 +34,6 @@ export default function FormField({
       {error ? (
         <span className="mt-1 text-xs text-red-500">{error}</span>
       ) : null}
-    </div>
+    </>
   );
 }

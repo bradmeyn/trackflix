@@ -73,7 +73,7 @@ export const verificationTokens = mysqlTable(
 export const users = mysqlTable(
   "users",
   {
-    id: int("id").primaryKey().autoincrement().notNull(),
+    id: int("id").primaryKey().autoincrement(),
     firstName: varchar("firstName", { length: 191 }),
     lastName: varchar("lastName", { length: 191 }),
     email: varchar("email", { length: 191 }).notNull(),
@@ -91,19 +91,19 @@ export const users = mysqlTable(
 export type User = typeof users.$inferSelect; // return type when queried
 export type NewUser = typeof users.$inferInsert; // insert type
 
-export const lists = mysqlTable("lists", {
+export const rating = mysqlTable("rating", {
   id: int("id").primaryKey().autoincrement(),
-  name: varchar("name", { length: 255 }).notNull(),
-  movies: int("movies"),
+  rating: int("rating").notNull(),
+  movie_id: int("movie_id").notNull(),
   user_id: int("user_id"),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
 });
 
-export const rating = mysqlTable("rating", {
+export const lists = mysqlTable("lists", {
   id: int("id").primaryKey().autoincrement(),
-  rating: int("rating").notNull(),
-  movie_id: int("movie_id").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  movies: int("movies"),
   user_id: int("user_id"),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),

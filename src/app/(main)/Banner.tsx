@@ -43,11 +43,9 @@ export default function Banner({ movies }: Props) {
     return () => clearInterval(interval);
   }, [featuredIndex, movies.length]);
 
-
-
   return (
     <>
-      <div className="px-3">
+      <div className="px-3 text-white">
         <div className="custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]">
           {movies.map((movie, i) => (
             <Link
@@ -98,7 +96,7 @@ export default function Banner({ movies }: Props) {
                     }`}
                   >
                     <h1
-                      className={`mb-2 max-w-sm pt-1 text-3xl font-bold sm:text-3xl md:pt-4 md:text-4xl  lg:max-w-xl lg:text-6xl  xl:max-w-2xl`}
+                      className={`mb-2 max-w-sm pt-1 text-3xl font-bold text-white sm:text-3xl md:pt-4 md:text-4xl lg:max-w-xl lg:text-6xl  xl:max-w-2xl`}
                     >
                       {movie.title}
                     </h1>

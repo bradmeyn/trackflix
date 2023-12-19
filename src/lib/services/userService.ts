@@ -18,6 +18,7 @@ export async function getUser(email: string): Promise<User | undefined> {
 export async function createUser(user: NewUser): Promise<User> {
   try {
     const success = await db.insert(users).values(user);
+    console.log("User created:", success);
     if (!success) throw new Error("Failed to create user.");
     const newUser = await getUser(user.email);
     return newUser as User;

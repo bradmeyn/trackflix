@@ -36,8 +36,9 @@ export async function registerUser(newUser: unknown) {
       error: "Invalid credentials.",
     };
   }
-  const { firstName, lastName, email, password } = validationResult.data;
 
+  const { firstName, lastName, email, password } = validationResult.data;
+  console.log("New User:", newUser);
   // check if user already exists
   const existingUser: User | null = await getUser(email);
   if (existingUser) {
