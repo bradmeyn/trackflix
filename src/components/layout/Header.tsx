@@ -40,9 +40,8 @@ export default function Header({ isAuthenticated = false }) {
           </a>
         ) : (
           <div className="flex items-center gap-4">
-            <Link href={"/login"} className="rounded py-2 px-4 text-white">Login</Link>
-            <Link href={"/signup"} className="rounded bg-slate-600 py-2 px-4 text-white">
-              Sign Up
+            <Link href={"/signin"} className="rounded py-2 px-4 text-white">
+              Login
             </Link>
           </div>
         )}
