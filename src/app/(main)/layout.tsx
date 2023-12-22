@@ -18,6 +18,10 @@ export default async function RootLayout({
 }) {
   const session = await auth();
   console.log(session?.user);
+
+  if (session?.user) {
+    console.log(session.user.watchlistId);
+  }
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-gradient-to-t from-slate-800 to-slate-900 ">

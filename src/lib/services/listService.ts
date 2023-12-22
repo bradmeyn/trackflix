@@ -68,8 +68,29 @@ export async function updateList(
   }
 }
 
+export async function getWatchlist(userId: string): Promise<List | undefined> {
+  try {
+    const watchlist: List[] = await db
+      .select()
+      .from(lists)
+      .where(eq(lists.name, "Watchlist"))
+      .where(eq(lists.userId, userId))
+      .execute();
+
+    if (watchlist.length === 0) {
+      console.log("Watchlist not found.");
+      return undefined;
+    }
+
+    return watchlist[0];
+  } catch (error) {
+    console.error("Failed to fetch watchlist:", error);
+    throw new Error("Failed to fetch watchlist.");
+  }
+}
+
 export async function addWatchlistItem(
-  movieId: string,
+  movieId: number,
   userId: string
 ): Promise<List> {
   try {
@@ -87,7 +108,22 @@ export async function addWatchlistItem(
       return undefined;
     }
 
-    return list[0];
+    // Add movie to watchlist
+    const success = await db
+      .update(lists)
+      .set({ movies: list[0].movies + 1 })
+      .where(eq(lists.id, list[0].id))
+      .execute();
+
+    if (!success) throw new Error("Failed to update list.");
+
+    const updatedList = await db
+      .select()
+      .from(lists)
+      .where(eq(lists.id, list[0].id))
+      .execute();
+
+    return updatedList[0] as List;
   } catch (error) {
     console.error("Failed to fetch list:", error);
     throw new Error("Failed to fetch list.");
