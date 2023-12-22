@@ -1,4 +1,4 @@
-import { getMovies, MovieData } from "@/src/lib/services/tmdbService";
+import { getMovies, MovieData } from "@/lib/services/tmdbService";
 import ClientPage from "./ClientPage";
 
 export default async function DiscoverPage() {

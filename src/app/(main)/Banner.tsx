@@ -1,14 +1,14 @@
 "use client";
-import { MovieResult } from "@/lib/types";
+import { MovieResult } from "@/lib/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/pro-solid-svg-icons";
+
 import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/pro-regular-svg-icons";
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  StarIcon,
+} from "@heroicons/react/24/solid";
 
 type Props = {
   movies: MovieResult[];
@@ -45,8 +45,8 @@ export default function Banner({ movies }: Props) {
 
   return (
     <>
-      <div className="px-3 text-white">
-        <div className="custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-hidden rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]">
+      <div className="px-3 py-2 text-white">
+        <div className="custom-shadow hover:outline-3 container mx-auto mb-3 flex h-[200px] w-full overflow-clip rounded hover:outline md:mx-auto md:h-[300px] lg:h-[370px]">
           {movies.map((movie, i) => (
             <Link
               key={movie.id}
@@ -63,17 +63,11 @@ export default function Banner({ movies }: Props) {
                     className="z-10 h-full  p-3 text-slate-400 hover:text-white md:p-5"
                     onClick={moveLeft}
                   >
-                    <FontAwesomeIcon
-                      icon={faChevronLeft}
-                      className="text-lg md:text-4xl"
-                    />
+                    <ChevronLeftIcon className="w-10 text-lg md:text-4xl" />
                   </button>
                 ) : (
                   <div className="p-3 md:p-5">
-                    <FontAwesomeIcon
-                      icon={faChevronLeft}
-                      className="h-full text-lg text-transparent md:text-4xl"
-                    />
+                    <ChevronLeftIcon className="h-full w-10 text-lg text-transparent md:text-4xl" />
                   </div>
                 )}
 
@@ -96,17 +90,14 @@ export default function Banner({ movies }: Props) {
                     }`}
                   >
                     <h1
-                      className={`mb-2 max-w-sm pt-1 text-3xl font-bold text-white sm:text-3xl md:pt-4 md:text-4xl lg:max-w-xl lg:text-6xl  xl:max-w-2xl`}
+                      className={`mb-4 max-w-sm pt-1 text-3xl font-bold text-white sm:text-3xl md:pt-4 md:text-4xl lg:max-w-xl lg:text-6xl  xl:max-w-2xl`}
                     >
                       {movie.title}
                     </h1>
 
                     <div className="text-md flex items-center md:text-2xl ">
-                      <FontAwesomeIcon
-                        icon={faStar}
-                        className="mr-2 text-yellow-400"
-                      />
-                      <span className="text-white">
+                      <StarIcon className="mr-2 w-5 text-yellow-400" />
+                      <span className="text-slate-100">
                         {movie.vote_average.toFixed(1)}
                       </span>
                     </div>
@@ -133,17 +124,11 @@ export default function Banner({ movies }: Props) {
                     onClick={moveRight}
                     className="z-10 h-full p-3 text-slate-400 hover:text-white md:p-5"
                   >
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className="text-lg md:text-4xl"
-                    />
+                    <ChevronRightIcon className="w-10 text-lg md:text-4xl" />
                   </button>
                 ) : (
                   <div className="p-3 md:p-5">
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className="h-full text-lg text-transparent md:text-4xl"
-                    />
+                    <ChevronRightIcon className="h-full w-10 text-lg text-transparent md:text-4xl" />
                   </div>
                 )}
               </div>

@@ -1,13 +1,12 @@
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { getMovie } from "@/lib/services/tmdbService";
 import {
-  faStar,
-  faBookmark,
-  faCheck,
-  faHeart,
-} from "@fortawesome/pro-solid-svg-icons";
-import { getMovie } from "@/src/lib/services/tmdbService";
-import { MovieResult } from "@/src/lib/types";
+  BookmarkIcon,
+  CheckIcon,
+  HeartIcon,
+  StarIcon,
+} from "@heroicons/react/24/solid";
 
 export default async function MoviePage({
   params,
@@ -56,13 +55,13 @@ export default async function MoviePage({
             </p>
             <div className="mb-2  flex ">
               <button className="mr-6 h-12 w-12 rounded-full border-2 border-sky-600 text-lg text-white hover:bg-sky-600 ">
-                <FontAwesomeIcon icon={faBookmark} />
+                <BookmarkIcon />
               </button>
               <button className="mr-6 h-12 w-12 rounded-full border-2 border-emerald-600 text-lg text-white hover:bg-emerald-600 ">
-                <FontAwesomeIcon icon={faCheck} />
+                <CheckIcon />
               </button>
               <button className="mr-6 h-12 w-12 rounded-full border-2 border-purple-600 text-lg text-white hover:bg-purple-600 ">
-                <FontAwesomeIcon icon={faHeart} />
+                <HeartIcon />
               </button>
             </div>
             <p className="mb-4 text-xl italic text-slate-300">
@@ -98,10 +97,7 @@ export default async function MoviePage({
                   Average Rating
                 </h6>
                 <div className="flex items-center ">
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className="mr-2 text-yellow-400"
-                  />
+                  <StarIcon className="mr-2 text-yellow-400" />
                   <span className="text-white">
                     {movie.vote_average.toFixed(1)}
                   </span>
@@ -113,10 +109,6 @@ export default async function MoviePage({
                   Your Rating
                 </h6>
                 <div className="flex items-center ">
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className="mr-2 text-sky-400"
-                  />
                   <span className="text-slate-300 ">
                     {movie.vote_average.toFixed(1)}
                   </span>

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { MovieResult } from "../types";
+import { MovieResult } from "../types/types";
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
 
 const movieService = axios.create({

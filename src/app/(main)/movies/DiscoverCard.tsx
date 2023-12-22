@@ -1,7 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faBookmark } from "@fortawesome/pro-solid-svg-icons";
-import { faBookmark as falStar } from "@fortawesome/pro-regular-svg-icons";
-
 import Image from "next/image";
 import Link from "next/link";
 

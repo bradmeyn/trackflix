@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/pro-solid-svg-icons";
-import { MovieResult } from "@/lib/types"
+
+import { MovieResult } from "@/lib/types/types";
+import { StarIcon } from "@heroicons/react/24/solid";
 
 export default function SearchDropdown({
   movies,
@@ -52,9 +52,6 @@ export default function SearchDropdown({
                 <div className="w-32 p-1">
                   <Image
                     loader={({ src }) => src}
-
-              
-
                     className="h-auto w-full rounded"
                     src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                     alt={movie.original_title}
@@ -70,10 +67,7 @@ export default function SearchDropdown({
                     {new Date(movie.release_date).getFullYear()}
                   </div>
                   <span className="text-md flex items-center md:text-lg lg:text-xl">
-                    <FontAwesomeIcon
-                      icon={faStar}
-                      className="mr-2 text-yellow-400"
-                    />
+                    <StarIcon className="mr-2 text-yellow-400" />
                     <span>{Math.round(movie.vote_average * 10) / 10}</span>
                   </span>
                 </div>

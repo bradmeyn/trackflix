@@ -1,13 +1,21 @@
+"use client";
+
 import logo from "@public/logo.png";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/pro-light-svg-icons";
-import SearchModal from "../Search/SearchModal";
 import Link from "next/link";
+import type { User } from "next-auth";
 
-export default function Header({ isAuthenticated = false }) {
+import SearchModal from "./Search/SearchModal";
+import ProfileDropdown from "./ProfileDropdown";
+import Example from "./ProfileDropdown";
+
+type Props = {
+  user?: User;
+};
+
+export default function Header({ user }: Props) {
   return (
-    <header className="bg-slate-900 p-3  ">
+    <header className="relative bg-slate-900  p-3">
       <div className="container mx-auto flex w-full items-center justify-between md:justify-between">
         <nav className="flex items-center gap-2 md:gap-6">
           <Link href={"/"}>
@@ -34,16 +42,15 @@ export default function Header({ isAuthenticated = false }) {
         </nav>
         <SearchModal />
 
-        {isAuthenticated ? (
-          <a className="flex items-center align-middle hover:text-white">
-            <FontAwesomeIcon icon={faCircleUser} className="text-xl" />
-          </a>
+        {user ? (
+          <ProfileDropdown user={user} />
         ) : (
-          <div className="flex items-center gap-4">
-            <Link href={"/signin"} className="rounded py-2 px-4 text-white">
-              Login
-            </Link>
-          </div>
+          <Link
+            href={"/signin"}
+            className="rounded bg-violet-600 py-2 px-4 text-white transition-colors duration-300 hover:bg-violet-700"
+          >
+            Sign in
+          </Link>
         )}
       </div>
     </header>

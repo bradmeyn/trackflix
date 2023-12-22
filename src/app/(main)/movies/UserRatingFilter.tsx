@@ -1,7 +1,6 @@
-import { faChevronDown, faStar } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
-import useOutsideClick from "@/src/app/hooks/useOutsideClick";
+import useOutsideClick from "@/hooks/useOutsideClick";
+import { ChevronDownIcon, StarIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   userRating: number;
@@ -40,7 +39,7 @@ export default function UserRatingFilter({ userRating, setUserRating }: Props) {
         }`}
       >
         <span className="mr-2">User Rating</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <ChevronDownIcon />
       </button>
       {isActive ? (
         <div
@@ -64,10 +63,7 @@ export default function UserRatingFilter({ userRating, setUserRating }: Props) {
                 onChange={handleRatingChange}
               ></input>
               <span>
-                <FontAwesomeIcon
-                  icon={faStar}
-                  className="mr-1 text-yellow-400"
-                />
+                <StarIcon className="h-5 w-5 text-yellow-500" />
                 {userRating}
               </span>
             </div>

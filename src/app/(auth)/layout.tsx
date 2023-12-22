@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import "@/styles/globals.css";
-import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import logo from "@public/logo.png";
 import Image from "next/image";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/Footer";
 
 export default function AuthLayout({
   children,

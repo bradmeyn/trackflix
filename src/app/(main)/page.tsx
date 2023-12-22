@@ -10,7 +10,7 @@ export type CarouselData = {
   year?: number;
 };
 
-export async function getData() {
+async function getData() {
   const popularMoviesData = await getMovies("trending/movie/week", { page: 1 });
   const topRatedMoviesData = await getMovies("movie/top_rated", { page: 1 });
   const randomYear = Math.floor(Math.random() * 40) + 1970;

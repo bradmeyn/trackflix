@@ -1,7 +1,6 @@
-import { faChevronDown } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef, useState } from "react";
-import useOutsideClick from "@/src/app/hooks/useOutsideClick";
+import useOutsideClick from "@/hooks/useOutsideClick";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   releaseYears: { min: number; max: number };
@@ -50,7 +49,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
         }`}
       >
         <span className="mr-2">Release Year</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <ChevronDownIcon />
       </button>
       {isActive ? (
         <div

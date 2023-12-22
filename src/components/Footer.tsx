@@ -1,7 +1,7 @@
 import logo from "@public/logo.png";
+import githubLogo from "@public/github-logo-white.svg";
 import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+
 const Footer = () => {
   return (
     <footer className="items-center p-5 text-slate-400 ">
@@ -23,9 +23,9 @@ const Footer = () => {
             href={"https://www.github.com/bradmeyn/watchflix"}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-center text-sm text-white underline-offset-2 hover:underline"
+            className="flex items-center justify-center gap-2 text-sm text-white underline-offset-2 hover:underline"
           >
-            <FontAwesomeIcon icon={faGithub} className="mr-2 " />{" "}
+            <Image src={githubLogo} alt="GitHub logo" width={16} height={16} />
             <span>GitHub</span>
           </a>
         </p>

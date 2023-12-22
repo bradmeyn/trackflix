@@ -1,13 +1,13 @@
 "use client";
 
-import { getMovies, MovieData } from "@/src/lib/services/tmdbService";
-import DiscoverCard from "@/src/app/(main)/movies/DiscoverCard";
+import { getMovies } from "@/lib/services/tmdbService";
+import DiscoverCard from "@/app/(main)/movies/DiscoverCard";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import YearsFilter from "@/src/app/(main)/movies/YearsFilter";
-import GenresFilter from "@/src/app/(main)/movies/GenresFilter";
-import movieGenres from "@/src/lib/constants";
-import UserRatingFilter from "@/src/app/(main)/movies/UserRatingFilter";
-import { MovieResult } from "@/src/lib/types";
+import YearsFilter from "@/app/(main)/movies/YearsFilter";
+import GenresFilter from "@/app/(main)/movies/GenresFilter";
+import { MOVIE_GENRES } from "@/lib/constants";
+import UserRatingFilter from "@/app/(main)/movies/UserRatingFilter";
+import { MovieResult } from "@/lib/types/types";
 
 type Props = {
   initialMovies: MovieResult[];
@@ -25,7 +25,7 @@ type MovieParams = {
 
 export default function ClientPage({ initialMovies }: Props) {
   const [movies, setMovies] = useState<MovieResult[]>(initialMovies);
-  const [genres, setGenres] = useState(movieGenres);
+  const [genres, setGenres] = useState(MOVIE_GENRES);
   const [userRating, setUserRating] = useState(0);
   const [releaseYears, setReleaseYears] = useState({ min: 1970, max: 2022 });
   const [currentPage, setCurrentPage] = useState(1);

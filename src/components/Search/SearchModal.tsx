@@ -8,12 +8,11 @@ import {
   useState,
   useCallback,
 } from "react";
-import { MovieResult } from "@/lib/types";
+import { MovieResult } from "@/lib/types/types";
 import { searchMovies } from "@services/tmdbService";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import SearchDropdown from "./SearchDropdown";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/pro-regular-svg-icons";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 export default function SearchModal() {
   const [modalActive, setModalActive] = useState(false);
@@ -93,10 +92,7 @@ export default function SearchModal() {
                 }`}
                 onChange={handleChange}
               />
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="absolute ml-4 text-lg md:text-xl"
-              />
+              <MagnifyingGlassIcon className="absolute ml-4 w-5 text-lg md:text-xl" />
               <span
                 className="absolute right-4 z-50 cursor-pointer text-xl text-white"
                 onClick={closeSearch}
@@ -118,13 +114,12 @@ export default function SearchModal() {
               className="text-md relative mx-8 flex flex-1 items-center rounded-md bg-slate-700 py-2 px-4 text-slate-300 hover:bg-slate-600 hover:text-white md:max-w-md lg:max-w-xl"
               onClick={activateSearch}
             >
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-3" />
+              <MagnifyingGlassIcon className="mr-3 w-5" />
               <span>Search movies</span>
             </button>
           ) : (
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className="focus:white ml-auto mr-5 cursor-pointer text-xl hover:text-white "
+            <MagnifyingGlassIcon
+              className="focus:white ml-auto mr-5 w-5 cursor-pointer text-xl hover:text-white "
               onClick={activateSearch}
             />
           )}

@@ -1,14 +1,7 @@
-import { faChevronDown } from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  MouseEvent,
-  useRef,
-  useState,
-} from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { ChangeEvent, useRef, useState } from "react";
 
-import useOutsideClick from "@/src/app/hooks/useOutsideClick";
+import useOutsideClick from "@/hooks/useOutsideClick";
 
 interface MovieGenreFilter {
   id: number;
@@ -63,7 +56,7 @@ export default function GenresFilter({ genres, setGenres }: Props) {
         }`}
       >
         <span className="mr-2">Genres</span>
-        <FontAwesomeIcon icon={faChevronDown} />
+        <ChevronDownIcon />
       </button>
       {isActive ? (
         <div
