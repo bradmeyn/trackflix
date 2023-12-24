@@ -62,10 +62,10 @@ export const verificationTokens = mysqlTable(
 export type User = typeof users.$inferSelect; // return type when queried
 export type NewUser = typeof users.$inferInsert; // insert type
 
+// List table for Watchlist & Seenlist
 export const lists = mysqlTable("list", {
   id: int("id").primaryKey().autoincrement(),
   name: varchar("name", { length: 255 }).notNull(),
-  movies: int("movies"),
   userId: varchar("userId", { length: 255 }).notNull(),
   created_at: timestamp("created_at").notNull().defaultNow(),
   updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
@@ -74,16 +74,38 @@ export const lists = mysqlTable("list", {
 export type List = typeof lists.$inferSelect; // return type when queried
 export type NewList = typeof lists.$inferInsert; // insert type
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const listItems = mysqlTable("listItem", {
+  id: int("id").primaryKey().autoincrement(),
+  listId: int("listId").notNull(),
+  movieId: int("movieId").notNull(),
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
+});
+
+// One User to Many Lists Relation
+export const userRelations = relations(users, ({ many }) => ({
   lists: many(lists),
 }));
 
-export const listssRelations = relations(lists, ({ one }) => ({
+export const listRelations = relations(lists, ({ one, many }) => ({
+  // Lists are associated with One User
   user: one(users, {
     fields: [lists.userId],
     references: [users.id],
   }),
+  listItems: many(listItems),
 }));
+
+export const listItemRelations = relations(listItems, ({ one, many }) => ({
+  // List Items are associated with One List
+  list: one(lists, {
+    fields: [listItems.listId],
+    references: [lists.id],
+  }),
+}));
+
+export type ListItem = typeof listItems.$inferSelect; // return type when queried
+export type NewListItem = typeof listItems.$inferInsert; // insert type
 
 // Users and Accounts Relation
 export const userAccountRelations = relations(users, ({ many }) => ({

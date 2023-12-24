@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { auth } from "@/lib/auth";
 
 import { getMovie } from "@/lib/services/tmdbService";
 import {
@@ -7,6 +8,7 @@ import {
   HeartIcon,
   StarIcon,
 } from "@heroicons/react/24/solid";
+import { redirect } from "next/navigation";
 
 export default async function MoviePage({
   params,
@@ -17,13 +19,13 @@ export default async function MoviePage({
   const movie = response?.data;
 
   if (!movie) {
-    return null;
+    redirect("/");
   }
 
   const moviePoster = `https://image.tmdb.org/t/p/w300${movie.poster_path}`;
 
   return (
-    <main className="grow ">
+    <main className="grow">
       <div
         className="bg-cover bg-top bg-no-repeat py-10 px-6 text-left md:py-20"
         style={{
@@ -53,26 +55,23 @@ export default async function MoviePage({
               </span>
               {movie.genres.map((genre) => genre.name).join(", ")}
             </p>
-            <div className="mb-2  flex ">
-              <button className="mr-6 h-12 w-12 rounded-full border-2 border-sky-600 text-lg text-white hover:bg-sky-600 ">
-                <BookmarkIcon />
+            <div className="mb-2 flex gap-2">
+              <button className="rounded-full border-2 border-violet-600 p-2 text-lg text-white hover:bg-violet-600 ">
+                <BookmarkIcon className="w-5" />
               </button>
-              <button className="mr-6 h-12 w-12 rounded-full border-2 border-emerald-600 text-lg text-white hover:bg-emerald-600 ">
-                <CheckIcon />
-              </button>
-              <button className="mr-6 h-12 w-12 rounded-full border-2 border-purple-600 text-lg text-white hover:bg-purple-600 ">
-                <HeartIcon />
+              <button className="rounded-full border-2 border-emerald-600 p-2 text-lg text-white hover:bg-emerald-600 ">
+                <CheckIcon className="w-5" />
               </button>
             </div>
-            <p className="mb-4 text-xl italic text-slate-300">
+            <p className="mb-4 italic text-slate-300 md:text-xl">
               {movie.tagline}
             </p>
             <div className="mb-4">
               <h2 className="mb-1 text-xl font-bold text-white">Overview</h2>
               <p className="text-lg text-slate-300 ">{movie.overview}</p>
             </div>
-            <div className="mb-6 flex">
-              <div className="mr-20">
+            <div className="mb-6 flex gap-10">
+              <div>
                 <h2 className="mb-1 text-lg font-bold text-white">Director</h2>
                 <p className="text-lg text-slate-300 ">
                   {movie.credits?.crew
@@ -91,33 +90,35 @@ export default async function MoviePage({
                 </p>
               </div>
             </div>
-            <div className="flex ">
-              <div className="mr-8">
-                <h6 className="mb-1 text-lg font-bold text-white">
-                  Average Rating
-                </h6>
-                <div className="flex items-center ">
-                  <StarIcon className="mr-2 text-yellow-400" />
-                  <span className="text-white">
-                    {movie.vote_average.toFixed(1)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="">
-                <h6 className="mb-1 text-lg font-bold text-white">
-                  Your Rating
-                </h6>
-                <div className="flex items-center ">
-                  <span className="text-slate-300 ">
-                    {movie.vote_average.toFixed(1)}
-                  </span>
-                </div>
-              </div>
+            <h6 className="mb-1 text-lg font-bold text-white">
+              Average Rating
+            </h6>
+            <div className="flex items-center gap-2 ">
+              <StarIcon className="w-4 text-yellow-400" />
+              <span className="text-white">
+                {movie.vote_average.toFixed(1)}
+              </span>
             </div>
           </div>
         </div>
       </div>
     </main>
+  );
+}
+
+async function WatchlistButton({ movieId }: { movieId: string }) {
+  const session = await auth();
+  console.log(session?.user);
+
+  if (session?.user) {
+    console.log(session.user.watchlistId);
+  }
+
+  // check if movie is in watchlist
+
+  return (
+    <button className="rounded-full border-2 border-violet-600 p-2 text-lg text-white hover:bg-violet-600 ">
+      <BookmarkIcon className="w-5" />
+    </button>
   );
 }

@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@db/index";
-import { getWatchlist, createList } from "./services/listService";
+import { getList, createList } from "./services/listService";
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   pages: {
@@ -17,7 +17,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       session.user.id = user.id as string;
 
       // create a watchlist for the user if one doesn't exist
-      const watchlist = await getWatchlist(user.id as string);
+      const watchlist = await getList(user.id as string, "Watchlist");
 
       if (!watchlist) {
         console.log("New user, creating watchlist");
