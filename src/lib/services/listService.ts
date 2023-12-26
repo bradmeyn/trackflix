@@ -1,5 +1,5 @@
 import { db } from "@db/index";
-import { lists, type List, NewList } from "@db/schema";
+import { lists, listItems, type List, NewList, ListItem } from "@db/schema";
 import { eq, and } from "drizzle-orm";
 
 export async function createList(newList: NewList): Promise<List> {
@@ -44,5 +44,66 @@ export async function getList(
   } catch (error) {
     console.error("Failed to fetch list:", error);
     throw new Error("Failed to fetch list.");
+  }
+}
+
+export async function getListItem(
+  listId: number,
+  movieId: number
+): Promise<ListItem | undefined> {
+  try {
+    console.log("listId", listId);
+    console.log("movieId", movieId);
+
+    const listItem: ListItem[] = await db
+      .select()
+      .from(listItems)
+      .where(and(eq(listItems.listId, listId), eq(listItems.movieId, movieId)))
+      .execute();
+
+    console.log("listItem", listItem);
+
+    if (listItem.length === 0) {
+      console.log("List item not found.");
+      return undefined;
+    }
+
+    return listItem[0];
+  } catch (error) {
+    console.error("Failed to fetch list item:", error);
+    throw new Error("Failed to fetch list item.");
+  }
+}
+
+export async function addListItem(
+  listId: number,
+  movieId: number
+): Promise<ListItem> {
+  try {
+    console.log("ADDING LIST ITEM");
+    console.log("listId", listId);
+    console.log("movieId", movieId);
+
+    const listItem = await db
+      .insert(listItems)
+      .values({ listId, movieId })
+      .execute();
+
+    return listItem[0];
+  } catch (error) {
+    console.error("Failed to add list item:", error);
+    throw new Error("Failed to add list item.");
+  }
+}
+
+export async function deleteListItem(listId: number, movieId: number) {
+  try {
+    await db
+      .delete(listItems)
+      .where(and(eq(listItems.listId, listId), eq(listItems.movieId, movieId)))
+      .execute();
+  } catch (error) {
+    console.error("Failed to remove list item:", error);
+    throw new Error("Failed to remove list item.");
   }
 }

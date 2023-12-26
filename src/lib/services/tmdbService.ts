@@ -8,6 +8,7 @@ const movieService = axios.create({
     api_key: API_KEY,
     language: "en-AU",
     sort_by: "revenue.desc",
+    append_to_response: "credits",
     include_adult: false,
   },
 });

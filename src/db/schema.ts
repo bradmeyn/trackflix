@@ -74,13 +74,18 @@ export const lists = mysqlTable("list", {
 export type List = typeof lists.$inferSelect; // return type when queried
 export type NewList = typeof lists.$inferInsert; // insert type
 
-export const listItems = mysqlTable("listItem", {
-  id: int("id").primaryKey().autoincrement(),
-  listId: int("listId").notNull(),
-  movieId: int("movieId").notNull(),
-  created_at: timestamp("created_at").notNull().defaultNow(),
-  updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
-});
+export const listItems = mysqlTable(
+  "listItem",
+  {
+    listId: int("listId").notNull(),
+    movieId: int("movieId").notNull(),
+    created_at: timestamp("created_at").notNull().defaultNow(),
+    updated_at: timestamp("updated_at").notNull().defaultNow().onUpdateNow(),
+  },
+  (item) => ({
+    compoundKey: primaryKey(item.listId, item.movieId),
+  })
+);
 
 // One User to Many Lists Relation
 export const userRelations = relations(users, ({ many }) => ({

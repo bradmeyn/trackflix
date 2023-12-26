@@ -2,13 +2,10 @@ import Image from "next/image";
 import { auth } from "@/lib/auth";
 
 import { getMovie } from "@/lib/services/tmdbService";
-import {
-  BookmarkIcon,
-  CheckIcon,
-  HeartIcon,
-  StarIcon,
-} from "@heroicons/react/24/solid";
+import { CheckIcon, StarIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
+
+import WatchlistButton from "./WatchlistButton";
 
 export default async function MoviePage({
   params,
@@ -17,6 +14,7 @@ export default async function MoviePage({
 }) {
   const response = await getMovie(params.id);
   const movie = response?.data;
+  console.log(movie);
 
   if (!movie) {
     redirect("/");
@@ -24,80 +22,78 @@ export default async function MoviePage({
 
   const moviePoster = `https://image.tmdb.org/t/p/w300${movie.poster_path}`;
 
+  const cast = movie.credits?.cast
+    .splice(0, 4)
+    .map((cast) => cast.name)
+    .join(", ");
+
+  const director = movie.credits?.crew
+    .filter((crew) => crew.job === "Director")
+    .map((director) => director.name)
+    .join(", ");
+
   return (
     <main className="grow">
-      <div
-        className="bg-cover bg-top bg-no-repeat py-10 px-6 text-left md:py-20"
-        style={{
-          backgroundImage: `linear-gradient(rgba(16, 23, 42, 0.8), rgba(16, 23, 42, 0.8)), url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
-        }}
-      >
-        <div className="container mx-auto flex flex-col justify-start gap-4 md:gap-8 lg:flex-row lg:items-start">
-          <div className="mx-auto">
-            <Image
-              className=" h-auto w-[150px] rounded-md md:w-[200px] lg:w-[700px]"
-              src={moviePoster}
-              priority
-              width={200}
-              height={100}
-              unoptimized
-              alt={movie.title ?? ""}
-            />
-          </div>
-          <div className="content-start justify-self-start">
-            <h1 className="mb-2 text-left text-3xl font-bold text-white opacity-100 md:text-5xl">
-              {movie.original_title}
-            </h1>
-            <p className="mb-4 text-lg text-slate-300">
-              <span>
-                {new Date(movie.release_date).getFullYear()} &#183;{" "}
-                {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m &#183;{" "}
-              </span>
-              {movie.genres.map((genre) => genre.name).join(", ")}
-            </p>
-            <div className="mb-2 flex gap-2">
-              <button className="rounded-full border-2 border-violet-600 p-2 text-lg text-white hover:bg-violet-600 ">
-                <BookmarkIcon className="w-5" />
-              </button>
-              <button className="rounded-full border-2 border-emerald-600 p-2 text-lg text-white hover:bg-emerald-600 ">
-                <CheckIcon className="w-5" />
-              </button>
-            </div>
-            <p className="mb-4 italic text-slate-300 md:text-xl">
-              {movie.tagline}
-            </p>
-            <div className="mb-4">
-              <h2 className="mb-1 text-xl font-bold text-white">Overview</h2>
-              <p className="text-lg text-slate-300 ">{movie.overview}</p>
-            </div>
-            <div className="mb-6 flex gap-10">
-              <div>
-                <h2 className="mb-1 text-lg font-bold text-white">Director</h2>
-                <p className="text-lg text-slate-300 ">
-                  {movie.credits?.crew
-                    .filter((crew) => crew.job === "Director")
-                    .map((director) => director.name)
-                    .join(", ")}
-                </p>
+      <div className="">
+        <div
+          className="bg-cover bg-top bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(rgba(16, 23, 42, 0.8), rgba(16, 23, 42, 0.8)), url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`,
+          }}
+        >
+          <div className="container mx-auto flex flex-col gap-4   p-4 md:max-w-[1000px]">
+            <div className="flex gap-4 md:gap-8">
+              <div className="w-32 md:w-72 md:min-w-[250px] lg:w-80 lg:min-w-[300px]">
+                <Image
+                  className="w-full rounded"
+                  src={moviePoster}
+                  priority
+                  width={200}
+                  height={100}
+                  unoptimized
+                  alt={movie.title + " poster" ?? ""}
+                />
               </div>
+
               <div>
-                <h2 className="mb-1 text-lg font-bold text-white">Cast</h2>
-                <p className="text-lg text-slate-300 ">
-                  {movie.credits?.cast
-                    .splice(0, 4)
-                    .map((cast) => cast.name)
-                    .join(", ")}
+                <h1 className="mb-2 text-xl font-bold text-white md:text-3xl">
+                  {movie.original_title}
+                </h1>
+                <p className=" mb-2 text-sm text-slate-300">
+                  <span>
+                    {new Date(movie.release_date).getFullYear()} &#183;{" "}
+                    {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m
+                    &#183;{" "}
+                  </span>
+                  {movie.genres.map((genre) => genre.name).join(", ")}
                 </p>
+                <div className="text-md mb-2 flex items-center gap-2">
+                  <StarIcon className="w-6 text-yellow-400" />
+                  <span className="text-white">
+                    {movie.vote_average.toFixed(1)}
+                  </span>
+                </div>
+                <p className="text-md mb-3 italic text-slate-300 md:text-lg">
+                  {movie.tagline}
+                </p>
+                {/* @ts-expect-error Server Component */}
+                <WatchlistButton movieId={movie.id} />
+
+                <div className="hidden w-full md:block">
+                  <TextBlock title="Overview" paragraph={movie.overview} />
+                  <TextBlock title="Director" paragraph={director} />
+                  <TextBlock title="Cast" paragraph={cast} />
+                </div>
               </div>
             </div>
-            <h6 className="mb-1 text-lg font-bold text-white">
-              Average Rating
-            </h6>
-            <div className="flex items-center gap-2 ">
-              <StarIcon className="w-4 text-yellow-400" />
-              <span className="text-white">
-                {movie.vote_average.toFixed(1)}
-              </span>
+            {/*  */}
+
+            <div className="w-full md:hidden">
+              <TextBlock title="Overview" paragraph={movie.overview} />
+              <div className="flex flex-wrap">
+                <TextBlock title="Director" paragraph={director} />
+                <TextBlock title="Cast" paragraph={cast} />
+              </div>
             </div>
           </div>
         </div>
@@ -106,19 +102,11 @@ export default async function MoviePage({
   );
 }
 
-async function WatchlistButton({ movieId }: { movieId: string }) {
-  const session = await auth();
-  console.log(session?.user);
-
-  if (session?.user) {
-    console.log(session.user.watchlistId);
-  }
-
-  // check if movie is in watchlist
-
+function TextBlock({ title, paragraph }) {
   return (
-    <button className="rounded-full border-2 border-violet-600 p-2 text-lg text-white hover:bg-violet-600 ">
-      <BookmarkIcon className="w-5" />
-    </button>
+    <div className="mb-4">
+      <h2 className="text-md mb-1 font-bold text-white md:text-lg">{title}</h2>
+      <p className="text-sm text-slate-300">{paragraph}</p>
+    </div>
   );
 }

@@ -17,7 +17,7 @@ export default function Header({ user }: Props) {
   return (
     <header className="relative bg-slate-900  p-3">
       <div className="container mx-auto flex w-full items-center justify-between md:justify-between">
-        <nav className="flex items-center gap-2 md:gap-6">
+        <nav className="flex items-center gap-8 md:gap-6">
           <Link href={"/"}>
             <Image
               src={logo}
@@ -37,8 +37,17 @@ export default function Header({ user }: Props) {
             href={"/movies"}
             className={`text-md font-semibold text-slate-400 hover:text-white `}
           >
-            Discover
+            Movies
           </Link>
+
+          {user ? (
+            <Link
+              href={"/lists"}
+              className={`text-md font-semibold text-slate-400 hover:text-white `}
+            >
+              Lists
+            </Link>
+          ) : null}
         </nav>
         <SearchModal />
 

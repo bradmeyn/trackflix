@@ -21,6 +21,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
       if (!watchlist) {
         console.log("New user, creating watchlist");
+
         const newWatchlist = await createList({
           name: "Watchlist",
           userId: user.id as string,
@@ -30,6 +31,14 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         session.user.watchlistId = watchlist.id;
       }
       return session;
+    },
+
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
     },
   },
   adapter: DrizzleAdapter(db),
