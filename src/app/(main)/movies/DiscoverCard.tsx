@@ -21,10 +21,8 @@ export default function DiscoverCard({
         }
       >
         <Image
-          placeholder="blur"
           height={225}
           width={150}
-          sizes="100vw"
           className="h-auto w-full rounded"
           src={src}
           alt={title}

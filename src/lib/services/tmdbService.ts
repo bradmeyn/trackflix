@@ -34,7 +34,7 @@ export const getMovies = async (
   }
 };
 
-export const getMovie = async (movieId: string | number) => {
+export const getMovie = async (movieId: number) => {
   try {
     const response: AxiosResponse<MovieResult> = await movieService.get(
       `movie/${movieId}`

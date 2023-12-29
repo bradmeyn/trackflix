@@ -63,15 +63,23 @@ export async function getListItem(
 
     console.log("listItem", listItem);
 
-    if (listItem.length === 0) {
-      console.log("List item not found.");
-      return undefined;
-    }
-
     return listItem[0];
   } catch (error) {
     console.error("Failed to fetch list item:", error);
     throw new Error("Failed to fetch list item.");
+  }
+}
+
+export async function getListItems(listId: number): Promise<ListItem[]> {
+  try {
+    const listItems: ListItem[] = await db.query.listItems.findMany({
+      where: (listItem) => eq(listItem.listId, listId),
+    });
+
+    return listItems;
+  } catch (error) {
+    console.error("Failed to fetch list items:", error);
+    throw new Error("Failed to fetch list items.");
   }
 }
 

@@ -7,7 +7,6 @@ import type { User } from "next-auth";
 
 import SearchModal from "./Search/SearchModal";
 import ProfileDropdown from "./ProfileDropdown";
-import Example from "./ProfileDropdown";
 
 type Props = {
   user?: User;

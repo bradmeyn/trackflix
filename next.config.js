@@ -8,6 +8,10 @@ const nextConfig = {
 
         hostname: "avatars.githubusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "https://image.tmdb.org/t/p/w200/",
+      },
     ],
   },
 };
