@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { User } from "next-auth";
 
-import SearchModal from "./Search/SearchModal";
+import SearchModal from "./SearchModal";
 import ProfileDropdown from "./ProfileDropdown";
 
 type Props = {
@@ -33,7 +33,7 @@ export default function Header({ user }: Props) {
             Home
           </Link>
           <Link
-            href={"/movies"}
+            href={"/discover"}
             className={`text-md font-semibold text-slate-400 hover:text-white `}
           >
             Movies

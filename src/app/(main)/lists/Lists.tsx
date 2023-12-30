@@ -48,7 +48,7 @@ export default function Lists({ lists }) {
               key={list.name}
               className={({ selected }) =>
                 classNames(
-                  "flex w-full items-center justify-center gap-2 rounded py-2.5 text-sm font-medium leading-5",
+                  "mb-10 flex w-full items-center justify-center gap-2 rounded py-2.5 text-sm font-medium leading-5",
                   "ring-white/60 ring-offset-2 ring-offset-slate-400 focus:outline-none focus:ring-2",
                   selected
                     ? list.name === "Favourites"
@@ -94,7 +94,7 @@ function MovieItem({ movie, list }) {
   const moviePoster = `https://image.tmdb.org/t/p/w300${movie.poster_path}`;
 
   return (
-    <li className="flex items-center gap-8 border border-transparent bg-slate-800 p-3 hover:border-white">
+    <li className="flex items-center gap-8 rounded border border-transparent bg-slate-800 p-3 hover:border-white">
       <Link href={`/movies/${movie.id}`} className="flex gap-8 ">
         <div className="w-20">
           <Image
@@ -131,7 +131,7 @@ function MovieItem({ movie, list }) {
 
 function EmptyList({ listName }) {
   return (
-    <div className="mt-5 flex flex-col items-center justify-center gap-2 p-3">
+    <div className=" flex flex-col items-center justify-center gap-2 p-3">
       <h2 className="text-2xl font-semibold text-white">
         No movies in {listName}
       </h2>

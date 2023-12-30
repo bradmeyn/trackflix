@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { auth } from "@/lib/auth";
 
 import { getMovie } from "@/lib/services/tmdbService";
-import { CheckIcon, StarIcon } from "@heroicons/react/24/solid";
+import { StarIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
 
 import WatchlistButton from "./WatchlistButton";
@@ -12,7 +11,7 @@ export default async function MoviePage({
 }: {
   params: { id: string };
 }) {
-  const response = await getMovie(params.id);
+  const response = await getMovie(+params.id);
   const movie = response?.data;
   console.log(movie);
 
