@@ -16,20 +16,11 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     async session({ session, user }) {
       session.user.id = user.id as string;
 
-      // create a watchlist for the user if one doesn't exist
-      const watchlist = await getList(user.id as string, "Watchlist");
+      // Refactored to use the new function for each list
+      session.user.watchlistId = await handleList(user.id, "Watchlist");
+      session.user.favouritesId = await handleList(user.id, "Favourites");
+      session.user.seenId = await handleList(user.id, "Seen");
 
-      if (!watchlist) {
-        console.log("New user, creating watchlist");
-
-        const newWatchlist = await createList({
-          name: "Watchlist",
-          userId: user.id as string,
-        });
-        session.user.watchlistId = newWatchlist.id;
-      } else {
-        session.user.watchlistId = watchlist.id;
-      }
       return session;
     },
 
@@ -53,3 +44,19 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     }),
   ],
 });
+
+async function handleList(userId, listName) {
+  const list = await getList(userId, listName);
+
+  if (!list) {
+    console.log(`New user, creating ${listName}`);
+
+    const newList = await createList({
+      name: listName,
+      userId: userId,
+    });
+    return newList.id;
+  } else {
+    return list.id;
+  }
+}

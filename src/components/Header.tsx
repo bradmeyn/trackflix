@@ -36,7 +36,7 @@ export default function Header({ user }: Props) {
             href={"/discover"}
             className={`text-md font-semibold text-slate-400 hover:text-white `}
           >
-            Movies
+            Discover
           </Link>
 
           {user ? (

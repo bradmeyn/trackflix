@@ -50,7 +50,7 @@ export default function Banner({ movies }: Props) {
           {movies.map((movie, i) => (
             <Link
               key={movie.id}
-              href={`/movies/${movie.id}`}
+              href={`/discover/${movie.id}`}
               className={`min-w-full rounded bg-cover bg-no-repeat text-left transition-transform duration-500 ease-in-out hover:cursor-pointer`}
               style={{
                 backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,

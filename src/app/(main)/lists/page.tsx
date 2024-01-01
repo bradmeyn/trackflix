@@ -12,6 +12,7 @@ type Props = {
 
 export default async function ListsPage() {
   const session = await auth();
+  console.log(session);
   if (!session?.user) {
     redirect("/signin");
   }
@@ -19,9 +20,25 @@ export default async function ListsPage() {
   // Get User Watchlist
 
   const watchlistIds = await getListItems(session.user.watchlistId);
+  const seenIds = await getListItems(session.user.seenId);
+  const favouriteIds = await getListItems(session.user.favouritesId);
 
   const watchlist = await Promise.all(
     watchlistIds?.map(async (item) => {
+      const response = await getMovie(item.movieId);
+      return response?.data;
+    })
+  );
+
+  const seen = await Promise.all(
+    seenIds?.map(async (item) => {
+      const response = await getMovie(item.movieId);
+      return response?.data;
+    })
+  );
+
+  const favourites = await Promise.all(
+    favouriteIds?.map(async (item) => {
       const response = await getMovie(item.movieId);
       return response?.data;
     })
@@ -34,12 +51,14 @@ export default async function ListsPage() {
       movies: watchlist,
     },
     {
+      id: session.user.seenId,
       name: "Seen",
-      movies: [],
+      movies: seen,
     },
     {
+      id: session.user.favouritesId,
       name: "Favourites",
-      movies: [],
+      movies: favourites,
     },
   ];
 
@@ -49,7 +68,6 @@ export default async function ListsPage() {
         <h1 className="mb-4 text-2xl font-bold md:mb-8 md:text-4xl">
           My Lists
         </h1>
-
         <Lists lists={lists} />
       </div>
     </main>

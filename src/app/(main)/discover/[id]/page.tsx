@@ -3,8 +3,7 @@ import Image from "next/image";
 import { getMovie } from "@/lib/services/tmdbService";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { redirect } from "next/navigation";
-
-import WatchlistButton from "./WatchlistButton";
+import ListButton from "./ListButton";
 
 export default async function MoviePage({
   params,
@@ -13,7 +12,6 @@ export default async function MoviePage({
 }) {
   const response = await getMovie(+params.id);
   const movie = response?.data;
-  console.log(movie);
 
   if (!movie) {
     redirect("/");
@@ -75,8 +73,15 @@ export default async function MoviePage({
                 <p className="text-md mb-3 italic text-slate-300 md:text-lg">
                   {movie.tagline}
                 </p>
-                {/* @ts-expect-error Server Component */}
-                <WatchlistButton movieId={movie.id} />
+
+                <div className="flex items-center justify-start gap-2">
+                  {/* @ts-expect-error Server Component */}
+                  <ListButton movieId={movie.id} listType="Watchlist" />
+                  {/* @ts-expect-error Server Component */}
+                  <ListButton movieId={movie.id} listType="Seen" />
+                  {/* @ts-expect-error Server Component */}
+                  <ListButton movieId={movie.id} listType="Favourites" />
+                </div>
 
                 <div className="hidden w-full md:block">
                   <TextBlock title="Overview" paragraph={movie.overview} />
@@ -85,7 +90,6 @@ export default async function MoviePage({
                 </div>
               </div>
             </div>
-            {/*  */}
 
             <div className="w-full md:hidden">
               <TextBlock title="Overview" paragraph={movie.overview} />

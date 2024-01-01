@@ -1,12 +1,12 @@
 "use client";
 
 import { getMovies } from "@/lib/services/tmdbService";
-import DiscoverCard from "@/app/(main)/movies/DiscoverCard";
+import DiscoverCard from "@/app/(main)/discover/DiscoverCard";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import YearsFilter from "@/app/(main)/movies/YearsFilter";
-import GenresFilter from "@/app/(main)/movies/GenresFilter";
+import YearsFilter from "@/app/(main)/discover/YearsFilter";
+import GenresFilter from "@/app/(main)/discover/GenresFilter";
 import { MOVIE_GENRES } from "@/lib/constants";
-import UserRatingFilter from "@/app/(main)/movies/UserRatingFilter";
+import UserRatingFilter from "@/app/(main)/discover/UserRatingFilter";
 import { MovieResult } from "@/lib/types/types";
 
 type Props = {
@@ -41,7 +41,6 @@ export default function ClientPage({ initialMovies }: Props) {
 
   const updateMovies = useCallback(
     async (appendMovies = false) => {
-      console.log("updating movies...");
       const selectedGenres = genres
         .filter((genre) => genre.selected)
         .map((genre) => genre.id);
@@ -80,7 +79,7 @@ export default function ClientPage({ initialMovies }: Props) {
 
   return (
     <>
-      <div className="mb-3 flex gap-2">
+      <div className="mb-3 flex gap-2 text-sm">
         <YearsFilter
           releaseYears={releaseYears}
           setReleaseYears={setReleaseYears}
@@ -92,7 +91,7 @@ export default function ClientPage({ initialMovies }: Props) {
         />
       </div>
       <div
-        className="relative mb-10 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7"
+        className="relative mb-10 grid grid-cols-4 gap-4 lg:grid-cols-5 xl:grid-cols-7"
         ref={gridRef}
       >
         {movies?.map((movie, i) => (

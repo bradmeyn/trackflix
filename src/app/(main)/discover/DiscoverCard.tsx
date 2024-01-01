@@ -15,9 +15,9 @@ export default function DiscoverCard({
   return (
     <>
       <Link
-        href={`/movies/${id}`}
+        href={`/discover/${id}`}
         className={
-          "card-shadow  relative rounded-md transition-transform duration-300 hover:scale-105 hover:cursor-pointer hover:outline  hover:outline-4"
+          "card-shadow relative rounded transition-transform duration-300 hover:cursor-pointer hover:outline  hover:outline-2"
         }
       >
         <Image

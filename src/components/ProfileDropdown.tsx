@@ -46,12 +46,12 @@ export default function ProfileDropdown({ user }: Props) {
                   <button
                     onClick={() => signOut()}
                     className={`${
-                      active ? "bg-violet-500 text-white" : "text-white"
+                      active ? "bg-slate-600 text-white" : "text-white"
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     <ArrowLeftStartOnRectangleIcon
                       className={`${
-                        active ? "text-white" : "text-violet-500"
+                        active ? "text-white" : "text-slate-400"
                       } mr-3 h-5 w-5`}
                       aria-hidden="true"
                     />

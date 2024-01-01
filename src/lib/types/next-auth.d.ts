@@ -9,6 +9,8 @@ declare module "next-auth" {
       /** The user's postal address. */
       id: string;
       watchlistId: number;
+      favouritesId: number;
+      seenId: number;
     } & DefaultSession["user"];
   }
 }

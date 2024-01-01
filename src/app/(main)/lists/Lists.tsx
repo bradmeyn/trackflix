@@ -95,7 +95,7 @@ function MovieItem({ movie, list }) {
 
   return (
     <li className="flex items-center gap-8 rounded border border-transparent bg-slate-800 p-3 hover:border-white">
-      <Link href={`/movies/${movie.id}`} className="flex gap-8 ">
+      <Link href={`/discover/${movie.id}`} className="flex gap-8 ">
         <div className="w-20">
           <Image
             className="rounded"
@@ -140,7 +140,7 @@ function EmptyList({ listName }) {
         <span className="font-semibold">Add</span> button on any movie page.
       </p>
       <Link
-        href="/movies"
+        href="/discover"
         className="flex items-center gap-2 text-slate-200 hover:text-white hover:underline"
       >
         <span>Discover movies</span> <ArrowRightIcon className="w-4" />
