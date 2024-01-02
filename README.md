@@ -25,20 +25,20 @@ Trackflix is a fullstack web application that allows users to search for movies 
 
 ### Home Page
 
-![Home Page Screenshot](./wwwroot/screenshots/trackflix-home.png)
+![Home Page Screenshot](./screenshots/trackflix-home.jpg)
 
 ### Lists Page
 
-![Lists Page Screenshot](./wwwroot/screenshots/trackflix-lists.png)
+![Lists Page Screenshot](./screenshots/trackflix-lists.png)
 
 ### Movie Page
 
-![Movie Page Screenshot](./wwwroot/screenshots/trackflix-details.png)
+![Movie Page Screenshot](./screenshots/trackflix-details.png)
 
 ### Authentication
 
-![Authentication Screenshot](./wwwroot/screenshots/trackflix-auth.png)
+![Authentication Screenshot](./screenshots/trackflix-auth.png)
 
 ### Discover Page
 
-![Discover Page Screenshot](./wwwroot/screenshots/trackflix-discover.png)
+![Discover Page Screenshot](./screenshots/trackflix-discover.png)
