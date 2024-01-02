@@ -12,22 +12,20 @@ export default function DiscoverCard({
 }) {
   const src = `https://image.tmdb.org/t/p/w200${poster}`;
 
-  return (
-    <>
-      <Link
-        href={`/discover/${id}`}
-        className={
-          "card-shadow relative rounded transition-transform duration-300 hover:cursor-pointer hover:outline  hover:outline-2"
-        }
-      >
-        <Image
-          height={225}
-          width={150}
-          className="h-auto w-full rounded"
-          src={src}
-          alt={title}
-        />
-      </Link>
-    </>
-  );
+  return poster ? (
+    <Link
+      href={`/discover/${id}`}
+      className={
+        "card-shadow relative rounded  hover:cursor-pointer hover:outline  hover:outline-2"
+      }
+    >
+      <Image
+        height={225}
+        width={150}
+        className="h-auto w-full rounded"
+        src={src}
+        alt={title}
+      />
+    </Link>
+  ) : null;
 }

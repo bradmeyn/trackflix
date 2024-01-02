@@ -29,21 +29,27 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
   };
 
   return (
-    <Popover as="span" className="relative">
+    <Popover as="span">
       <Popover.Button className="flex items-center gap-2 rounded-md p-2 text-sm text-slate-300 hover:bg-slate-600 hover:text-white">
         <span>Year</span>
         <ChevronDownIcon className="w-4" />
       </Popover.Button>
 
-      <Popover.Panel className="absolute z-10 mt-1 w-96 rounded bg-slate-700 p-5 shadow-lg">
-        <div className="mb-3 flex justify-between">
-          <h4 className="text-xl text-white">Year</h4>
-          <button onClick={handleReset}>Reset</button>
+      <Popover.Panel className="absolute z-10 mt-2 min-w-[300px] rounded bg-slate-800 p-5 shadow-lg">
+        <div className="mb-4 flex justify-between">
+          <h4 className="text-xl font-semibold text-white">Release Year</h4>
+          <button
+            className="rounded px-2 py-1 text-slate-400 hover:bg-slate-500 hover:text-white"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
         </div>
-        <div>
-          <div className="flex justify-between">
-            <label className="text-white">Start Year:</label>
+        <div className="flex flex-col gap-4">
+          <div>
+            <label className="block text-slate-300">After</label>
             <input
+              className="range-slider w-full"
               type="range"
               min="1970"
               max="2023"
@@ -51,11 +57,12 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
               value={yearRange[0]}
               onChange={handleYearChange}
             />
-            <span>{yearRange[0]}</span>
+            <span className="font-bold text-white">{yearRange[0]}</span>
           </div>
-          <div className="flex justify-between">
-            <label className="text-white">End Year:</label>
+          <div>
+            <label className="block text-slate-300">Before</label>
             <input
+              className="range-slider w-full"
               type="range"
               min="1970"
               max="2023"
@@ -63,7 +70,7 @@ export default function YearsFilter({ releaseYears, setReleaseYears }: Props) {
               value={yearRange[1]}
               onChange={handleEndYearChange}
             />
-            <span>{yearRange[1]}</span>
+            <span className="font-bold text-white">{yearRange[1]}</span>
           </div>
         </div>
       </Popover.Panel>

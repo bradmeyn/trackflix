@@ -70,7 +70,7 @@ export default function SearchModal() {
   return (
     <>
       {modalActive ? (
-        <div className="fixed top-0 left-0 z-50 h-full w-full bg-slate-900/30 p-0 backdrop-blur-md  ">
+        <div className="fixed top-0 left-0 z-50  h-full w-full bg-slate-900/30  backdrop-blur-md  ">
           <div
             ref={searchContainer}
             className=" mx-10 mt-20 md:mx-auto md:max-w-3xl "
@@ -83,7 +83,7 @@ export default function SearchModal() {
                 autoFocus
                 ref={searchInput}
                 placeholder="Search movies"
-                className={`w-full bg-slate-700 py-3 pl-12 text-lg text-white outline-0 md:text-xl ${
+                className={`mx-auto w-full bg-slate-700 py-3 pl-12 text-lg text-white outline-0 md:text-xl ${
                   movies.length > 0 ? "rounded-t" : "rounded"
                 }`}
                 onChange={handleChange}
@@ -114,7 +114,7 @@ function SearchButton({ activateSearch }) {
   return (
     <>
       <button
-        className="relative mx-2 ml-auto items-center gap-2 rounded-md p-2 text-slate-300 hover:bg-slate-600 hover:text-white md:mx-8 md:ml-0 md:flex md:max-w-md md:flex-1 md:bg-slate-700 lg:max-w-xl "
+        className="relative  ml-auto items-center gap-2 rounded p-2 px-4 text-slate-400 hover:bg-slate-600 hover:text-white md:mx-8 md:ml-4 md:flex md:max-w-md md:flex-1 md:bg-slate-700 lg:max-w-xl "
         onClick={activateSearch}
       >
         <MagnifyingGlassIcon className=" w-5" />

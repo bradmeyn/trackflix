@@ -79,7 +79,7 @@ export default function ClientPage({ initialMovies }: Props) {
 
   return (
     <>
-      <div className="mb-3 flex gap-2 text-sm">
+      <div className="relative mb-3 flex gap-2 text-sm">
         <YearsFilter
           releaseYears={releaseYears}
           setReleaseYears={setReleaseYears}
@@ -109,7 +109,7 @@ export default function ClientPage({ initialMovies }: Props) {
         movies?.length > 0 && (
           <button
             ref={loadMoreRef}
-            className="load-more-btn mx-auto block rounded-md bg-slate-600 p-2 px-5 text-white"
+            className="load-more-btn mx-auto block rounded-md bg-sky-600 p-2 px-5 text-white hover:bg-sky-800"
             onClick={() => updateMovies(true)}
           >
             Load More

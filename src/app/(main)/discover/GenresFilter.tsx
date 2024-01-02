@@ -31,18 +31,23 @@ export default function GenresFilter({ genres, setGenres }: Props) {
   };
 
   return (
-    <Popover as="span" className="relative inline-block">
+    <Popover as="span" className="left-0 inline-block">
       <Popover.Button className="flex items-center gap-2 rounded-md p-2 text-slate-300 hover:bg-slate-600 hover:text-white">
         <span>Genres</span>
         <ChevronDownIcon className="w-4" />
       </Popover.Button>
 
-      <Popover.Panel className="absolute  z-10 mt-1 w-96 rounded bg-slate-800 p-5 shadow-lg">
+      <Popover.Panel className="content absolute left-4 z-10 mt-2 rounded bg-slate-800 p-5 shadow-lg">
         <div className="mb-3 flex justify-between">
-          <h4 className="text-xl text-white">Genres</h4>
-          <button onClick={handleReset}>Reset</button>
+          <h4 className="text-xl font-semibold text-white">Genres</h4>
+          <button
+            className="rounded px-2 py-1 text-slate-400 hover:bg-slate-500 hover:text-white"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 gap-3">
           {genres.map((genre) => (
             <label
               key={genre.id}
