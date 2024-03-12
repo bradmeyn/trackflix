@@ -6,6 +6,8 @@
 
 Trackflix is a fullstack web application that allows users to search for movies and save them to various lists. I built it as a way to learn Next.js & NextAuth.
 
+Update:  Planetscale has removed it's free tier, so currently the backend functionality is not working. 
+
 ### Features:
 
 - Browse, filter, search and sort movies, using the TMDB API
