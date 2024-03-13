@@ -20,6 +20,7 @@ export default async function ListButton({ movieId, listType }: Props) {
     case "Favourites":
       bgColor = "bg-pink-600";
       hoverColor = "hover:bg-pink-600";
+      xw;
       Icon = HeartIcon;
       break;
     case "Seen":
@@ -31,17 +32,6 @@ export default async function ListButton({ movieId, listType }: Props) {
       bgColor = "bg-sky-600";
       hoverColor = "hover:bg-sky-600";
       Icon = BookmarkIcon;
-  }
-
-  if (!session?.user) {
-    return (
-      <Link
-        href="/signin"
-        className={`mb-4 flex items-center gap-2 rounded-full bg-slate-900 p-2 text-sm text-white ${hoverColor}`}
-      >
-        <Icon className="w-5" />
-      </Link>
-    );
   }
 
   const listId = session.user[`${listType.toLowerCase()}Id`];
@@ -84,15 +74,12 @@ export default async function ListButton({ movieId, listType }: Props) {
 
   return (
     <>
-      {/* @ts-expect-error Server Component */}
-      <form action={handleList}>
-        <button
-          type="submit"
-          className={`mb-4 flex items-center gap-2 rounded-full p-2 text-sm text-white ${bgColor} ${hoverColor}`}
-        >
-          <Icon className="w-5" />
-        </button>
-      </form>
+      <button
+        type="submit"
+        className={`mb-4 flex items-center gap-2 rounded-full p-2 text-sm text-white ${bgColor} ${hoverColor}`}
+      >
+        <Icon className="w-5" />
+      </button>
     </>
   );
 }

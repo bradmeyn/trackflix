@@ -16,10 +16,7 @@ Trackflix is a fullstack web application that allows users to search for movies 
 
 - Next.js 14 with React Server Components
 - Tailwind CSS
-- MySQL via Planetscale
-- Drizzle ORM
 - TMDB API
-- Third Party authentication with Github & NextAuth
 
 ## Screenshots
 
@@ -34,10 +31,6 @@ Trackflix is a fullstack web application that allows users to search for movies 
 ### Movie Page
 
 ![Movie Page Screenshot](./screenshots/trackflix-details.jpg)
-
-### Authentication
-
-![Authentication Screenshot](./screenshots/trackflix-auth.jpg)
 
 ### Discover Page
 

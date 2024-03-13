@@ -14,11 +14,10 @@
     "db:push": "drizzle-kit push:mysql"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^0.3.11",
+
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.1.1",
-    "@neondatabase/serverless": "^0.6.0",
-    "@planetscale/database": "^1.13.0",
+
     "@types/bcrypt": "^5.0.2",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
@@ -42,7 +41,6 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "autoprefixer": "^10.4.13",
-    "drizzle-kit": "^0.19.3",
     "eslint-config-next": "^14.0.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
